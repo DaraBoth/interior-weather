@@ -115,23 +115,23 @@ export default function Drink() {
         )}
 
         <div className="grid">
-          <div className="cell" style={{ gridColumn: "span 4" }}>
+          <div className="cell s4">
             <span className="cap">Make a rule</span>
             <button className="btn amber wide big" onClick={() => dispense("rule")}>Rule</button>
             <div className="tiny">Binding until someone objects loudly enough.</div>
           </div>
-          <div className="cell" style={{ gridColumn: "span 4" }}>
+          <div className="cell s4">
             <span className="cap">Never have I ever</span>
             <button className="btn wide big" onClick={() => dispense("never")}>Confess</button>
             <div className="tiny">Drink if you have. Lie if you must.</div>
           </div>
-          <div className="cell" style={{ gridColumn: "span 4" }}>
+          <div className="cell s4">
             <span className="cap">A dare</span>
             <button className="btn red wide big" onClick={() => dispense("dare")}>Dare</button>
             <div className="tiny">Refusal is permitted and will be remembered.</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">Escalation</span>
             <button
               className="btn wide"

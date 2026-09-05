@@ -327,7 +327,7 @@ export default function Lobby() {
         </div>
 
         <div className="grid">
-          <div className="cell" style={{ gridColumn: "span 5", alignItems: "center", textAlign: "center" }}>
+          <div className="cell s5" style={{ alignItems: "center", textAlign: "center" }}>
             <span className="cap">Do not press</span>
             <button
               className="bigred"
@@ -343,7 +343,7 @@ export default function Lobby() {
             <div className="tiny">PRESSED {presses} TIMES, EVER</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 3", alignItems: "center" }}>
+          <div className="cell s3" style={{ alignItems: "center" }}>
             <span className="cap">Diagnose me</span>
             <div
               onClick={pullLever}
@@ -364,7 +364,7 @@ export default function Lobby() {
             </div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 4" }}>
+          <div className="cell s4">
             <span className="cap">Vibes</span>
             <input
               type="range" min={0} max={100} value={vibes}
@@ -399,7 +399,7 @@ export default function Lobby() {
             </div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 5", minHeight: 118, justifyContent: "center" }}>
+          <div className="cell s5" style={{ minHeight: 118, justifyContent: "center" }}>
             <span className="cap">Please click this one</span>
             <button
               className="btn"
@@ -415,7 +415,7 @@ export default function Lobby() {
             </button>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 7", flexDirection: "row", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+          <div className="cell s7" style={{ flexDirection: "row", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
             <button
               className="btn big"
               style={{

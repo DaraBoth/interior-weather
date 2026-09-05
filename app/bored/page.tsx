@@ -100,7 +100,7 @@ export default function Waiting() {
         </div>
 
         <div className="grid">
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">Processing</span>
             <div style={{
               height: 30, background: "#8e876f", borderRadius: 6, overflow: "hidden",
@@ -115,21 +115,21 @@ export default function Waiting() {
             <div className="tiny">{progress.toFixed(1)}% · ESTIMATED TIME REMAINING: YES</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 6", textAlign: "center" }}>
+          <div className="cell s6" style={{ textAlign: "center" }}>
             <span className="cap">Now serving</span>
             <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1 }}>{serving.toLocaleString()}</div>
             <div className="tiny">YOUR TICKET: {ticket.toLocaleString()}</div>
             <div className="tiny">POSITION IN QUEUE: {(ticket - serving).toLocaleString()}</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 6", textAlign: "center" }}>
+          <div className="cell s6" style={{ textAlign: "center" }}>
             <span className="cap">Stillness contest</span>
             <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1 }}>{stillness}s</div>
             <div className="tiny">DO NOT MOVE. DO NOT SCROLL. DO NOT BREATHE ON THE MOUSE.</div>
             <div className="tiny">BEST THIS SESSION: {bestStill}s</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">Assistance</span>
             <button className="btn wide" onClick={() => { trombone(); setServing((s) => s - 3); }}>
               Request assistance

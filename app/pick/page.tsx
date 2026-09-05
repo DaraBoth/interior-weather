@@ -215,7 +215,7 @@ export default function SelectionChamber() {
         </div>
 
         <div className="grid" style={{ marginBottom: 16 }}>
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">The forfeit</span>
             <input
               className="field"
@@ -243,12 +243,8 @@ export default function SelectionChamber() {
         <div
           ref={wrapRef}
           onClick={addMark}
-          style={{
-            position: "relative", width: "100%", aspectRatio: "4 / 3",
-            background: "#0d100c", borderRadius: 10, overflow: "hidden",
-            border: "3px solid #2e332c", boxShadow: "inset 0 3px 18px rgba(0,0,0,.8)",
-            cursor: manual && live ? "crosshair" : "default",
-          }}
+          className="viewport"
+          style={{ cursor: manual && live ? "crosshair" : "default" }}
         >
           <video
             ref={videoRef}
@@ -337,7 +333,7 @@ export default function SelectionChamber() {
 
         {/* ------------- controls ------------- */}
         <div className="grid" style={{ marginTop: 16 }}>
-          <div className="cell" style={{ gridColumn: "span 12", flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+          <div className="cell s12" style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
             <button className="btn amber big" style={{ flex: 2, minWidth: 180 }} onClick={select} disabled={!live || spinning}>
               {spinning ? "Deciding…" : "Choose someone"}
             </button>

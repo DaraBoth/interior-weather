@@ -109,12 +109,12 @@ export default function Form27B() {
         )}
 
         <div className="grid">
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">1. Name (surname first, then also surname first again)</span>
             <input className="field" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">2. Date of anything. Year first. Then day. Then month. Obviously.</span>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <select className="field" style={{ flex: 1, minWidth: 100 }} value={year} onChange={(e) => { setYear(e.target.value); beep(500, 0.04); }}>
@@ -132,14 +132,14 @@ export default function Form27B() {
             </div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">3. Department (one option, still required)</span>
             <select className="field" defaultValue="Interior Weather">
               <option>Interior Weather</option>
             </select>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">4. Reason for applying to apply</span>
             <textarea
               className="field"
@@ -151,7 +151,7 @@ export default function Form27B() {
             <div className="tiny">Minimum four characters. Maximum sincerity.</div>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">5. Verification</span>
             <div className="mono" style={{ fontSize: 14, color: "var(--ink)" }}>
               Type the answer to this question: <b>Is this form well designed?</b>
@@ -159,7 +159,7 @@ export default function Form27B() {
             <input className="field" value={captcha} onChange={(e) => setCaptcha(e.target.value)} placeholder="two letters" />
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <label style={{ display: "flex", gap: 10, alignItems: "flex-start", cursor: "pointer" }}>
               <input
                 type="checkbox"
@@ -173,7 +173,7 @@ export default function Form27B() {
             </label>
           </div>
 
-          <div className="cell" style={{ gridColumn: "span 12", alignItems: "center" }}>
+          <div className="cell s12" style={{ alignItems: "center" }}>
             <button
               className="btn amber big"
               onClick={trySubmit}

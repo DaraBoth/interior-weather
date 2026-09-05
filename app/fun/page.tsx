@@ -140,7 +140,7 @@ export default function Recreation() {
 
         <div className="grid">
           {/* whack */}
-          <div className="cell" style={{ gridColumn: "span 6" }}>
+          <div className="cell s6">
             <span className="cap">Hit the things</span>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
               {Array.from({ length: 9 }).map((_, i) => (
@@ -170,7 +170,7 @@ export default function Recreation() {
           </div>
 
           {/* endurance */}
-          <div className="cell" style={{ gridColumn: "span 6" }}>
+          <div className="cell s6">
             <span className="cap">Hold this. That is the whole game.</span>
             <button
               className="btn red wide big"
@@ -189,7 +189,7 @@ export default function Recreation() {
           </div>
 
           {/* reaction */}
-          <div className="cell" style={{ gridColumn: "span 12" }}>
+          <div className="cell s12">
             <span className="cap">Reaction test (results not guaranteed to be true)</span>
             <button
               onClick={rxClick}
