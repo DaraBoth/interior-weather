@@ -11,13 +11,24 @@ Built for people who are having a good night and do not want to read anything.
 | Route | Department | What happens |
 |---|---|---|
 | `/` | Lobby | The Feelings Machine. A red button that resents you, a lever that diagnoses you, a vibes slider that physically tilts the page. |
-| `/drink` | Liquid Decisions | Rules nobody agreed to, never-have-I-ever, dares, and a Ministerial Override. |
+| `/bomb` | **The Bomb** | Pass-the-phone panic. A category, an accelerating fuse of random length, and whoever is holding it when it blows drinks. |
+| `/wheel` | **The Wheel** | A weighted canvas wheel with real momentum and a peg that clicks. Twelve outcomes, deliberately not equally likely. |
+| `/paranoia` | **Paranoia** | Read a question privately, whisper it, they answer out loud, then a coin decides whether the room ever learns what was asked. |
+| `/freeze` | **Freeze** | Everyone poses. The camera measures who drifted most during the hold. That person loses. |
 | `/pick` | **Selection Chamber** | Type a forfeit, open the camera, and the Ministry picks who does it. |
+| `/drink` | Liquid Decisions | Rules nobody agreed to, never-have-I-ever, dares, and a Ministerial Override. |
 | `/fun` | Recreation Wing | Whack-the-things, a hold-the-button endurance record, a reaction test that lies. |
 | `/bored` | Department of Waiting | A progress bar that never finishes, a queue you never reach, a stillness contest. |
 | `/form` | Form 27-B | Deliberately awful UI. Always completable. |
 | `/archive` | The Archive | 1997. Marquee, visitor counter, guestbook, and the hint list. |
 | `/basement` | — | Not in the nav. The machine tells you how to get there. |
+
+### Which game for which moment
+
+- **The Bomb** is the loudest and needs no setup. Start here.
+- **Paranoia** needs no camera and produces the biggest reactions. Best when people have settled.
+- **The Wheel** is for when nobody can decide anything.
+- **Freeze** and the **Selection Chamber** both use the camera, so run them back to back while the model is warm.
 
 ## The Selection Chamber, and your camera
 
@@ -101,13 +112,16 @@ app/
   layout.tsx        the building shell
   globals.css       the whole design system
   page.tsx          lobby, holds the most secrets
-  drink|pick|fun|bored|form|archive|basement/
+  bomb|wheel|paranoia|freeze/    the four party games
+  pick|drink|fun|bored|form|archive|basement/
 components/
   Ministry.tsx      nav, bulletins, discovery toast, cross-page secrets
 lib/
   audio.ts          the synth
   secrets.ts        discovery engine and hint rationing
   bulletins.ts      the announcements that interrupt you
+  faces.ts          three-tier face detection
+  games.ts          categories, questions and wheel segments
 ```
 
 ## A note on the drinking

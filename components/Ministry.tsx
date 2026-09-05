@@ -15,9 +15,13 @@ import { chime, beep } from "@/lib/audio";
 
 const ROOMS: { href: string; label: string }[] = [
   { href: "/", label: "Lobby" },
-  { href: "/drink", label: "Liquid Decisions" },
-  { href: "/pick", label: "Selection Chamber" },
-  { href: "/fun", label: "Recreation" },
+  { href: "/bomb", label: "Bomb" },
+  { href: "/wheel", label: "Wheel" },
+  { href: "/paranoia", label: "Paranoia" },
+  { href: "/freeze", label: "Freeze" },
+  { href: "/pick", label: "Who Drinks" },
+  { href: "/drink", label: "Rules" },
+  { href: "/fun", label: "Arcade" },
   { href: "/bored", label: "Waiting" },
   { href: "/form", label: "Form 27-B" },
   { href: "/archive", label: "Archive" },

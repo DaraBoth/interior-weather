@@ -128,7 +128,10 @@ export function availableHints(): { id: SecretId; title: string; hint: string; g
 
 /* ---------------------------------------------------------------- visits */
 
-export const ROOMS = ["/", "/drink", "/pick", "/fun", "/bored", "/form", "/archive"] as const;
+export const ROOMS = [
+  "/", "/bomb", "/wheel", "/paranoia", "/freeze",
+  "/pick", "/drink", "/fun", "/bored", "/form", "/archive",
+] as const;
 
 export function recordVisit(path: string) {
   if (typeof window === "undefined") return;
