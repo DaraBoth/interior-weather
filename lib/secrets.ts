@@ -26,7 +26,8 @@ export type SecretId =
   | "form27b"
   | "guestbook"
   | "chosen"
-  | "nightshift";
+  | "nightshift"
+  | "cardsharp";
 
 export const SECRETS: Record<SecretId, { title: string; hint: string }> = {
   konami:           { title: "THE OLD WAYS",          hint: "Gamers know a certain sequence." },
@@ -49,6 +50,7 @@ export const SECRETS: Record<SecretId, { title: string; hint: string }> = {
   guestbook:        { title: "1997",                  hint: "Sign the guestbook in the archive." },
   chosen:           { title: "CHOSEN",                hint: "Let the chamber pick you." },
   nightshift:       { title: "NIGHT SHIFT",           hint: "Come here after midnight." },
+  cardsharp:        { title: "CARD SHARP",            hint: "Seven correct guesses in a row." },
 };
 
 const KEY = "miw:secrets";
@@ -130,7 +132,7 @@ export function availableHints(): { id: SecretId; title: string; hint: string; g
 
 export const ROOMS = [
   "/", "/bomb", "/wheel", "/paranoia", "/freeze",
-  "/pick", "/drink", "/fun", "/bored", "/form", "/archive",
+  "/cards", "/pick", "/drink", "/fun", "/bored", "/form", "/archive",
 ] as const;
 
 export function recordVisit(path: string) {

@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BOMB_CATEGORIES } from "@/lib/games";
-import { alarm, beep, trombone, fanfare } from "@/lib/audio";
+import { explosion, beep, trombone, fanfare } from "@/lib/audio";
 import { verdict } from "@/lib/celebrate";
 
 type Phase = "idle" | "armed" | "blown";
@@ -62,9 +62,10 @@ export default function Bomb() {
 
       if (p >= 1) {
         setPhase("blown");
-        alarm();
+        explosion();
         verdict("Boom", "you are holding it", "#c8342b");
-        setTimeout(trombone, 500);
+        // let the blast breathe before the punchline
+        setTimeout(trombone, 1400);
         if (navigator.vibrate) { try { navigator.vibrate([220, 90, 220, 90, 420]); } catch {} }
         return;
       }

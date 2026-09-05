@@ -15,6 +15,7 @@ Built for people who are having a good night and do not want to read anything.
 | `/wheel` | **The Wheel** | A canvas wheel with real momentum and a peg that clicks. Run the Ministry's twelve weighted outcomes, or type your own list of names and forfeits. |
 | `/paranoia` | **Paranoia** | Read a question privately, whisper it, they answer out loud, then a coin decides whether the room ever learns what was asked. |
 | `/freeze` | **Freeze** | Everyone poses. The camera measures who drifted most during the hold. That person loses. |
+| `/cards` | **Higher or Lower** | Guess the next card. Dealt without replacement from a real shoe, with the exact odds printed, so counting actually pays. |
 | `/pick` | **Selection Chamber** | Type a forfeit, open the camera, and the Ministry picks who does it. |
 | `/drink` | Liquid Decisions | Rules nobody agreed to, never-have-I-ever, dares, and a Ministerial Override. |
 | `/fun` | Recreation Wing | Whack-the-things, a hold-the-button endurance record, a reaction test that lies. |
@@ -28,6 +29,7 @@ Built for people who are having a good night and do not want to read anything.
 - **The Bomb** is the loudest and needs no setup. Start here.
 - **Paranoia** needs no camera and produces the biggest reactions. Best when people have settled.
 - **The Wheel** is for when nobody can decide anything.
+- **Higher or Lower** is the slow one. Good for a table, and the only game here with real skill in it.
 - **Freeze** and the **Selection Chamber** both use the camera, so run them back to back while the model is warm.
 
 ## The Selection Chamber, and your camera

@@ -149,6 +149,97 @@ export function alarm() {
   }
 }
 
+/**
+ * A genuine explosion, built from four layers the way a sound designer would:
+ *
+ *   crack   a bright noise transient, ~60ms, the initial snap
+ *   body    filtered noise whose lowpass sweeps 1800Hz down to 90Hz, the whoomph
+ *   sub     a sine dropping 110Hz to 28Hz, the part you feel rather than hear
+ *   rumble  a long low tail so it decays instead of stopping
+ *
+ * The body runs through a waveshaper for grit, because a clean explosion
+ * sounds like a cushion falling over.
+ */
+export function explosion() {
+  const a = ctx();
+  if (!a || muted) return;
+  const t = a.currentTime;
+
+  // shared noise source material
+  const len = Math.floor(a.sampleRate * 2.4);
+  const buf = a.createBuffer(1, len, a.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+
+  const master = a.createGain();
+  master.gain.value = 0.9;
+  master.connect(a.destination);
+
+  // grit
+  const shaper = a.createWaveShaper();
+  const n = 2048;
+  const curve = new Float32Array(n);
+  for (let i = 0; i < n; i++) {
+    const x = (i * 2) / n - 1;
+    curve[i] = ((3 + 8) * x * 20 * Math.PI) / 180 / (Math.PI + 8 * Math.abs(x));
+  }
+  shaper.curve = curve;
+  shaper.oversample = "2x";
+  shaper.connect(master);
+
+  // 1. crack
+  const crack = a.createBufferSource();
+  crack.buffer = buf;
+  const hp = a.createBiquadFilter();
+  hp.type = "highpass";
+  hp.frequency.value = 1800;
+  const cg = a.createGain();
+  cg.gain.setValueAtTime(0.55, t);
+  cg.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+  crack.connect(hp); hp.connect(cg); cg.connect(master);
+  crack.start(t); crack.stop(t + 0.15);
+
+  // 2. body
+  const body = a.createBufferSource();
+  body.buffer = buf;
+  const lp = a.createBiquadFilter();
+  lp.type = "lowpass";
+  lp.Q.value = 1.4;
+  lp.frequency.setValueAtTime(1800, t);
+  lp.frequency.exponentialRampToValueAtTime(90, t + 1.0);
+  const bg = a.createGain();
+  bg.gain.setValueAtTime(0.0001, t);
+  bg.gain.exponentialRampToValueAtTime(0.85, t + 0.012);
+  bg.gain.exponentialRampToValueAtTime(0.0001, t + 1.5);
+  body.connect(lp); lp.connect(bg); bg.connect(shaper);
+  body.start(t); body.stop(t + 1.7);
+
+  // 3. sub, the part you feel
+  const sub = a.createOscillator();
+  sub.type = "sine";
+  sub.frequency.setValueAtTime(110, t);
+  sub.frequency.exponentialRampToValueAtTime(28, t + 0.85);
+  const sg = a.createGain();
+  sg.gain.setValueAtTime(0.0001, t);
+  sg.gain.exponentialRampToValueAtTime(0.95, t + 0.02);
+  sg.gain.exponentialRampToValueAtTime(0.0001, t + 1.35);
+  sub.connect(sg); sg.connect(master);
+  sub.start(t); sub.stop(t + 1.5);
+
+  // 4. rumble tail
+  const tail = a.createBufferSource();
+  tail.buffer = buf;
+  const tlp = a.createBiquadFilter();
+  tlp.type = "lowpass";
+  tlp.frequency.value = 150;
+  const tg = a.createGain();
+  tg.gain.setValueAtTime(0.0001, t + 0.05);
+  tg.gain.exponentialRampToValueAtTime(0.35, t + 0.18);
+  tg.gain.exponentialRampToValueAtTime(0.0001, t + 2.2);
+  tail.connect(tlp); tlp.connect(tg); tg.connect(master);
+  tail.start(t + 0.05); tail.stop(t + 2.4);
+}
+
 /** ascending arpeggio, for the moment someone is chosen */
 export function fanfare() {
   const notes = [523, 659, 784, 1047];

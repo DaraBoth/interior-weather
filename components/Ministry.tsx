@@ -19,6 +19,7 @@ const ROOMS: { href: string; label: string }[] = [
   { href: "/wheel", label: "Wheel" },
   { href: "/paranoia", label: "Paranoia" },
   { href: "/freeze", label: "Freeze" },
+  { href: "/cards", label: "Higher/Lower" },
   { href: "/pick", label: "Who Drinks" },
   { href: "/drink", label: "Rules" },
   { href: "/fun", label: "Arcade" },
