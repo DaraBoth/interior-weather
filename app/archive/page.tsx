@@ -143,7 +143,7 @@ export default function Archive() {
               maxLength={28}
               style={{
                 flex: 1, minWidth: 160, padding: "8px 10px", fontFamily: "inherit",
-                fontSize: 14, border: "2px inset #808080", background: "#fff", color: "#000",
+                fontSize: 16, border: "2px inset #808080", background: "#fff", color: "#000",
                 userSelect: "text",
               }}
             />

@@ -262,12 +262,17 @@ input[type="range"]::-moz-range-thumb {
   background: linear-gradient(180deg, #ede7d6, #9a9280); border: 2px solid #6b6553;
 }
 
+/* 16px is the floor: iOS Safari zooms the whole page in whenever a focused
+   input is smaller than that, and there is no way to undo it gracefully.
+   Fixing the font size is the correct fix; disabling user zoom is not. */
 .field {
-  font-family: var(--f-read); font-size: 15px; padding: 12px 14px; border-radius: 7px;
+  font-family: var(--f-read); font-size: 16px; padding: 12px 14px; border-radius: 7px;
   border: 2px solid #8e876f; background: #ede8d8; color: var(--ink); width: 100%;
   user-select: text; -webkit-user-select: text;
 }
 .field:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+input, select, textarea, button { font-size: 16px; }
 
 /* ---------------------------------------------------------------- bulletin */
 .bulletin {
