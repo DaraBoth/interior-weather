@@ -16,6 +16,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { getDetector, describeTier, type Tier, type FaceBox } from "@/lib/faces";
 import { FREEZE_TAUNTS } from "@/lib/games";
 import { alarm, beep, fanfare, tick, trombone } from "@/lib/audio";
+import { verdict } from "@/lib/celebrate";
 
 type Phase = "idle" | "countdown" | "holding" | "result";
 
@@ -159,14 +160,17 @@ export default function Freeze() {
       setStatus("THE MINISTRY COULD NOT SEE ANYONE. IT HAS DECIDED ANYWAY.");
       setLoser(-1);
       trombone();
+      verdict("Everybody", "nobody was visible", "#e8a317");
       return;
     }
     entries.sort((a, b) => b[1].drift - a[1].drift);
     const worst = entries[0][0];
     setLoser(worst);
-    setTaunt(FREEZE_TAUNTS[Math.floor(Math.random() * FREEZE_TAUNTS.length)]);
+    const t = FREEZE_TAUNTS[Math.floor(Math.random() * FREEZE_TAUNTS.length)];
+    setTaunt(t);
     setStatus("THE MINISTRY SAW EVERYTHING.");
     fanfare();
+    verdict("Caught", t, "#c8342b");
   };
 
   return (

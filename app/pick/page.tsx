@@ -18,6 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "@/lib/secrets";
 import { beep, fanfare, tick, trombone } from "@/lib/audio";
+import { verdict } from "@/lib/celebrate";
 import { getDetector, describeTier, type Tier } from "@/lib/faces";
 
 type Box = { x: number; y: number; w: number; h: number; id: number };
@@ -178,6 +179,7 @@ export default function SelectionChamber() {
         setSpinning(false);
         setStatus("THE MINISTRY HAS DECIDED.");
         fanfare();
+        verdict("Chosen", forfeit || "by order of the ministry", "#e8a317");
         S.discover("chosen");
       }
     };

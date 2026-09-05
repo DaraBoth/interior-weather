@@ -12,7 +12,7 @@ Built for people who are having a good night and do not want to read anything.
 |---|---|---|
 | `/` | Lobby | The Feelings Machine. A red button that resents you, a lever that diagnoses you, a vibes slider that physically tilts the page. |
 | `/bomb` | **The Bomb** | Pass-the-phone panic. A category, an accelerating fuse of random length, and whoever is holding it when it blows drinks. |
-| `/wheel` | **The Wheel** | A weighted canvas wheel with real momentum and a peg that clicks. Twelve outcomes, deliberately not equally likely. |
+| `/wheel` | **The Wheel** | A canvas wheel with real momentum and a peg that clicks. Run the Ministry's twelve weighted outcomes, or type your own list of names and forfeits. |
 | `/paranoia` | **Paranoia** | Read a question privately, whisper it, they answer out loud, then a coin decides whether the room ever learns what was asked. |
 | `/freeze` | **Freeze** | Everyone poses. The camera measures who drifted most during the hold. That person loses. |
 | `/pick` | **Selection Chamber** | Type a forfeit, open the camera, and the Ministry picks who does it. |
@@ -121,6 +121,7 @@ lib/
   secrets.ts        discovery engine and hint rationing
   bulletins.ts      the announcements that interrupt you
   faces.ts          three-tier face detection
+  celebrate.ts      the stamp, flash and confetti shared by every verdict
   games.ts          categories, questions and wheel segments
 ```
 
