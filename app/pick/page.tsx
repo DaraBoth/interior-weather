@@ -18,6 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as S from "@/lib/secrets";
 import { beep, fanfare, tick, trombone } from "@/lib/audio";
+import { getDetector, describeTier, type Tier } from "@/lib/faces";
 
 type Box = { x: number; y: number; w: number; h: number; id: number };
 
@@ -44,13 +45,14 @@ export default function SelectionChamber() {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number | null>(null);
-  const detectorRef = useRef<any>(null);
+  const detectorRef = useRef<Awaited<ReturnType<typeof getDetector>> | null>(null);
 
   const [forfeit, setForfeit] = useState("drink 2 glasses");
   const [facing, setFacing] = useState<"user" | "environment">("user");
   const [live, setLive] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [autoOK, setAutoOK] = useState<boolean | null>(null);
+  const [tier, setTier] = useState<Tier | null>(null);
+  const [loadingModel, setLoadingModel] = useState(true);
   const [manual, setManual] = useState(false);
   const [boxes, setBoxes] = useState<Box[]>([]);
   const [marks, setMarks] = useState<Box[]>([]);
@@ -101,40 +103,34 @@ export default function SelectionChamber() {
 
   useEffect(() => () => stop(), [stop]);
 
-  /* ---------------- face detection, where the browser offers it ---------------- */
+  /* ---------------- pick the best detector this browser can manage ---------------- */
   useEffect(() => {
-    const FD = (window as any).FaceDetector;
-    if (!FD) { setAutoOK(false); return; }
-    try {
-      detectorRef.current = new FD({ fastMode: true, maxDetectedFaces: 12 });
-      setAutoOK(true);
-    } catch {
-      setAutoOK(false);
-    }
+    let alive = true;
+    getDetector().then((d) => {
+      if (!alive) return;
+      detectorRef.current = d;
+      setTier(d.tier);
+      setLoadingModel(false);
+      if (d.tier === "none") setManual(true);
+    });
+    return () => { alive = false; };
   }, []);
 
   useEffect(() => {
-    if (!live || manual || !detectorRef.current || !videoRef.current) return;
+    // capture once so TypeScript can narrow it inside the async closure
+    const det = detectorRef.current;
+    if (!live || manual || !det || det.tier === "none") return;
     let alive = true;
     let last = 0;
 
     const loop = async (t: number) => {
       if (!alive) return;
-      if (t - last > 220 && videoRef.current && videoRef.current.readyState >= 2) {
+      const v = videoRef.current;
+      if (t - last > 220 && v && v.readyState >= 2) {
         last = t;
         try {
-          const faces = await detectorRef.current.detect(videoRef.current);
-          const vw = videoRef.current.videoWidth || 1;
-          const vh = videoRef.current.videoHeight || 1;
-          setBoxes(
-            faces.map((f: any, i: number) => ({
-              id: i,
-              x: (f.boundingBox.x / vw) * 100,
-              y: (f.boundingBox.y / vh) * 100,
-              w: (f.boundingBox.width / vw) * 100,
-              h: (f.boundingBox.height / vh) * 100,
-            })),
-          );
+          const faces = await det.detect(v);
+          if (alive) setBoxes(faces.map((f, i) => ({ id: i, ...f })));
         } catch {
           /* a failed frame is not worth reporting; the next one usually works */
         }
@@ -143,7 +139,8 @@ export default function SelectionChamber() {
     };
     rafRef.current = requestAnimationFrame(loop);
     return () => { alive = false; if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [live, manual]);
+    // tier is a dependency so the loop starts as soon as the model finishes loading
+  }, [live, manual, tier]);
 
   /* ---------------- manual markers ---------------- */
   const addMark = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -210,7 +207,7 @@ export default function SelectionChamber() {
         <div className="readout">
           <p className="rd-line">{status}</p>
           <p className="rd-sub">
-            CANDIDATES: {candidates.length} · MODE: {manual ? "MANUAL" : autoOK ? "AUTOMATIC" : "MANUAL (NO DETECTOR)"}
+            CANDIDATES: {candidates.length} · MODE: {manual ? "MANUAL" : loadingModel ? "LOADING DETECTOR…" : describeTier(tier ?? "none")}
           </p>
         </div>
 
@@ -351,7 +348,7 @@ export default function SelectionChamber() {
         <div className="footplate">
           <span>ALL PROCESSING IS LOCAL · NOTHING IS UPLOADED OR STORED</span>
           <span>
-            {autoOK === false ? "NO FACE DETECTOR IN THIS BROWSER — MANUAL MODE" : "DETECTOR AVAILABLE"}
+            {loadingModel ? "PREPARING DETECTOR…" : describeTier(tier ?? "none")}
           </span>
         </div>
       </div>

@@ -30,10 +30,16 @@ chamber or leave the route.
 
 Two ways to find people:
 
-- **Automatic** uses the browser's built-in `FaceDetector`, which exists in Chrome
-  and most Android browsers. Nothing is downloaded, so there is no model to wait for.
-- **Manual** is the fallback and honestly the better option in a dark room: everyone
-  taps their own face on the screen, then the chamber picks. Works everywhere.
+Detection has three tiers and falls through automatically:
+
+1. **`window.FaceDetector`** — the Shape Detection API. Instant and free where it
+   exists, but it is not a real standard: Safari and Firefox never shipped it and
+   desktop Chrome usually lacks it. Treated as a lucky bonus, never the plan.
+2. **MediaPipe BlazeFace** — a genuine model, works in every modern browser. Costs
+   one ~2MB download of WASM plus weights on first use, cached by the browser
+   afterwards. This is what actually runs for most people.
+3. **Manual** — everyone taps their own face on screen. Needs no network at all,
+   and is honestly the better option in a dark room full of people.
 
 The camera needs HTTPS. That is automatic on Vercel, and `localhost` counts as
 secure during development.
@@ -64,6 +70,11 @@ library — the industrial look is hand-written CSS in `app/globals.css`.
 
 All audio is synthesised at runtime in `lib/audio.ts`. Nothing is downloaded, so
 nothing can fail to load on bad party wifi and there is no loop seam to hear.
+
+The face model is the one exception: it fetches WASM and weights from a CDN the
+first time the chamber runs. If that fails, the chamber drops to manual mode
+rather than breaking. Load it once on good wifi before the party and the browser
+keeps it cached.
 
 ## Deploying to Vercel
 
