@@ -1,0 +1,109 @@
+# Ministry of Interior Weather
+
+A fake government building on the web. Every department is a page, every page is
+a very serious machine that does something profoundly stupid, and roughly twenty
+things are hidden where nobody told you to look.
+
+Built for people who are having a good night and do not want to read anything.
+
+## The building
+
+| Route | Department | What happens |
+|---|---|---|
+| `/` | Lobby | The Feelings Machine. A red button that resents you, a lever that diagnoses you, a vibes slider that physically tilts the page. |
+| `/drink` | Liquid Decisions | Rules nobody agreed to, never-have-I-ever, dares, and a Ministerial Override. |
+| `/pick` | **Selection Chamber** | Type a forfeit, open the camera, and the Ministry picks who does it. |
+| `/fun` | Recreation Wing | Whack-the-things, a hold-the-button endurance record, a reaction test that lies. |
+| `/bored` | Department of Waiting | A progress bar that never finishes, a queue you never reach, a stillness contest. |
+| `/form` | Form 27-B | Deliberately awful UI. Always completable. |
+| `/archive` | The Archive | 1997. Marquee, visitor counter, guestbook, and the hint list. |
+| `/basement` | — | Not in the nav. The machine tells you how to get there. |
+
+## The Selection Chamber, and your camera
+
+This is the party game. Someone types a forfeit, everyone gets in frame, and the
+chamber picks a victim with a suspenseful scan.
+
+**Nothing leaves the device.** There is no upload, no recording, no canvas export
+and no network call anywhere on that page. The stream stops when you close the
+chamber or leave the route.
+
+Two ways to find people:
+
+- **Automatic** uses the browser's built-in `FaceDetector`, which exists in Chrome
+  and most Android browsers. Nothing is downloaded, so there is no model to wait for.
+- **Manual** is the fallback and honestly the better option in a dark room: everyone
+  taps their own face on the screen, then the chamber picks. Works everywhere.
+
+The camera needs HTTPS. That is automatic on Vercel, and `localhost` counts as
+secure during development.
+
+## Hidden things
+
+There are twenty. The building never tells you the total, only how many you have
+found, which is the entire point. The Archive on `/archive` reveals hints slowly:
+one new clue for every two discoveries.
+
+A few live outside the pages entirely: a keyboard sequence, a word you can type
+anywhere, a command in the browser console, a right-click, being here at a certain
+time, and coming back on a different day.
+
+Progress is kept in `localStorage`, so it is per-device and survives closing the tab.
+`machine.reset()` in the console wipes it.
+
+## Running it
+
+```bash
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # production build
+```
+
+Node 20+ required. Uses Next.js 16 App Router, React 19, TypeScript, and no UI
+library — the industrial look is hand-written CSS in `app/globals.css`.
+
+All audio is synthesised at runtime in `lib/audio.ts`. Nothing is downloaded, so
+nothing can fail to load on bad party wifi and there is no loop seam to hear.
+
+## Deploying to Vercel
+
+The app is entirely static and client-side, so there is no configuration, no
+environment variable and no server runtime to think about.
+
+**From the dashboard**
+
+1. Push this folder to a GitHub repo.
+2. On vercel.com choose Add New → Project and import it.
+3. Vercel detects Next.js on its own. Accept the defaults and deploy.
+
+**From the terminal**
+
+```bash
+npx vercel          # preview deployment
+npx vercel --prod   # production
+```
+
+Vercel serves everything over HTTPS by default, which is what the camera needs.
+
+## Layout
+
+```
+app/
+  layout.tsx        the building shell
+  globals.css       the whole design system
+  page.tsx          lobby, holds the most secrets
+  drink|pick|fun|bored|form|archive|basement/
+components/
+  Ministry.tsx      nav, bulletins, discovery toast, cross-page secrets
+lib/
+  audio.ts          the synth
+  secrets.ts        discovery engine and hint rationing
+  bulletins.ts      the announcements that interrupt you
+```
+
+## A note on the drinking
+
+The forfeits are written to be silly rather than punishing, `/drink` forces a water
+bulletin every seven rounds, and the Ministry gets gentler about it after 11pm.
+Nobody is ever told to drink a specific amount by the machine — the players type
+their own forfeit and can write whatever they like, including nothing.
