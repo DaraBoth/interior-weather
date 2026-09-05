@@ -28,8 +28,6 @@ chamber picks a victim with a suspenseful scan.
 and no network call anywhere on that page. The stream stops when you close the
 chamber or leave the route.
 
-Two ways to find people:
-
 Detection has three tiers and falls through automatically:
 
 1. **`window.FaceDetector`** — the Shape Detection API. Instant and free where it
