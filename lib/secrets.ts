@@ -30,27 +30,27 @@ export type SecretId =
   | "cardsharp";
 
 export const SECRETS: Record<SecretId, { title: string; hint: string }> = {
-  konami:           { title: "THE OLD WAYS",          hint: "Gamers know a certain sequence." },
-  soup:             { title: "61% SOUP",              hint: "Type what you are made of." },
-  unscrewed:        { title: "LOAD BEARING",          hint: "Four screws. Three turns each." },
-  longpress:        { title: "THE LONG PRESS",        hint: "Do not let go of the red one." },
-  twentythree:      { title: "THE 23 ENIGMA",         hint: "Press it a specific number of times." },
-  moodswing:        { title: "MOOD SWING",            hint: "Take the vibes all the way down, up, and down." },
-  lonely:           { title: "STILL THERE?",          hint: "Leave the machine alone for a minute." },
-  threethirtythree: { title: "THE WITCHING MINUTE",   hint: "Be here at 3:33." },
-  palindrome:       { title: "PALINDROME",            hint: "Switches: 1 2 3 3 2 1." },
-  rightclick:       { title: "UNAUTHORISED MENU",     hint: "Right-click the panel." },
-  basement:         { title: "THE BASEMENT",          hint: "The building has a floor below the lobby." },
-  persistence:      { title: "PERSISTENCE",           hint: "Chase the coward twenty times." },
-  returned:         { title: "YOU CAME BACK",         hint: "Return on another day." },
-  confess:          { title: "CONFESSION",            hint: "The console knows a command." },
-  demolition:       { title: "DEMOLITION",            hint: "Destroy the machine five times." },
-  allrooms:         { title: "THE FULL TOUR",         hint: "Visit every department." },
-  form27b:          { title: "BUREAUCRAT",            hint: "Actually submit Form 27-B." },
-  guestbook:        { title: "1997",                  hint: "Sign the guestbook in the archive." },
-  chosen:           { title: "CHOSEN",                hint: "Let the chamber pick you." },
-  nightshift:       { title: "NIGHT SHIFT",           hint: "Come here after midnight." },
-  cardsharp:        { title: "CARD SHARP",            hint: "Seven correct guesses in a row." },
+  konami:           { title: "វិធីបុរាណ",              hint: "អ្នកលេងហ្គេមដឹងលំដាប់ជាក់លាក់មួយ។" },
+  soup:             { title: "៦១% ស៊ុប",               hint: "វាយបញ្ចូលអ្វីដែលអ្នកធ្វើពី។" },
+  unscrewed:        { title: "ទ្រទ្រង់ទម្ងន់",          hint: "វីសបួន។ បង្វិលបីជុំម្នាក់។" },
+  longpress:        { title: "ការសង្កត់យូរ",            hint: "កុំលែងប៊ូតុងក្រហម។" },
+  twentythree:      { title: "អាថ៌កំបាំង ២៣",          hint: "ចុចវាឱ្យគ្រប់ចំនួនជាក់លាក់។" },
+  moodswing:        { title: "អារម្មណ៍ប្រែប្រួល",       hint: "បង្វិលអារម្មណ៍ចុះ ឡើង រួចចុះវិញ។" },
+  lonely:           { title: "នៅទីនោះទេ?",             hint: "ទុកម៉ាស៊ីនចោលមួយនាទី។" },
+  threethirtythree: { title: "នាទីមន្តអាគម",            hint: "មកទីនេះនៅម៉ោង ៣:៣៣។" },
+  palindrome:       { title: "ពាក្យបញ្ច្រាស",           hint: "កុងតាក់៖ ១ ២ ៣ ៣ ២ ១។" },
+  rightclick:       { title: "ម៉ឺនុយគ្មានការអនុញ្ញាត",  hint: "ចុចខាងស្តាំលើផ្ទាំង។" },
+  basement:         { title: "បន្ទប់ក្រោមដី",           hint: "អគារនេះមានជាន់មួយនៅក្រោមកន្លែងទទួលភ្ញៀវ។" },
+  persistence:      { title: "ការតស៊ូ",                 hint: "ដេញតាមអ្នកកំសាកម្ភៃដង។" },
+  returned:         { title: "អ្នកត្រឡប់មកវិញ",         hint: "ត្រឡប់មកវិញនៅថ្ងៃផ្សេង។" },
+  confess:          { title: "ការសារភាព",               hint: "កុងសូលដឹងពាក្យបញ្ជាមួយ។" },
+  demolition:       { title: "ការបំផ្លាញ",              hint: "បំផ្លាញម៉ាស៊ីនប្រាំដង។" },
+  allrooms:         { title: "ទស្សនកិច្ចពេញលេញ",        hint: "ទៅលេងគ្រប់នាយកដ្ឋាន។" },
+  form27b:          { title: "មន្ត្រីរាជការ",           hint: "ដាក់ស្នើទម្រង់ ២៧-ខ ពិតប្រាកដ។" },
+  guestbook:        { title: "១៩៩៧",                   hint: "ចុះហត្ថលេខាក្នុងសៀវភៅភ្ញៀវនៅបណ្ណសារ។" },
+  chosen:           { title: "ត្រូវបានជ្រើសរើស",        hint: "ទុកឱ្យបន្ទប់ជ្រើសរើសអ្នក។" },
+  nightshift:       { title: "វេនយប់",                  hint: "មកទីនេះក្រោយកណ្តាលអធ្រាត្រ។" },
+  cardsharp:        { title: "ជំនាញបៀ",                 hint: "ទាយត្រូវប្រាំពីរដងជាប់ៗគ្នា។" },
 };
 
 const KEY = "miw:secrets";
@@ -124,7 +124,7 @@ export function availableHints(): { id: SecretId; title: string; hint: string; g
       spent++;
       return s;
     }
-    return { ...s, title: "————", hint: "Not yet." };
+    return { ...s, title: "————", hint: "មិនទាន់នៅឡើយ។" };
   });
 }
 

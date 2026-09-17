@@ -1,64 +1,64 @@
 "use client";
 
-/** DEPARTMENT OF LIQUID DECISIONS — rules, dares, and confessions. */
+/** នាយកដ្ឋានសម្រេចចិត្តរាវ — ច្បាប់ ការប្រកួត និងការសារភាព។ */
 
 import { useState } from "react";
 import { beep, boing, clunk, raspberry, trombone } from "@/lib/audio";
 
 const RULES = [
-  "Everyone whose name contains an R drinks.",
-  "The tallest person drinks. No measuring. Argue instead.",
-  "Anyone holding a phone drinks. Yes, you.",
-  "Youngest person invents a rule. It is binding.",
-  "Everyone wearing something black drinks. This is most of you.",
-  "Whoever spoke last drinks. Whoever speaks next also drinks.",
-  "The person to the left of the host drinks twice, for the host.",
-  "Anyone who has checked the time in the last minute drinks.",
-  "Left-handed people are exempt from this rule and smug about it.",
-  "Everyone who has been to this house before drinks.",
-  "Whoever suggested this game drinks. It was your idea.",
-  "Nobody drinks. Sit with the disappointment.",
-  "Everyone points at someone. Most-pointed drinks.",
-  "The person with the most unread messages drinks.",
-  "Anyone who says the word 'drink' for the next round drinks.",
+  "អ្នកណាដែលឈ្មោះមានអក្សរ រ ត្រូវផឹក។",
+  "អ្នកខ្ពស់ជាងគេត្រូវផឹក។ ហាមវាស់។ ជជែកតវ៉ាគ្នាទៅ។",
+  "អ្នកណាកាន់ទូរស័ព្ទត្រូវផឹក។ បាទ អ្នកនោះហើយ។",
+  "អ្នកក្មេងជាងគេបង្កើតច្បាប់មួយ។ ច្បាប់នោះជាធរមាន។",
+  "អ្នកណាពាក់អ្វីពណ៌ខ្មៅត្រូវផឹក។ នេះគឺភាគច្រើននៃពួកអ្នក។",
+  "អ្នកនិយាយចុងក្រោយត្រូវផឹក។ អ្នកនិយាយបន្ទាប់ក៏ត្រូវផឹកដែរ។",
+  "អ្នកនៅខាងឆ្វេងម្ចាស់ផ្ទះត្រូវផឹកពីរដង ជំនួសម្ចាស់ផ្ទះ។",
+  "អ្នកណាបានមើលម៉ោងក្នុងមួយនាទីចុងក្រោយត្រូវផឹក។",
+  "អ្នកប្រើដៃឆ្វេងរួចផុតពីច្បាប់នេះ ហើយក្អេងក្អាងអំពីវា។",
+  "អ្នកណាធ្លាប់មកផ្ទះនេះពីមុនត្រូវផឹក។",
+  "អ្នកណាស្នើលេងហ្គេមនេះត្រូវផឹក។ គំនិតរបស់អ្នកហើយ។",
+  "គ្មាននរណាផឹកទេ។ អង្គុយជាមួយការខកចិត្តទៅ។",
+  "គ្រប់គ្នាចង្អុលទៅនរណាម្នាក់។ អ្នកដែលគេចង្អុលច្រើនជាងគេត្រូវផឹក។",
+  "អ្នកដែលមានសារមិនទាន់អានច្រើនជាងគេត្រូវផឹក។",
+  "អ្នកណានិយាយពាក្យ 'ផឹក' ក្នុងវគ្គបន្ទាប់ត្រូវផឹក។",
 ];
 
 const NEVER = [
-  "Never have I ever pretended to know a song I did not know.",
-  "Never have I ever left a group chat and rejoined quietly.",
-  "Never have I ever taken a photo of food and not eaten it warm.",
-  "Never have I ever agreed to plans I intended to cancel.",
-  "Never have I ever googled myself. Twice.",
-  "Never have I ever laughed at a joke I did not hear.",
-  "Never have I ever said 'I'm five minutes away' from bed.",
-  "Never have I ever argued about something I first read ten minutes earlier.",
-  "Never have I ever kept a plant alive for a full year.",
-  "Never have I ever rehearsed an argument in the shower and lost.",
-  "Never have I ever pretended the wifi cut out.",
-  "Never have I ever taken the last one and said nothing.",
+  "ខ្ញុំមិនដែលធ្វើពុតថាស្គាល់បទចម្រៀងដែលខ្ញុំមិនស្គាល់ទេ។",
+  "ខ្ញុំមិនដែលចាកចេញពីក្រុមឆាត រួចចូលវិញស្ងាត់ៗទេ។",
+  "ខ្ញុំមិនដែលថតរូបម្ហូប រួចទុករហូតត្រជាក់ទេ។",
+  "ខ្ញុំមិនដែលព្រមទទួលការណាត់ជួប ទាំងគិតទុកជាមុនថានឹងលុបចោលទេ។",
+  "ខ្ញុំមិនដែលស្វែងរកឈ្មោះខ្លួនឯងក្នុងហ្គូហ្គលទេ។ ពីរដង។",
+  "ខ្ញុំមិនដែលសើចនឹងរឿងកំប្លែងដែលខ្ញុំមិនបានឮទេ។",
+  "ខ្ញុំមិនដែលនិយាយថា 'នៅប្រាំនាទីទៀតដល់' ទាំងដេកលើគ្រែទេ។",
+  "ខ្ញុំមិនដែលជជែកតវ៉ាអំពីរឿងដែលខ្ញុំទើបតែអានដប់នាទីមុនទេ។",
+  "ខ្ញុំមិនដែលចិញ្ចឹមដើមឈើឱ្យរស់បានពេញមួយឆ្នាំទេ។",
+  "ខ្ញុំមិនដែលហាត់ជជែកតវ៉ាក្នុងបន្ទប់ទឹក រួចចាញ់ទេ។",
+  "ខ្ញុំមិនដែលធ្វើពុតថាវ៉ាយហ្វាយដាច់ទេ។",
+  "ខ្ញុំមិនដែលយកដុំចុងក្រោយ ហើយមិននិយាយអ្វីទេ។",
 ];
 
 const DARES = [
-  "Do your best impression of the person on your left. They choose if it was good.",
-  "Text the fifth person in your recent list the word 'confirmed'. Nothing else.",
-  "Speak only in questions until your next turn.",
-  "Let the group choose your next song. No vetoes.",
-  "Describe your job to the group as if it were a crime.",
-  "Swap seats with someone and defend their opinions for one round.",
-  "Say something genuinely nice about everyone here. Yes, everyone.",
-  "Show the group the last photo you took. Context is not permitted.",
-  "Do the worst dance you can for ten seconds. Commit fully.",
-  "Tell a story that is 90% true. The group guesses the 10%.",
+  "ធ្វើត្រាប់តាមអ្នកនៅខាងឆ្វេងអ្នកឱ្យអស់ពីសមត្ថភាព។ គេជាអ្នកកាត់សេចក្តីថាល្អឬអត់។",
+  "ផ្ញើសារទៅមនុស្សទីប្រាំក្នុងបញ្ជីថ្មីៗរបស់អ្នក ត្រឹមពាក្យ 'បញ្ជាក់'។ គ្មានអ្វីផ្សេងទេ។",
+  "និយាយតែជាសំណួរប៉ុណ្ណោះ រហូតដល់វេនបន្ទាប់របស់អ្នក។",
+  "ទុកឱ្យក្រុមជ្រើសរើសបទចម្រៀងបន្ទាប់របស់អ្នក។ ហាមបដិសេធ។",
+  "ពិពណ៌នាការងាររបស់អ្នកទៅក្រុម ដូចជាវាជាបទល្មើសព្រហ្មទណ្ឌ។",
+  "ប្តូរកន្លែងអង្គុយជាមួយនរណាម្នាក់ ហើយការពារមតិរបស់គេមួយវគ្គ។",
+  "និយាយរឿងល្អពិតប្រាកដអំពីមនុស្សគ្រប់រូបនៅទីនេះ។ បាទ គ្រប់គ្នា។",
+  "បង្ហាញក្រុមនូវរូបថតចុងក្រោយដែលអ្នកថត។ ហាមពន្យល់បរិបទ។",
+  "រាំឱ្យអាក្រក់បំផុតតាមដែលអាចធ្វើបានដប់វិនាទី។ ធ្វើឱ្យអស់ពីចិត្ត។",
+  "និទានរឿងមួយដែលពិត ៩០%។ ក្រុមទាយ ១០% ដែលនៅសល់។",
 ];
 
 type Mode = "rule" | "never" | "dare";
 
-const LABEL: Record<Mode, string> = { rule: "A RULE", never: "A CONFESSION", dare: "A DARE" };
+const LABEL: Record<Mode, string> = { rule: "ច្បាប់មួយ", never: "ការសារភាព", dare: "ការប្រកួត" };
 const POOL: Record<Mode, string[]> = { rule: RULES, never: NEVER, dare: DARES };
 
 export default function Drink() {
   const [mode, setMode] = useState<Mode>("rule");
-  const [text, setText] = useState("PULL THE LEVER. ACCEPT THE CONSEQUENCE.");
+  const [text, setText] = useState("ទាញដងកាន់។ ទទួលយកផលវិបាក។");
   const [round, setRound] = useState(0);
   const [pulled, setPulled] = useState(false);
 
@@ -87,13 +87,13 @@ export default function Drink() {
 
         <div className="plate">
           <div>
-            <div className="mk">Department of Liquid Decisions · Floor 1</div>
-            <h1>Rules Nobody Agreed To</h1>
+            <div className="mk">នាយកដ្ឋានសម្រេចចិត្តរាវ · ជាន់ទី ១</div>
+            <h1>ច្បាប់ដែលគ្មាននរណាព្រមព្រៀង</h1>
           </div>
           <div className="cert">
-            THE MINISTRY DISPENSES<br />
-            INSTRUCTIONS, NOT PERMISSION<br />
-            ROUND {String(round).padStart(3, "0")}
+            ក្រសួងចេញឱ្យ<br />
+            សេចក្តីណែនាំ មិនមែនការអនុញ្ញាតទេ<br />
+            វគ្គ {String(round).padStart(3, "0")}
           </div>
         </div>
 
@@ -137,7 +137,7 @@ export default function Drink() {
               className="btn wide"
               onClick={() => {
                 trombone();
-                setText("EVERYONE DRINKS. NO REASON GIVEN. THE MINISTRY DOES NOT EXPLAIN ITSELF.");
+                setText("គ្រប់គ្នាត្រូវផឹក។ គ្មានហេតុផលទេ។ ក្រសួងមិនពន្យល់ខ្លួនឯងទេ។");
                 setRound((r) => r + 1);
               }}
             >

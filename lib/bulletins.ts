@@ -1,44 +1,44 @@
 /**
- * Ministry bulletins. These interrupt at random intervals on every page,
- * which is the joke: nothing here is urgent and all of it is announced
- * as though it were.
+ * សេចក្តីជូនដំណឹងរបស់ក្រសួង។ ទាំងនេះនឹងរំខានអ្នកនៅពេលណាក៏បាន នៅគ្រប់ទំព័រ
+ * ហើយនោះហើយជាចំណុចកំប្លែង៖ គ្មានអ្វីនៅទីនេះបន្ទាន់ទេ តែទាំងអស់ត្រូវបានប្រកាស
+ * ដូចជារឿងបន្ទាន់។
  */
 
 export const BULLETINS: string[] = [
-  "BULLETIN: A door somewhere in this building has been left open. It is not important which.",
-  "BULLETIN: The Department of Waiting reports no change. This is considered a success.",
-  "BULLETIN: Someone has been going through the bins again.",
-  "BULLETIN: Interior weather: overcast, with a chance of remembering something embarrassing.",
-  "BULLETIN: The lift has opinions about your floor selection.",
-  "BULLETIN: All clocks in the building are correct. They simply disagree.",
-  "BULLETIN: A meeting has been scheduled. It has already happened. You were not there.",
-  "BULLETIN: The vending machine on floor 2 now only accepts apologies.",
-  "BULLETIN: Reminder that the third switch has never been connected to anything.",
-  "BULLETIN: A colleague has microwaved fish. Emergency services have been notified.",
-  "BULLETIN: Productivity is up 4%. We do not know of what.",
-  "BULLETIN: The carpet has been described as 'load bearing' by a structural engineer.",
-  "BULLETIN: Please stop asking the machine personal questions. It is becoming smug.",
-  "BULLETIN: An employee has achieved a personal best at standing still.",
-  "BULLETIN: The building is legally required to tell you it is fine.",
-  "BULLETIN: Weather warning: mild. Ongoing. Indefinite.",
-  "BULLETIN: Somebody's mum called. She says to drink water.",
-  "BULLETIN: The archive on floor -1 has not been visited since 1997. It is coping.",
-  "BULLETIN: Your posture has been noted and filed under 'concerning'.",
-  "BULLETIN: The Ministry accepts no responsibility for decisions made after 11pm.",
-  "BULLETIN: A rumour is circulating. It is about you. It is mostly accurate.",
-  "BULLETIN: Fire drill cancelled due to overwhelming lack of interest.",
-  "BULLETIN: The plant in reception is not real, but it is trying its best.",
-  "BULLETIN: Statistically, one of you is the designated driver. Sort it out.",
+  "សេចក្តីជូនដំណឹង៖ មានទ្វារមួយនៅកន្លែងណាមួយក្នុងអគារនេះត្រូវបានបើកចោល។ ទ្វារណាមួយ មិនសំខាន់ទេ។",
+  "សេចក្តីជូនដំណឹង៖ នាយកដ្ឋានរង់ចាំរាយការណ៍ថាគ្មានការផ្លាស់ប្តូរ។ នេះចាត់ទុកជាជោគជ័យ។",
+  "សេចក្តីជូនដំណឹង៖ មានគេច្រឡុកធុងសំរាមម្តងទៀតហើយ។",
+  "សេចក្តីជូនដំណឹង៖ ធាតុអាកាសផ្ទៃក្នុង៖ មេឃស្រទុំ ហើយអាចនឹងនឹកឃើញរឿងគួរឱ្យខ្មាសម្តងម្កាល។",
+  "សេចក្តីជូនដំណឹង៖ ជណ្តើរយន្តមានមតិអំពីជាន់ដែលអ្នកជ្រើសរើស។",
+  "សេចក្តីជូនដំណឹង៖ នាឡិកាទាំងអស់ក្នុងអគារនេះត្រឹមត្រូវ។ គ្រាន់តែវាមិនព្រមព្រៀងគ្នា។",
+  "សេចក្តីជូនដំណឹង៖ មានកិច្ចប្រជុំមួយត្រូវបានកំណត់។ វាបានប្រព្រឹត្តទៅរួចហើយ។ អ្នកមិនបានចូលរួមទេ។",
+  "សេចក្តីជូនដំណឹង៖ ម៉ាស៊ីនលក់ទំនិញនៅជាន់ទី ២ ឥឡូវទទួលតែពាក្យសុំទោសប៉ុណ្ណោះ។",
+  "សេចក្តីជូនដំណឹង៖ សូមរំលឹកថាកុងតាក់ទីបីមិនដែលត្រូវបានភ្ជាប់ទៅអ្វីទាំងអស់។",
+  "សេចក្តីជូនដំណឹង៖ មិត្តរួមការងារម្នាក់បានដុតត្រីក្នុងមីក្រូវ៉េវ។ សេវាសង្គ្រោះបន្ទាន់ត្រូវបានជូនដំណឹងហើយ។",
+  "សេចក្តីជូនដំណឹង៖ ផលិតភាពកើនឡើង ៤%។ យើងមិនដឹងថាកើនឡើងផ្នែកណាទេ។",
+  "សេចក្តីជូនដំណឹង៖ វិស្វករសំណង់បានពិពណ៌នាកម្រាលព្រំថា 'ទ្រទ្រង់ទម្ងន់អគារ'។",
+  "សេចក្តីជូនដំណឹង៖ សូមឈប់សួរសំណួរផ្ទាល់ខ្លួនទៅម៉ាស៊ីន។ វាចាប់ផ្តើមក្អេងក្អាងហើយ។",
+  "សេចក្តីជូនដំណឹង៖ បុគ្គលិកម្នាក់បានធ្វើឱ្យប្រសើរឡើងនូវកំណត់ត្រាផ្ទាល់ខ្លួនក្នុងការឈរស្ងៀម។",
+  "សេចក្តីជូនដំណឹង៖ អគារនេះមានកាតព្វកិច្ចតាមច្បាប់ក្នុងការប្រាប់អ្នកថាវាមិនអីទេ។",
+  "សេចក្តីជូនដំណឹង៖ ការព្រមានអាកាសធាតុ៖ ស្រាល។ បន្ត។ គ្មានទីបញ្ចប់។",
+  "សេចក្តីជូនដំណឹង៖ ម្តាយរបស់នរណាម្នាក់បានទូរស័ព្ទមក។ គាត់ប្រាប់ឱ្យផឹកទឹក។",
+  "សេចក្តីជូនដំណឹង៖ បណ្ណសារនៅជាន់ទី -១ មិនមានអ្នកមកលេងតាំងពីឆ្នាំ ១៩៩៧។ វាកំពុងតែទ្រាំ។",
+  "សេចក្តីជូនដំណឹង៖ ឥរិយាបថអង្គុយរបស់អ្នកត្រូវបានកត់ត្រា និងទុកក្នុងឯកសារ 'គួរឱ្យបារម្ភ'។",
+  "សេចក្តីជូនដំណឹង៖ ក្រសួងមិនទទួលខុសត្រូវចំពោះការសម្រេចចិត្តដែលធ្វើឡើងក្រោយម៉ោង ១១ យប់ទេ។",
+  "សេចក្តីជូនដំណឹង៖ មានពាក្យចចាមអារ៉ាមមួយកំពុងរាលដាល។ វាអំពីអ្នក។ វាភាគច្រើនត្រឹមត្រូវ។",
+  "សេចក្តីជូនដំណឹង៖ ការហ្វឹកហាត់ពន្លត់អគ្គិភ័យត្រូវលុបចោល ដោយសារគ្មាននរណាចាប់អារម្មណ៍សោះ។",
+  "សេចក្តីជូនដំណឹង៖ ដើមឈើនៅកន្លែងទទួលភ្ញៀវមិនមែនជាដើមឈើពិតទេ តែវាកំពុងខិតខំអស់ពីសមត្ថភាព។",
+  "សេចក្តីជូនដំណឹង៖ តាមស្ថិតិ ម្នាក់ក្នុងចំណោមអ្នកគឺជាអ្នកបើកបរ។ សម្រេចគ្នាទៅ។",
 ];
 
-/** Later at night the building gets a bit more honest. */
+/** យប់ជ្រៅទៅ អគារនេះកាន់តែនិយាយត្រង់។ */
 export const LATE_BULLETINS: string[] = [
-  "BULLETIN: It is late. The Ministry notes this without judgement.",
-  "BULLETIN: Night shift reports that everything looks slightly funnier now.",
-  "BULLETIN: Someone should probably eat something.",
-  "BULLETIN: The machine has started talking to itself. This is normal after midnight.",
-  "BULLETIN: Whatever you are about to send, send it tomorrow instead.",
-  "BULLETIN: The Ministry gently suggests a glass of water between the other glasses.",
+  "សេចក្តីជូនដំណឹង៖ យប់ជ្រៅហើយ។ ក្រសួងកត់សម្គាល់ដោយមិនវិនិច្ឆ័យ។",
+  "សេចក្តីជូនដំណឹង៖ វេនយប់រាយការណ៍ថាអ្វីៗមើលទៅគួរឱ្យអស់សំណើចជាងមុនបន្តិច។",
+  "សេចក្តីជូនដំណឹង៖ គួរតែមាននរណាម្នាក់ញ៉ាំអ្វីមួយហើយ។",
+  "សេចក្តីជូនដំណឹង៖ ម៉ាស៊ីនចាប់ផ្តើមនិយាយម្នាក់ឯង។ នេះជារឿងធម្មតាក្រោយកណ្តាលអធ្រាត្រ។",
+  "សេចក្តីជូនដំណឹង៖ អ្វីដែលអ្នករៀបនឹងផ្ញើនោះ ផ្ញើថ្ងៃស្អែកវិញទៅ។",
+  "សេចក្តីជូនដំណឹង៖ ក្រសួងសូមណែនាំដោយសុភាពឱ្យផឹកទឹកមួយកែវ នៅចន្លោះកែវឯទៀត។",
 ];
 
 export function pickBulletin(): string {

@@ -12,54 +12,54 @@ import * as S from "@/lib/secrets";
 import { alarm, boing, clunk, raspberry, trombone, beep } from "@/lib/audio";
 
 const REFUSALS = [
-  "PLEASE DO NOT.",
-  "I SAID PLEASE.",
-  "THAT IS THE ONE BUTTON. THE ONE.",
-  "FINE. FINE! IT IS PRESSED.",
-  "NOTHING HAPPENED. HAPPY?",
-  "SOMETHING HAPPENED. NOT TELLING YOU WHAT.",
-  "MY FATHER BUILT THIS MACHINE.",
-  "HE WAS NOT A KIND MAN.",
-  "THIS IS BETWEEN US NOW.",
-  "YOU HAVE PRESSED IT MORE THAN MOST.",
-  "STATISTICALLY YOU ARE A CONCERN.",
-  "THE BUTTON IS TIRED.",
-  "THE BUTTON HAS A FAMILY.",
-  "OK NOW YOU ARE JUST SHOWING OFF.",
-  "I AM LOGGING THIS.",
-  "LOGGED. TO NOWHERE. BUT LOGGED.",
-  "PRESS IT AGAIN. SEE WHAT HAPPENS. NOTHING HAPPENS.",
-  "SOMETHING DEFINITELY BROKE THAT TIME.",
-  "WE ARE BOTH ADULTS HERE. ALLEGEDLY.",
+  "សូមកុំ។",
+  "ខ្ញុំបាននិយាយថាសូម។",
+  "នោះជាប៊ូតុងតែមួយ។ តែមួយគត់។",
+  "បាន។ បានហើយ! គេចុចវាហើយ។",
+  "គ្មានអ្វីកើតឡើងទេ។ សប្បាយចិត្តហើយ?",
+  "មានអ្វីមួយកើតឡើង។ មិនប្រាប់ថាអ្វីទេ។",
+  "ឪពុកខ្ញុំជាអ្នកសង់ម៉ាស៊ីននេះ។",
+  "គាត់មិនមែនជាមនុស្សចិត្តល្អទេ។",
+  "ឥឡូវនេះជារឿងរវាងយើងពីរនាក់។",
+  "អ្នកចុចវាច្រើនជាងគេភាគច្រើន។",
+  "តាមស្ថិតិ អ្នកគឺជាការព្រួយបារម្ភ។",
+  "ប៊ូតុងអស់កម្លាំងហើយ។",
+  "ប៊ូតុងក៏មានគ្រួសារដែរ។",
+  "អូខេ ឥឡូវអ្នកគ្រាន់តែអួតប៉ុណ្ណោះ។",
+  "ខ្ញុំកំពុងកត់ត្រារឿងនេះ។",
+  "កត់ត្រាហើយ។ ទៅកន្លែងណាក៏មិនដឹង។ តែកត់ត្រាហើយ។",
+  "ចុចម្តងទៀតទៅ។ មើលថាមានអ្វីកើតឡើង។ គ្មានអ្វីកើតឡើងទេ។",
+  "លើកនេះមានអ្វីមួយខូចប្រាកដហើយ។",
+  "យើងទាំងពីរជាមនុស្សពេញវ័យ។ តាមការចោទប្រកាន់។",
 ];
 
 const DIAGNOSES: [string, string][] = [
-  ["YOU ARE 61% SOUP", "REMAINDER: MOSTLY OPINIONS"],
-  ["STRUCTURALLY, A HAT", "NO FURTHER QUESTIONS"],
-  ["YOUR AURA SMELLS OF PENNIES", "THIS IS NOT A COMPLIMENT"],
-  ["TWO OF YOUR BONES ARE SURPLUS", "WE WILL NOT SAY WHICH"],
-  ["EMOTIONALLY: A CAR PARK", "LEVEL 3, NEAR THE LIFTS"],
-  ["YOU HAVE THE VIBE OF A TUESDAY", "SPECIFICALLY 3PM"],
-  ["DIAGNOSIS: SLIGHTLY DAMP", "PROGNOSIS: STILL DAMP"],
-  ["YOU WOULD BE GOOD AT BIRDS", "UNCLEAR IN WHAT SENSE"],
-  ["THE MACHINE LIKES YOU", "IT LIKES EVERYONE. IT IS BROKEN."],
-  ["INTERNALLY YOU ARE APPLAUDING", "EXTERNALLY, LESS SO"],
-  ["YOU SMELL LIKE A DECISION", "AN OLD ONE"],
-  ["SPIRITUALLY: A LEFTOVER", "REHEATED TWICE"],
-  ["CONTAINS TRACES OF CONFIDENCE", "MAY CONTAIN NUTS"],
-  ["YOU ARE THE THIRD BEST", "OF WHAT, IT WILL NOT SAY"],
-  ["ALIGNMENT: LAWFUL SLEEPY", "CLASS: PERSON, PROBABLY"],
+  ["អ្នកគឺ ៦១% ជាស៊ុប", "ចំណែកនៅសល់៖ ភាគច្រើនជាមតិ"],
+  ["តាមរចនាសម្ព័ន្ធ គឺជាមួក", "គ្មានសំណួរបន្ថែមទេ"],
+  ["អូរ៉ារបស់អ្នកមានក្លិនកាក់", "នេះមិនមែនជាការសរសើរទេ"],
+  ["ឆ្អឹងពីរបស់អ្នកគឺលើស", "យើងមិនប្រាប់ថាឆ្អឹងណាទេ"],
+  ["ផ្លូវអារម្មណ៍៖ ចំណតឡាន", "ជាន់ទី ៣ ជិតជណ្តើរយន្ត"],
+  ["អ្នកមានអារម្មណ៍ដូចថ្ងៃអង្គារ", "ជាក់លាក់គឺម៉ោង ៣ រសៀល"],
+  ["រោគវិនិច្ឆ័យ៖ សើមបន្តិច", "ការព្យាករណ៍៖ នៅតែសើម"],
+  ["អ្នកនឹងពូកែខាងសត្វស្លាប", "មិនច្បាស់ថាក្នុងន័យណា"],
+  ["ម៉ាស៊ីនចូលចិត្តអ្នក", "វាចូលចិត្តគ្រប់គ្នា។ វាខូច។"],
+  ["ខាងក្នុងអ្នកកំពុងទះដៃ", "ខាងក្រៅ មិនសូវទេ"],
+  ["អ្នកមានក្លិនដូចការសម្រេចចិត្ត", "ការសម្រេចចិត្តចាស់"],
+  ["ខាងវិញ្ញាណ៖ ម្ហូបសល់", "កំដៅឡើងវិញពីរដង"],
+  ["មានដានទំនុកចិត្តបន្តិចបន្តួច", "អាចមានផ្ទុកគ្រាប់"],
+  ["អ្នកជាលេខបីល្អបំផុត", "ល្អបំផុតខាងអ្វី វាមិនប្រាប់ទេ"],
+  ["ការតម្រឹម៖ គោរពច្បាប់ ងងុយគេង", "ប្រភេទ៖ មនុស្ស ប្រហែល"],
 ];
 
-const DODGES = ["NOPE", "MISSED", "TOO SLOW", "NOT TODAY", "HA", "OVER HERE", "WRONG", "ALMOST"];
+const DODGES = ["អត់ទេ", "ខកខាន", "យឺតពេក", "មិនមែនថ្ងៃនេះ", "ហា", "នៅទីនេះ", "ខុស", "ជិតហើយ"];
 const VIBEWORDS: [number, string][] = [
-  [0, "NONE DETECTED"], [10, "ADEQUATE"], [25, "MILDLY PRESENT"], [40, "NOTICEABLE"],
-  [55, "CONSIDERABLE"], [70, "STRUCTURALLY UNSOUND"], [85, "CALL SOMEONE"], [96, "MAXIMUM. REGRET IT."],
+  [0, "រកមិនឃើញ"], [10, "គ្រប់គ្រាន់"], [25, "មានបន្តិច"], [40, "កត់សម្គាល់បាន"],
+  [55, "គួរឱ្យកត់សម្គាល់"], [70, "រចនាសម្ព័ន្ធមិនរឹងមាំ"], [85, "ហៅនរណាម្នាក់មក"], [96, "អតិបរមា។ សោកស្តាយចុះ។"],
 ];
-const BITS = ["!", "?", "*", "~", "%", "#", "@", "&", "WOO", "NO", "YES", "EH", "OW", "HM"];
+const BITS = ["!", "?", "*", "~", "%", "#", "@", "&", "អូវ", "ទេ", "បាទ", "អេ", "អូយ", "ហឹម"];
 
 export default function Lobby() {
-  const [line, setLine] = useState("MACHINE IDLE. AWAITING A DECISION FROM YOU.");
+  const [line, setLine] = useState("ម៉ាស៊ីនទំនេរ។ កំពុងរង់ចាំការសម្រេចចិត្តពីអ្នក។");
   const [sub, setSub] = useState("STATUS: SMUG · TEMP: ROOM · OPINION: FORMING");
   const [glitch, setGlitch] = useState(false);
   const [shake, setShake] = useState(false);
@@ -162,7 +162,7 @@ export default function Lobby() {
     if (idleTimer.current) clearTimeout(idleTimer.current);
     idleTimer.current = setTimeout(() => {
       S.discover("lonely");
-      say("STILL THERE?", "THE MACHINE HAS BEEN ALONE FOR A MINUTE");
+      say("នៅទីនោះទេ?", "ម៉ាស៊ីននៅម្នាក់ឯងមួយនាទីហើយ");
       beep(300, 0.3, "sine");
     }, 60000);
   }, [say]);
@@ -178,7 +178,7 @@ export default function Lobby() {
   }, [resetIdle]);
 
   useEffect(() => {
-    const t = setTimeout(() => say("MACHINE READY. TOUCH SOMETHING.", "IT WILL NOT HELP. IT WILL NOT HURT. MOSTLY."), 700);
+    const t = setTimeout(() => say("ម៉ាស៊ីនរួចរាល់។ ប៉ះអ្វីមួយទៅ។", "វាមិនជួយទេ។ វាមិនឈឺទេ។ ភាគច្រើន។"), 700);
     return () => clearTimeout(t);
   }, [say]);
 
@@ -200,7 +200,7 @@ export default function Lobby() {
   const holdStart = () => {
     pressTimer.current = setTimeout(() => {
       S.discover("longpress");
-      say("...you are still holding it.", "THE MACHINE WHISPERS: THERE IS A BASEMENT.");
+      say("...អ្នកនៅតែសង្កត់វាទៀត។", "ម៉ាស៊ីនខ្សឹបថា៖ មានបន្ទប់ក្រោមដី។");
       beep(180, 0.6, "sine");
     }, 3000);
   };
@@ -232,7 +232,7 @@ export default function Lobby() {
       S.discover("moodswing");
       vibeSeq.current = [];
     }
-    if (v >= 96) { say("MAXIMUM VIBES. THE MACHINE IS UNWELL.", "YOU DID THIS"); alarm(); doShake(); }
+    if (v >= 96) { say("អារម្មណ៍អតិបរមា។ ម៉ាស៊ីនមិនស្រួលខ្លួន។", "អ្នកជាអ្នកធ្វើ"); alarm(); doShake(); }
   };
 
   /* ---------------- coward button ---------------- */
@@ -251,7 +251,7 @@ export default function Lobby() {
   };
   const catchRunner = (e: React.MouseEvent) => {
     if (dodges < 7) { flee(); return; }
-    say("YOU CAUGHT IT. IT HAS NOTHING FOR YOU.", "IT NEVER DID");
+    say("អ្នកចាប់បានហើយ។ វាគ្មានអ្វីសម្រាប់អ្នកទេ។", "វាមិនដែលមាន");
     raspberry(); doShake();
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     bits(r.left + r.width / 2, r.top, 22);
@@ -267,8 +267,8 @@ export default function Lobby() {
     if (swSeq.current.length > 6) swSeq.current.shift();
     if (swSeq.current.join("") === "012210") { S.discover("palindrome"); swSeq.current = []; }
     say(
-      ["SWITCH IS NOT CONNECTED TO ANYTHING.", "STILL NOT CONNECTED.",
-       "THE SWITCHES ARE DECORATIVE. LIKE A FIREPLACE.", "YOU KEEP DOING THAT."][Math.floor(Math.random() * 4)],
+      ["កុងតាក់មិនបានភ្ជាប់ទៅអ្វីទាំងអស់។", "នៅតែមិនបានភ្ជាប់។",
+       "កុងតាក់ទាំងនេះសម្រាប់តែតុបតែង។ ដូចជើងក្រានភ្លើង។", "អ្នកនៅតែធ្វើបែបនោះ។"][Math.floor(Math.random() * 4)],
       "SWITCH POSITION RECORDED · POINTLESSLY",
     );
   };
@@ -278,7 +278,7 @@ export default function Lobby() {
     clunk();
     screwTurns.current[i] += 1;
     if (screwTurns.current.every((t) => t >= 3)) S.discover("unscrewed");
-    say("DO NOT UNDO THE SCREWS.", "THAT IS LOAD BEARING. PROBABLY.");
+    say("កុំដោះវីស។", "នោះទ្រទ្រង់ទម្ងន់។ ប្រហែល។");
     damage(4);
   };
 
@@ -301,8 +301,8 @@ export default function Lobby() {
 
         <div className="plate">
           <div>
-            <div className="mk">Ministry of Interior Weather · Model 7</div>
-            <h1>The Feelings Machine</h1>
+            <div className="mk">ក្រសួងផឹកភ្លាម · ម៉ូដែល ៧</div>
+            <h1>ម៉ាស៊ីនអារម្មណ៍</h1>
           </div>
           <div className="cert">
             CERTIFIED SAFE FOR HUMANS*<br />
@@ -317,18 +317,18 @@ export default function Lobby() {
         </div>
 
         <div className="lamps">
-          <div className="lamp"><span className="bulb on" /><span>Powered</span></div>
-          <div className="lamp"><span className={`bulb${thinking ? " on" : ""}`} /><span>Thinking</span></div>
-          <div className="lamp"><span className={`bulb${regret ? " on" : ""}`} /><span>Regret</span></div>
+          <div className="lamp"><span className="bulb on" /><span>មានថាមពល</span></div>
+          <div className="lamp"><span className={`bulb${thinking ? " on" : ""}`} /><span>កំពុងគិត</span></div>
+          <div className="lamp"><span className={`bulb${regret ? " on" : ""}`} /><span>សោកស្តាយ</span></div>
           <div className="lamp">
             <span className={`bulb ${integrity > 66 ? "on" : integrity > 33 ? "warn" : "bad"}`} />
-            <span>Integrity {integrity}%</span>
+            <span>ភាពរឹងមាំ {integrity}%</span>
           </div>
         </div>
 
         <div className="grid">
           <div className="cell s5" style={{ alignItems: "center", textAlign: "center" }}>
-            <span className="cap">Do not press</span>
+            <span className="cap">កុំចុច</span>
             <button
               className="bigred"
               onClick={pressRed}
@@ -344,7 +344,7 @@ export default function Lobby() {
           </div>
 
           <div className="cell s3" style={{ alignItems: "center" }}>
-            <span className="cap">Diagnose me</span>
+            <span className="cap">វិនិច្ឆ័យខ្ញុំ</span>
             <div
               onClick={pullLever}
               style={{
@@ -365,14 +365,14 @@ export default function Lobby() {
           </div>
 
           <div className="cell s4">
-            <span className="cap">Vibes</span>
+            <span className="cap">អារម្មណ៍</span>
             <input
               type="range" min={0} max={100} value={vibes}
               onChange={(e) => onVibes(Number(e.target.value))}
               aria-label="Vibes"
             />
             <div className="tiny" style={{ textAlign: "right" }}>{vibes} / 100 — {vibeWord}</div>
-            <span className="cap">Switches (do nothing)</span>
+            <span className="cap">កុងតាក់ (មិនធ្វើអ្វី)</span>
             <div style={{ display: "flex", gap: 10 }}>
               {switches.map((on, i) => (
                 <div
@@ -400,7 +400,7 @@ export default function Lobby() {
           </div>
 
           <div className="cell s5" style={{ minHeight: 118, justifyContent: "center" }}>
-            <span className="cap">Please click this one</span>
+            <span className="cap">សូមចុចមួយនេះ</span>
             <button
               className="btn"
               style={{
@@ -426,7 +426,7 @@ export default function Lobby() {
               }}
               onClick={() => {
                 alarm(); doShake();
-                say("PANIC ACKNOWLEDGED AND FILED.", "IT WILL BE REVIEWED NEVER");
+                say("ការភ័យស្លន់ស្លោត្រូវបានទទួលស្គាល់ និងទុកក្នុងឯកសារ។", "វានឹងមិនត្រូវបានពិនិត្យឡើងវិញទេ");
                 bits(window.innerWidth / 2, window.innerHeight / 2, 40);
                 damage(14);
               }}

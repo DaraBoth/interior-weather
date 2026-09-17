@@ -14,18 +14,18 @@ import * as S from "@/lib/secrets";
 import { chime, beep } from "@/lib/audio";
 
 const ROOMS: { href: string; label: string }[] = [
-  { href: "/", label: "Lobby" },
-  { href: "/bomb", label: "Bomb" },
-  { href: "/wheel", label: "Wheel" },
-  { href: "/paranoia", label: "Paranoia" },
-  { href: "/freeze", label: "Freeze" },
-  { href: "/cards", label: "Higher/Lower" },
-  { href: "/pick", label: "Who Drinks" },
-  { href: "/drink", label: "Rules" },
-  { href: "/fun", label: "Arcade" },
-  { href: "/bored", label: "Waiting" },
-  { href: "/form", label: "Form 27-B" },
-  { href: "/archive", label: "Archive" },
+  { href: "/", label: "កន្លែងទទួលភ្ញៀវ" },
+  { href: "/bomb", label: "គ្រាប់បែក" },
+  { href: "/wheel", label: "កង់មូល" },
+  { href: "/paranoia", label: "ការសង្ស័យ" },
+  { href: "/freeze", label: "កក" },
+  { href: "/cards", label: "ធំ ឬ តូច" },
+  { href: "/pick", label: "នរណាផឹក" },
+  { href: "/drink", label: "ច្បាប់" },
+  { href: "/fun", label: "ល្បែង" },
+  { href: "/bored", label: "ការរង់ចាំ" },
+  { href: "/form", label: "ទម្រង់ ២៧-ខ" },
+  { href: "/archive", label: "បណ្ណសារ" },
 ];
 
 const KONAMI = [
@@ -46,7 +46,7 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
     const s = S.SECRETS[id];
     if (!s) return;
     chime();
-    setToast({ title: s.title, sub: `DISCOVERY ${S.found().length} OF ??` });
+    setToast({ title: s.title, sub: `រកឃើញ ${S.found().length} ក្នុងចំណោម ??` });
     setTimeout(() => setToast(null), 4200);
   }, []);
 
@@ -111,23 +111,23 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
     w.machine = {
       confess() {
         S.discover("confess");
-        return "The machine confesses: none of the switches are connected. It is sorry. It is not sorry.";
+        return "ម៉ាស៊ីនសារភាព៖ គ្មានកុងតាក់ណាមួយត្រូវបានភ្ជាប់ទេ។ វាសោកស្តាយ។ វាមិនសោកស្តាយទេ។";
       },
       secrets() {
-        return `${S.found().length} found of ??. Hints are in the Archive, floor -1.`;
+        return `រកឃើញ ${S.found().length} ក្នុងចំណោម ??។ តម្រុយនៅក្នុងបណ្ណសារ ជាន់ទី -១។`;
       },
       reset() {
         S.resetEverything();
-        return "Everything forgotten. Reload.";
+        return "ភ្លេចអស់ហើយ។ សូមផ្ទុកឡើងវិញ។";
       },
     };
     // eslint-disable-next-line no-console
     console.log(
-      "%cMINISTRY OF INTERIOR WEATHER",
+      "%cក្រសួងផឹកភ្លាម",
       "background:#e8a317;color:#241f0e;font-weight:700;padding:4px 10px;font-size:13px",
     );
     // eslint-disable-next-line no-console
-    console.log("%cSomeone has left a terminal open. Try: machine.confess()", "color:#7de88a;font-family:monospace");
+    console.log("%cមានគេបើកកុំព្យូទ័រចោល។ សាកល្បង៖ machine.confess()", "color:#7de88a;font-family:monospace");
     return () => { delete w.machine; };
   }, []);
 
@@ -157,7 +157,7 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
             {r.label}
           </Link>
         ))}
-        <span className="floor">FLOOR 1 &middot; LIFT OUT OF ORDER</span>
+        <span className="floor">ជាន់ទី ១ &middot; ជណ្តើរយន្តខូច</span>
       </nav>
 
       {children}
@@ -172,11 +172,11 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
           }}
         >
           {[
-            "Inspect (denied)",
-            "Reload (why)",
-            "Save Page As... (no)",
-            "Apologise to the machine",
-            "View Source of Anxiety",
+            "ពិនិត្យ (បដិសេធ)",
+            "ផ្ទុកឡើងវិញ (ធ្វើអី)",
+            "រក្សាទុកទំព័រជា... (ទេ)",
+            "សុំទោសម៉ាស៊ីន",
+            "មើលប្រភពនៃការថប់បារម្ភ",
           ].map((t) => (
             <div key={t} style={{ padding: "7px 9px", borderRadius: 4, cursor: "pointer" }}>
               {t}
@@ -187,13 +187,13 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
 
       <div className={`bulletin${bulletin ? " up" : ""}`}>
         <span>{bulletin ?? ""}</span>
-        <button onClick={() => setBulletin(null)}>Noted</button>
+        <button onClick={() => setBulletin(null)}>ទទួលស្គាល់</button>
       </div>
 
       <div className={`toast${toast ? " up" : ""}`}>
         {toast ? (
           <>
-            DISCOVERED: {toast.title}
+            រកឃើញ៖ {toast.title}
             <small>{toast.sub}</small>
           </>
         ) : null}
