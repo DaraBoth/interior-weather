@@ -166,8 +166,8 @@ export default function Cards() {
             <h1>ធំ ឬ តូច</h1>
           </div>
           <div className="cert">
-            DEALT WITHOUT REPLACEMENT<br />
-            THE ODDS ARE PRINTED. USE THEM.<br />
+            ចែកដោយមិនដាក់ត្រឡប់វិញ<br />
+            ឱកាសត្រូវបានបោះពុម្ពរួច។ ប្រើវាទៅ។<br />
             STREAK {String(streak).padStart(2, "0")} · BEST {String(best).padStart(2, "0")}
           </div>
         </div>
@@ -242,10 +242,10 @@ export default function Cards() {
               onClick={() => { newShoe(); setStreak(0); }}
               disabled={busy}
             >
-              Fresh shoe
+              សម្រាំងថ្មី
             </button>
             <span className="cap" style={{ flex: 2, minWidth: 160 }}>
-              Wrong guess and you drink. A tie and everyone does. Pass the phone after each turn.
+              ទាយខុស អ្នកផឹក។ ស្មើគ្នា គ្រប់គ្នាផឹក។ បញ្ជូនទូរស័ព្ទបន្តក្រោយរាល់វេន។
             </span>
           </div>
         </div>

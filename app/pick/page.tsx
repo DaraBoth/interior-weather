@@ -200,9 +200,9 @@ export default function SelectionChamber() {
             <h1>តើនឹងជានរណា</h1>
           </div>
           <div className="cert">
-            NOTHING LEAVES THIS DEVICE<br />
-            no upload · no recording · no server<br />
-            THE MINISTRY IS NOT INTERESTED IN YOUR FACE
+            គ្មានអ្វីចេញពីឧបករណ៍នេះទេ<br />
+            គ្មានការផ្ទុកឡើង · គ្មានការថត · គ្មានម៉ាស៊ីនមេ<br />
+            ក្រសួងមិនចាប់អារម្មណ៍នឹងមុខអ្នកទេ
           </div>
         </div>
 
@@ -293,7 +293,7 @@ export default function SelectionChamber() {
                     fontWeight: 700, fontSize: 13, letterSpacing: ".12em", padding: "5px 12px",
                     borderRadius: 5, whiteSpace: "nowrap", textTransform: "uppercase",
                   }}>
-                    You
+                    អ្នក
                   </div>
                 )}
               </div>
@@ -306,7 +306,7 @@ export default function SelectionChamber() {
               fontFamily: "var(--f-read)", fontSize: 12, color: "#7de88a",
               textShadow: "0 2px 8px #000",
             }}>
-              EVERYONE TAP YOUR OWN FACE ON THE SCREEN
+              គ្រប់គ្នាចុចលើមុខខ្លួនឯងនៅលើអេក្រង់
             </div>
           )}
         </div>
@@ -325,7 +325,7 @@ export default function SelectionChamber() {
               អ្នកនៅក្នុងប្រអប់ត្រូវ {forfeit || "សម្រេចដោយខ្លួនឯង"}
             </div>
             <div className="mono" style={{ fontSize: 11, marginTop: 8, color: "#5c4a12" }}>
-              APPEALS MAY BE SUBMITTED VIA FORM 27-B AND WILL NOT BE READ
+              ការប្តឹងឧទ្ធរណ៍អាចដាក់តាមទម្រង់ ២៧-ខ ហើយនឹងមិនមានអ្នកអានទេ
             </div>
           </div>
         )}

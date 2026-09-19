@@ -85,8 +85,8 @@ export default function Paranoia() {
             <h1>ការសង្ស័យ</h1>
           </div>
           <div className="cert">
-            READ IT PRIVATELY<br />
-            WHISPER IT ONCE<br />
+            អានដោយឯកជន<br />
+            ខ្សឹបម្តងគត់<br />
             ROUND {String(round).padStart(3, "0")}
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function Paranoia() {
             {stage === "flipped" && (revealed ? "សំណួរត្រូវបានបង្ហាញ។" : "សំណួរស្លាប់នៅទីនេះ។")}
           </p>
           <p className="rd-sub">
-            PROTOCOL P · THE ANSWER IS ALWAYS SAID OUT LOUD · THE QUESTION USUALLY IS NOT
+            បែបបទ ប · ចម្លើយតែងតែនិយាយឮៗ · សំណួរភាគច្រើនមិននិយាយឮទេ
           </p>
         </div>
 

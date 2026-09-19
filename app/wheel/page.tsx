@@ -249,7 +249,7 @@ export default function Wheel() {
           </div>
           <div className="cert">
             {usingCustom ? "កំពុងប្រើបញ្ជីផ្ទាល់ខ្លួនរបស់អ្នក" : "លទ្ធផលមានទម្ងន់ខុសៗគ្នា"}<br />
-            THE WHEEL IS NOT YOUR FRIEND<br />
+            កង់មូលមិនមែនជាមិត្តរបស់អ្នកទេ<br />
             SPINS {String(spins).padStart(3, "0")}
           </div>
         </div>

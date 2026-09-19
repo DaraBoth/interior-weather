@@ -116,23 +116,23 @@ export default function Drink() {
 
         <div className="grid">
           <div className="cell s4">
-            <span className="cap">Make a rule</span>
-            <button className="btn amber wide big" onClick={() => dispense("rule")}>Rule</button>
-            <div className="tiny">Binding until someone objects loudly enough.</div>
+            <span className="cap">បង្កើតច្បាប់</span>
+            <button className="btn amber wide big" onClick={() => dispense("rule")}>ច្បាប់</button>
+            <div className="tiny">ជាធរមានរហូតដល់មាននរណាម្នាក់ជំទាស់ឮល្មម។</div>
           </div>
           <div className="cell s4">
-            <span className="cap">Never have I ever</span>
-            <button className="btn wide big" onClick={() => dispense("never")}>Confess</button>
-            <div className="tiny">Drink if you have. Lie if you must.</div>
+            <span className="cap">ខ្ញុំមិនដែល</span>
+            <button className="btn wide big" onClick={() => dispense("never")}>សារភាព</button>
+            <div className="tiny">បើធ្លាប់ធ្វើ ត្រូវផឹក។ បើចាំបាច់ ក៏កុហកបាន។</div>
           </div>
           <div className="cell s4">
-            <span className="cap">A dare</span>
-            <button className="btn red wide big" onClick={() => dispense("dare")}>Dare</button>
-            <div className="tiny">Refusal is permitted and will be remembered.</div>
+            <span className="cap">ការប្រកួត</span>
+            <button className="btn red wide big" onClick={() => dispense("dare")}>ប្រកួត</button>
+            <div className="tiny">អនុញ្ញាតឱ្យបដិសេធ ហើយគេនឹងចងចាំ។</div>
           </div>
 
           <div className="cell s12">
-            <span className="cap">Escalation</span>
+            <span className="cap">ការបង្កើនកម្រិត</span>
             <button
               className="btn wide"
               onClick={() => {
@@ -141,13 +141,13 @@ export default function Drink() {
                 setRound((r) => r + 1);
               }}
             >
-              Invoke Ministerial Override
+              ប្រើអំណាចពិសេសរបស់ក្រសួង
             </button>
           </div>
         </div>
 
         <div className="footplate">
-          <span>PLEASE DRINK RESPONSIBLY · THE MINISTRY WILL NOT BE HELD LIABLE FOR ANY OF THIS</span>
+          <span>សូមផឹកដោយទទួលខុសត្រូវ · ក្រសួងនឹងមិនទទួលខុសត្រូវចំពោះរឿងទាំងនេះទេ</span>
           <span>SEE ALSO: THE SELECTION CHAMBER</span>
         </div>
       </div>

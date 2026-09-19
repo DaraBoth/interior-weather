@@ -57,7 +57,7 @@ export default function Form27B() {
         <div className="machine" style={{ textAlign: "center" }}>
           <span className="screw tl" /><span className="screw tr" />
           <span className="screw bl" /><span className="screw br" />
-          <div className="mk">Form 27-B</div>
+          <div className="mk">ទម្រង់ ២៧-ខ</div>
           <h1 style={{ fontSize: "clamp(26px,6vw,46px)", margin: "10px 0 14px", textTransform: "uppercase" }}>
             បានដាក់ស្នើ
           </h1>
@@ -93,7 +93,7 @@ export default function Form27B() {
           </div>
           <div className="cert">
             ប្រអប់ទាំងអស់ជាកាតព្វកិច្ច<br />
-            INCLUDING THE OPTIONAL ONES<br />
+            រួមទាំងប្រអប់ស្រេចចិត្តផងដែរ<br />
             v1.0.0 (1998)
           </div>
         </div>

@@ -154,7 +154,7 @@ export default function Archive() {
                 border: "3px outset #c0c0c0", background: "#c0c0c0", color: "#000",
               }}
             >
-              SIGN IT
+              ចុះហត្ថលេខា
             </button>
           </div>
           <div style={{ marginTop: 10, display: "grid", gap: 4 }}>

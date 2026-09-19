@@ -103,8 +103,8 @@ export default function Bomb() {
             <h1>គ្រាប់បែក</h1>
           </div>
           <div className="cert">
-            PASS IT. DO NOT HOLD IT.<br />
-            FUSE LENGTH IS RANDOMISED<br />
+            បញ្ជូនបន្ត។ កុំកាន់ទុក។<br />
+            ប្រវែងបន្ទះភ្លើងជាចៃដន្យ<br />
             ROUND {String(round).padStart(3, "0")}
           </div>
         </div>
@@ -127,13 +127,13 @@ export default function Bomb() {
           {phase === "idle" && (
             <>
               <div className="mono" style={{ fontSize: 12, letterSpacing: ".2em", opacity: 0.75 }}>
-                DEVICE SAFE
+                ឧបករណ៍សុវត្ថិភាព
               </div>
               <div style={{ fontSize: "clamp(28px,7vw,54px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 1 }}>
                 ដំឡើងគ្រាប់បែក
               </div>
               <div className="mono" style={{ fontSize: 13, opacity: 0.8, maxWidth: 460, lineHeight: 1.7 }}>
-                A category appears. Say one answer, tap, pass the phone.
+                ប្រធានបទមួយលេចឡើង។ និយាយចម្លើយមួយ ចុច រួចបញ្ជូនទូរស័ព្ទបន្ត។
                 អ្នកណាកាន់វានៅពេលវាផ្ទុះ ត្រូវផឹក។
               </div>
             </>
@@ -142,7 +142,7 @@ export default function Bomb() {
           {phase === "armed" && (
             <>
               <div className="mono" style={{ fontSize: 12, letterSpacing: ".2em", opacity: 0.8 }}>
-                CATEGORY
+                ប្រធានបទ
               </div>
               <div style={{ fontSize: "clamp(24px,6vw,46px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.05, textWrap: "balance" }}>
                 {category}
@@ -163,7 +163,7 @@ export default function Bomb() {
           {phase === "blown" && (
             <>
               <div style={{ fontSize: "clamp(40px,12vw,96px)", fontWeight: 700, lineHeight: 0.9 }}>
-                BOOM
+                ផ្ទុះ
               </div>
               <div style={{ fontSize: "clamp(18px,4.4vw,30px)", fontWeight: 700, textTransform: "uppercase" }}>
                 អ្នកកំពុងកាន់វា
@@ -185,7 +185,7 @@ export default function Bomb() {
                 beep(640, 0.06);
               }}
             >
-              New category
+              ប្រធានបទថ្មី
             </button>
             <div className="tiny">អនុញ្ញាតគ្រប់ពេល។ បន្ទះភ្លើងនៅតែឆេះ។</div>
           </div>
@@ -196,7 +196,7 @@ export default function Bomb() {
               onClick={() => { setPhase("idle"); setHeat(0); fanfare(); }}
               disabled={phase !== "armed"}
             >
-              Defuse
+              ផ្តាច់ហ្វុយ
             </button>
             <div className="tiny">គ្រប់គ្នានឹងឃើញអ្នកធ្វើបែបនេះ។</div>
           </div>

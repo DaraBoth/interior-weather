@@ -88,9 +88,9 @@ export default function Waiting() {
             <h1>សូមរង់ចាំ</h1>
           </div>
           <div className="cert">
-            YOUR PATIENCE IS NOTED<br />
-            AND WILL NOT BE REWARDED<br />
-            NO APPOINTMENTS AVAILABLE
+            ការអត់ធ្មត់របស់អ្នកត្រូវបានកត់ត្រា<br />
+            ហើយនឹងមិនមានរង្វាន់ទេ<br />
+            គ្មានការណាត់ជួបទំនេរទេ
           </div>
         </div>
 
@@ -125,16 +125,16 @@ export default function Waiting() {
           <div className="cell s6" style={{ textAlign: "center" }}>
             <span className="cap">ការប្រកួតឈរស្ងៀម</span>
             <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1 }}>{stillness}s</div>
-            <div className="tiny">DO NOT MOVE. DO NOT SCROLL. DO NOT BREATHE ON THE MOUSE.</div>
+            <div className="tiny">កុំកម្រើក។ កុំរំកិល។ កុំដកដង្ហើមដាក់កណ្តុរ។</div>
             <div className="tiny">ល្អបំផុតលើកនេះ៖ {bestStill} វិនាទី</div>
           </div>
 
           <div className="cell s12">
-            <span className="cap">Assistance</span>
+            <span className="cap">ជំនួយ</span>
             <button className="btn wide" onClick={() => { trombone(); setServing((s) => s - 3); }}>
-              Request assistance
+              ស្នើសុំជំនួយ
             </button>
-            <div className="tiny">Requesting assistance moves you three places backwards. This is policy.</div>
+            <div className="tiny">ការស្នើសុំជំនួយធ្វើឱ្យអ្នកថយក្រោយបីកន្លែង។ នេះជាគោលនយោបាយ។</div>
           </div>
         </div>
 

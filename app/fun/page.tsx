@@ -132,9 +132,9 @@ export default function Recreation() {
             <h1>ហ្គេមគ្មានតម្លៃ</h1>
           </div>
           <div className="cert">
-            RECREATION IS PERMITTED<br />
-            BETWEEN THE HOURS OF ALWAYS<br />
-            AND ALSO ALWAYS
+            អនុញ្ញាតឱ្យកម្សាន្ត<br />
+            ចន្លោះម៉ោងជានិច្ច<br />
+            និងជានិច្ចដែរ
           </div>
         </div>
 
@@ -178,13 +178,13 @@ export default function Recreation() {
               onMouseDown={beginHold} onMouseUp={endHold} onMouseLeave={endHold}
               onTouchStart={beginHold} onTouchEnd={endHold}
             >
-              Hold
+              សង្កត់
             </button>
             <div className="tiny">
               លើកនេះ {(holdMs / 1000).toFixed(2)} វិ · ល្អបំផុតផ្ទាល់ខ្លួន {(best / 1000).toFixed(2)} វិ
             </div>
             <div className="tiny">
-              The record is stored on this device only, so it is between you and the machine.
+              កំណត់ត្រាត្រូវបានរក្សាទុកតែលើឧបករណ៍នេះ ដូច្នេះវាជារឿងរវាងអ្នកនិងម៉ាស៊ីន។
             </div>
           </div>
 

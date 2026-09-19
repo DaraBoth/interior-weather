@@ -1,17 +1,19 @@
 /**
- * The mark of the ministry: a serrated official seal with the big red button at
- * its centre.
+ * The mark of the ministry: a glass, stamped and approved.
  *
- * The button was already the building's emblem — it is the one object every
- * visitor touches. Ringing it in a seal says the rest: this is a government
- * department that has formally approved your drinking.
+ * The name is ផឹកភ្លាម — drink now — so the icon has to say "drink" before it
+ * says anything else. The glass carries that at a glance; the red seal behind it
+ * carries the joke, which is that a government department has formally approved
+ * it. An earlier version used the lobby's red button: distinctive inside the
+ * site, meaningless on a home screen next to twenty other apps.
  *
- * The teeth around the rim are what make it a seal rather than a target. Two
- * plain concentric circles read as a dartboard at any size, and a rotation does
- * nothing to a circle, so the silhouette has to carry the meaning.
+ * Built only from boxes, borders and border-radius. next/og renders through
+ * Satori, which ignores clip-path and most SVG-ish tricks — an earlier attempt
+ * at a tapered tumbler silently came out a plain rectangle. Rounded lower
+ * corners and a heavy rim do the same job with primitives that actually render.
  *
- * Deliberately wordless. Text in an icon fails twice over: unreadable at 32px,
- * and Khmer glyphs would need a font shipped into the image generator.
+ * Wordless on purpose: unreadable at 32px, and Khmer glyphs would need a font
+ * shipped into the image generator.
  *
  * Shared by the favicon, the iOS icon and the PWA icons so the app has one face.
  */
@@ -23,18 +25,21 @@ type Props = {
   safe?: boolean;
 };
 
-const TEETH = 24;
+const TEETH = 20;
 
 export function Mark({ s, safe = false }: Props) {
   // A maskable icon must keep its content inside the middle 80%.
   const inset = safe ? s * 0.1 : 0;
   const box = s - inset * 2;
 
-  const rim = box * 0.94; // where the teeth sit
-  const ring = box * 0.78; // the solid ring inside them
-  const button = box * 0.44; // the red button
-  const stroke = Math.max(2, box * 0.05);
-  const tooth = Math.max(2, box * 0.035);
+  const rim = box * 0.96; // where the seal's teeth sit
+  const tooth = Math.max(2, box * 0.03);
+
+  const gW = box * 0.4; // the glass
+  const gH = box * 0.5;
+  const wall = Math.max(2, box * 0.055); // its cream walls
+  const foot = box * 0.1; // rounded base, which is what reads as "glass"
+  const head = gH * 0.22; // the froth line
 
   return (
     <div
@@ -58,7 +63,7 @@ export function Mark({ s, safe = false }: Props) {
           position: "relative",
         }}
       >
-        {/* serrated rim: the thing that says "seal" */}
+        {/* the seal's serrated rim */}
         {Array.from({ length: TEETH }).map((_, i) => (
           <div
             key={i}
@@ -74,30 +79,44 @@ export function Mark({ s, safe = false }: Props) {
           />
         ))}
 
-        {/* the solid ring */}
+        {/* the glass: cream walls, open at the top, rounded at the foot */}
         <div
           style={{
-            position: "absolute",
-            width: ring,
-            height: ring,
-            borderRadius: ring,
-            border: `${stroke}px solid #c8342b`,
+            width: gW,
+            height: gH,
             display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            borderLeft: `${wall}px solid #e8e2d2`,
+            borderRight: `${wall}px solid #e8e2d2`,
+            borderBottom: `${wall}px solid #e8e2d2`,
+            borderBottomLeftRadius: foot,
+            borderBottomRightRadius: foot,
+            background: "#1b1d18",
+            overflow: "hidden",
           }}
-        />
-
-        {/* the button, lit from the top left like the one in the lobby */}
-        <div
-          style={{
-            position: "absolute",
-            width: button,
-            height: button,
-            borderRadius: button,
-            display: "flex",
-            background:
-              "radial-gradient(circle at 36% 30%,#e8574c,#c8342b 55%,#8e211a)",
-          }}
-        />
+        >
+          {/* the head on the drink */}
+          <div
+            style={{
+              width: "100%",
+              height: head,
+              display: "flex",
+              background: "#f4efe2",
+            }}
+          />
+          {/* and what is under it */}
+          <div
+            style={{
+              width: "100%",
+              height: gH * 0.58,
+              display: "flex",
+              background: "linear-gradient(180deg,#f0b93a,#d98f0c)",
+              borderBottomLeftRadius: foot * 0.7,
+              borderBottomRightRadius: foot * 0.7,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

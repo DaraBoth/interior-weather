@@ -305,9 +305,9 @@ export default function Lobby() {
             <h1>ម៉ាស៊ីនអារម្មណ៍</h1>
           </div>
           <div className="cert">
-            CERTIFIED SAFE FOR HUMANS*<br />
-            *not independently verified<br />
-            SERIAL 000-000-{String(secretCount).padStart(4, "0")}
+            បញ្ជាក់ថាសុវត្ថិភាពសម្រាប់មនុស្ស*<br />
+            *មិនបានផ្ទៀងផ្ទាត់ដោយឯករាជ្យទេ<br />
+            លេខស៊េរី ០០០-០០០-{String(secretCount).padStart(4, "0")}
           </div>
         </div>
 
@@ -338,9 +338,9 @@ export default function Lobby() {
               onTouchStart={holdStart}
               onTouchEnd={holdEnd}
             >
-              Do<br />not<br />press
+              កុំ<br />ចុច<br />វា
             </button>
-            <div className="tiny">PRESSED {presses} TIMES, EVER</div>
+            <div className="tiny">ចុចរួច {presses} ដង តាំងពីដើមមក</div>
           </div>
 
           <div className="cell s3" style={{ alignItems: "center" }}>
@@ -431,16 +431,16 @@ export default function Lobby() {
                 damage(14);
               }}
             >
-              Panic
+              ភ័យស្លន់ស្លោ
             </button>
             <span className="cap" style={{ flex: 1, minWidth: 120 }}>
-              In case of feelings, break glass
+              ក្នុងករណីមានអារម្មណ៍ សូមបំបែកកញ្ចក់
             </span>
           </div>
         </div>
 
         <div className="footplate">
-          <span>MADE IN A SHED · 240V · DO NOT IMMERSE</span>
+          <span>ផលិតក្នុងរោងជាង · ២៤០V · ហាមជ្រលក់ទឹក</span>
           <span>
             UPTIME {uptime < 60 ? `${uptime}S` : `${Math.floor(uptime / 60)}M ${uptime % 60}S`}
             {" · "}

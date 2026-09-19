@@ -185,9 +185,9 @@ export default function Freeze() {
             <h1>កក</h1>
           </div>
           <div className="cert">
-            NOTHING LEAVES THIS DEVICE<br />
-            only box positions are compared<br />
-            NO FRAME IS EVER KEPT
+            គ្មានអ្វីចេញពីឧបករណ៍នេះទេ<br />
+            គេប្រៀបធៀបតែទីតាំងប្រអប់ប៉ុណ្ណោះ<br />
+            គ្មានរូបភាពណាត្រូវបានរក្សាទុកទេ
           </div>
         </div>
 
@@ -272,7 +272,7 @@ export default function Freeze() {
             color: "#241f0e", fontFamily: "var(--f-label)", fontWeight: 700,
             fontSize: "clamp(16px,4vw,26px)", textTransform: "uppercase",
           }}>
-            Nobody was visible. Everybody drinks.
+            គ្មាននរណាមើលឃើញទេ។ គ្រប់គ្នាត្រូវផឹក។
           </div>
         )}
 
@@ -288,7 +288,7 @@ export default function Freeze() {
             </button>
             {live && (
               <button className="btn red" style={{ flex: 1, minWidth: 120 }} onClick={stop}>
-                Close camera
+                បិទកាមេរ៉ា
               </button>
             )}
           </div>
