@@ -12,7 +12,7 @@ import { useState } from "react";
 import * as S from "@/lib/secrets";
 import { beep, raspberry, fanfare, trombone } from "@/lib/audio";
 
-const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const MONTHS = ["មករា","កុម្ភៈ","មីនា","មេសា","ឧសភា","មិថុនា","កក្កដា","សីហា","កញ្ញា","តុលា","វិច្ឆិកា","ធ្នូ"];
 
 export default function Form27B() {
   const [name, setName] = useState("");
@@ -30,11 +30,11 @@ export default function Form27B() {
   const complete = name.trim().length > 1 && year && day && month && reason.trim().length > 3 && notNotAgree && captchaOK;
 
   const missing = () => {
-    if (!name.trim()) return "FIELD 1 IS EMPTY. IT IS THE FIRST ONE.";
-    if (!year || !day || !month) return "THE DATE IS INCOMPLETE. THE ORDER IS DELIBERATE.";
-    if (reason.trim().length <= 3) return "REASON TOO SHORT. WE REQUIRE AT LEAST FOUR CHARACTERS OF SINCERITY.";
-    if (!notNotAgree) return "YOU HAVE NOT NOT DISAGREED. READ IT AGAIN.";
-    if (!captchaOK) return "VERIFICATION FAILED. THE ANSWER IS SHORTER THAN YOU THINK.";
+    if (!name.trim()) return "ប្រអប់ទី ១ ទទេ។ វាជាប្រអប់ដំបូងគេ។";
+    if (!year || !day || !month) return "កាលបរិច្ឆេទមិនពេញលេញ។ លំដាប់នេះគឺដោយចេតនា។";
+    if (reason.trim().length <= 3) return "ហេតុផលខ្លីពេក។ យើងទាមទារភាពស្មោះត្រង់យ៉ាងតិចបួនតួអក្សរ។";
+    if (!notNotAgree) return "អ្នកមិនបានមិនជំទាស់ទេ។ សូមអានម្តងទៀត។";
+    if (!captchaOK) return "ការផ្ទៀងផ្ទាត់បរាជ័យ។ ចម្លើយខ្លីជាងអ្វីដែលអ្នកគិត។";
     return null;
   };
 
@@ -59,21 +59,21 @@ export default function Form27B() {
           <span className="screw bl" /><span className="screw br" />
           <div className="mk">Form 27-B</div>
           <h1 style={{ fontSize: "clamp(26px,6vw,46px)", margin: "10px 0 14px", textTransform: "uppercase" }}>
-            Submitted
+            បានដាក់ស្នើ
           </h1>
           <div className="readout" style={{ textAlign: "left" }}>
             <p className="rd-line">
-              THANK YOU, {name.toUpperCase() || "APPLICANT"}. YOUR FORM HAS BEEN RECEIVED AND IMMEDIATELY MISPLACED.
+              អរគុណ {name.toUpperCase() || "អ្នកដាក់ពាក្យ"}។ ទម្រង់របស់អ្នកត្រូវបានទទួល ហើយត្រូវបានបាត់ភ្លាមៗ។
             </p>
             <p className="rd-sub">
               REFERENCE {Math.random().toString(36).slice(2, 10).toUpperCase()} · NOBODY WILL BE IN TOUCH
             </p>
           </div>
           <p className="tiny" style={{ marginTop: 14 }}>
-            You are one of very few people to complete Form 27-B. The Ministry is unsettled by this.
+            អ្នកជាម្នាក់ក្នុងចំណោមមនុស្សតិចតួចណាស់ដែលបំពេញទម្រង់ ២៧-ខ បាន។ ក្រសួងមានការមិនស្រួលចិត្តចំពោះរឿងនេះ។
           </p>
           <button className="btn amber big" style={{ marginTop: 16 }} onClick={() => { setDone(false); trombone(); }}>
-            Submit another (why)
+            ដាក់ស្នើមួយទៀត (ធ្វើអី)
           </button>
         </div>
       </div>
@@ -88,11 +88,11 @@ export default function Form27B() {
 
         <div className="plate">
           <div>
-            <div className="mk">Form 27-B · Application to Apply</div>
-            <h1>Form 27-B</h1>
+            <div className="mk">ទម្រង់ ២៧-ខ · ពាក្យសុំដាក់ពាក្យ</div>
+            <h1>ទម្រង់ ២៧-ខ</h1>
           </div>
           <div className="cert">
-            ALL FIELDS MANDATORY<br />
+            ប្រអប់ទាំងអស់ជាកាតព្វកិច្ច<br />
             INCLUDING THE OPTIONAL ONES<br />
             v1.0.0 (1998)
           </div>
@@ -110,37 +110,37 @@ export default function Form27B() {
 
         <div className="grid">
           <div className="cell s12">
-            <span className="cap">1. Name (surname first, then also surname first again)</span>
+            <span className="cap">១. ឈ្មោះ (នាមត្រកូលមុន បន្ទាប់មកនាមត្រកូលមុនម្តងទៀត)</span>
             <input className="field" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div className="cell s12">
-            <span className="cap">2. Date of anything. Year first. Then day. Then month. Obviously.</span>
+            <span className="cap">២. កាលបរិច្ឆេទនៃអ្វីក៏បាន។ ឆ្នាំមុន។ បន្ទាប់មកថ្ងៃ។ បន្ទាប់មកខែ។ ច្បាស់ណាស់។</span>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <select className="field" style={{ flex: 1, minWidth: 100 }} value={year} onChange={(e) => { setYear(e.target.value); beep(500, 0.04); }}>
-                <option value="">Year</option>
+                <option value="">ឆ្នាំ</option>
                 {Array.from({ length: 40 }).map((_, i) => <option key={i}>{2026 - i}</option>)}
               </select>
               <select className="field" style={{ flex: 1, minWidth: 100 }} value={day} onChange={(e) => { setDay(e.target.value); beep(500, 0.04); }}>
-                <option value="">Day</option>
+                <option value="">ថ្ងៃ</option>
                 {Array.from({ length: 31 }).map((_, i) => <option key={i}>{i + 1}</option>)}
               </select>
               <select className="field" style={{ flex: 1, minWidth: 100 }} value={month} onChange={(e) => { setMonth(e.target.value); beep(500, 0.04); }}>
-                <option value="">Month</option>
+                <option value="">ខែ</option>
                 {MONTHS.map((m) => <option key={m}>{m}</option>)}
               </select>
             </div>
           </div>
 
           <div className="cell s12">
-            <span className="cap">3. Department (one option, still required)</span>
-            <select className="field" defaultValue="Interior Weather">
-              <option>Interior Weather</option>
+            <span className="cap">៣. នាយកដ្ឋាន (មានតែមួយជម្រើស តែនៅតែជាកាតព្វកិច្ច)</span>
+            <select className="field" defaultValue="ផឹកភ្លាម">
+              <option>ផឹកភ្លាម</option>
             </select>
           </div>
 
           <div className="cell s12">
-            <span className="cap">4. Reason for applying to apply</span>
+            <span className="cap">៤. ហេតុផលក្នុងការដាក់ពាក្យសុំដាក់ពាក្យ</span>
             <textarea
               className="field"
               rows={3}
@@ -148,15 +148,15 @@ export default function Form27B() {
               onChange={(e) => setReason(e.target.value)}
               style={{ resize: "vertical", fontFamily: "var(--f-read)" }}
             />
-            <div className="tiny">Minimum four characters. Maximum sincerity.</div>
+            <div className="tiny">យ៉ាងតិចបួនតួអក្សរ។ ភាពស្មោះត្រង់អតិបរមា។</div>
           </div>
 
           <div className="cell s12">
-            <span className="cap">5. Verification</span>
+            <span className="cap">៥. ការផ្ទៀងផ្ទាត់</span>
             <div className="mono" style={{ fontSize: 14, color: "var(--ink)" }}>
-              Type the answer to this question: <b>Is this form well designed?</b>
+              វាយចម្លើយចំពោះសំណួរនេះ៖ <b>តើទម្រង់នេះរចនាបានល្អទេ?</b>
             </div>
-            <input className="field" value={captcha} onChange={(e) => setCaptcha(e.target.value)} placeholder="two letters" />
+            <input className="field" value={captcha} onChange={(e) => setCaptcha(e.target.value)} placeholder="ពីរតួអក្សរ" />
           </div>
 
           <div className="cell s12">
@@ -168,7 +168,7 @@ export default function Form27B() {
                 style={{ width: 22, height: 22, flex: "none", marginTop: 2, cursor: "pointer" }}
               />
               <span className="mono" style={{ fontSize: 13, lineHeight: 1.6 }}>
-                I do not decline to not withhold my non-disagreement with the terms I have not been shown.
+                ខ្ញុំមិនបដិសេធមិនរក្សាទុកនូវការមិនជំទាស់របស់ខ្ញុំចំពោះលក្ខខណ្ឌដែលខ្ញុំមិនបានឃើញនោះទេ។
               </span>
             </label>
           </div>
@@ -185,17 +185,17 @@ export default function Form27B() {
                 transition: "transform .2s cubic-bezier(.3,1.5,.5,1)",
               }}
             >
-              Submit
+              ដាក់ស្នើ
             </button>
             <div className="tiny" style={{ textAlign: "center" }}>
-              The button settles down once the form is genuinely complete. It is not malicious. It is just like this.
+              ប៊ូតុងនឹងស្ងប់ នៅពេលទម្រង់ពេញលេញពិតប្រាកដ។ វាមិនមានចេតនាអាក្រក់ទេ។ វាគ្រាន់តែបែបនេះ។
             </div>
           </div>
         </div>
 
         <div className="footplate">
-          <span>THIS FORM IS AN APPLICATION TO APPLY. THE ACTUAL FORM IS FORM 27-C.</span>
-          <span>FORM 27-C DOES NOT EXIST</span>
+          <span>ទម្រង់នេះគឺជាពាក្យសុំដាក់ពាក្យ។ ទម្រង់ពិតប្រាកដគឺទម្រង់ ២៧-គ។</span>
+          <span>ទម្រង់ ២៧-គ មិនមានទេ</span>
         </div>
       </div>
     </div>

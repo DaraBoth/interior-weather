@@ -11,16 +11,16 @@ import * as S from "@/lib/secrets";
 import { beep } from "@/lib/audio";
 
 const CONFESSIONS = [
-  "The switches were never connected. You knew that.",
-  "There is no Model 1 through 6.",
-  "The integrity meter is decorative. Nothing has ever been structurally sound.",
-  "The Department of Waiting has one employee. It is the progress bar.",
-  "Form 27-C genuinely does not exist. People still ask.",
-  "The visitor counter starts at 1996 because it seemed funnier than starting at 0.",
-  "Nobody has ever reached the fourth floor because there isn't one.",
-  "The machine does not know how you are feeling. It never did.",
-  "Every diagnosis is random. Some of them were still correct.",
-  "This room was not supposed to be findable.",
+  "កុងតាក់ទាំងនោះមិនដែលត្រូវបានភ្ជាប់ទេ។ អ្នកដឹងរឿងនោះហើយ។",
+  "គ្មានម៉ូដែល ១ ដល់ ៦ ទេ។",
+  "ឧបករណ៍វាស់ភាពរឹងមាំគ្រាន់តែសម្រាប់តុបតែង។ គ្មានអ្វីធ្លាប់រឹងមាំតាមរចនាសម្ព័ន្ធទេ។",
+  "នាយកដ្ឋានរង់ចាំមានបុគ្គលិកតែម្នាក់។ គឺរបារវឌ្ឍនភាពនោះឯង។",
+  "ទម្រង់ ២៧-គ មិនមានពិតប្រាកដទេ។ មនុស្សនៅតែសួររក។",
+  "ឧបករណ៍រាប់ភ្ញៀវចាប់ផ្តើមពី ១៩៩៦ ព្រោះវាមើលទៅគួរឱ្យអស់សំណើចជាងចាប់ផ្តើមពីលេខ ០។",
+  "គ្មាននរណាធ្លាប់ទៅដល់ជាន់ទីបួនទេ ព្រោះវាមិនមាន។",
+  "ម៉ាស៊ីនមិនដឹងថាអ្នកមានអារម្មណ៍យ៉ាងណាទេ។ វាមិនដែលដឹង។",
+  "រាល់រោគវិនិច្ឆ័យគឺចៃដន្យទាំងអស់។ ប៉ុន្តែខ្លះនៅតែត្រូវ។",
+  "បន្ទប់នេះមិនគួរត្រូវបានរកឃើញទេ។",
 ];
 
 export default function Basement() {
@@ -60,7 +60,7 @@ export default function Basement() {
         }}
       >
         <div className="mono" style={{ fontSize: 11, letterSpacing: ".28em", color: "#3f7a47" }}>
-          FLOOR −2 · NOT ON ANY BUTTON
+          ជាន់ទី −២ · មិនមាននៅលើប៊ូតុងណាទេ
         </div>
 
         <div
@@ -79,7 +79,7 @@ export default function Basement() {
         </div>
 
         <div className="mono" style={{ fontSize: 11, color: "#2f5c36" }}>
-          CONFESSION {i + 1} OF {CONFESSIONS.length} · THE MACHINE IS ALONE DOWN HERE
+          ការសារភាពទី {i + 1} ក្នុងចំណោម {CONFESSIONS.length} · ម៉ាស៊ីននៅម្នាក់ឯងនៅខាងក្រោមនេះ
         </div>
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
@@ -87,16 +87,16 @@ export default function Basement() {
             className="btn"
             onClick={() => { setI((n) => (n + 1) % CONFESSIONS.length); beep(280, 0.16, "sine"); }}
           >
-            Go on
+            បន្តទៅ
           </button>
           <Link href="/" className="btn amber" style={{ display: "inline-block" }}>
-            Back upstairs
+            ត្រឡប់ឡើងលើវិញ
           </Link>
         </div>
 
         <div className="mono" style={{ fontSize: 10.5, color: "#2a4d30", marginTop: 8, maxWidth: 460, lineHeight: 1.7 }}>
-          You found {secretCount} things. The Ministry will not tell you how many there are,
-          because then you would stop looking.
+          អ្នករកឃើញ {secretCount} របស់។ ក្រសួងនឹងមិនប្រាប់អ្នកថាមានប៉ុន្មានទេ
+          ព្រោះបើប្រាប់ អ្នកនឹងឈប់រក។
         </div>
       </div>
     </div>

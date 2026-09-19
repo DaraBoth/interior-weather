@@ -40,12 +40,12 @@ function freshDeck(): Card[] {
 }
 
 const SMUG = [
-  "The Bureau had calculated this.",
-  "A predictable outcome, statistically.",
-  "The cards are not personal. They are simply correct.",
-  "This has been filed.",
-  "The Bureau is not surprised.",
-  "Probability remains undefeated.",
+  "ការិយាល័យបានគណនារឿងនេះរួចហើយ។",
+  "លទ្ធផលដែលអាចទស្សន៍ទាយបាន តាមស្ថិតិ។",
+  "បៀមិនមានរឿងផ្ទាល់ខ្លួនទេ។ វាគ្រាន់តែត្រឹមត្រូវ។",
+  "រឿងនេះត្រូវបានទុកក្នុងឯកសារហើយ។",
+  "ការិយាល័យមិនភ្ញាក់ផ្អើលទេ។",
+  "ប្រូបាប៊ីលីតេនៅតែមិនចាញ់អ្នកណា។",
 ];
 
 export default function Cards() {
@@ -56,8 +56,8 @@ export default function Cards() {
   const [busy, setBusy] = useState(false);
   const [streak, setStreak] = useState(0);
   const [best, setBest] = useState(0);
-  const [status, setStatus] = useState("PLACE A GUESS. THE BUREAU IS WATCHING.");
-  const [sub, setSub] = useState("HIGHER OR LOWER · TIES ARE EVERYBODY'S PROBLEM");
+  const [status, setStatus] = useState("ដាក់ការទាយមួយ។ ការិយាល័យកំពុងមើល។");
+  const [sub, setSub] = useState("ធំ ឬ តូច · ស្មើគ្នាគឺជាបញ្ហារបស់គ្រប់គ្នា");
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   /* ---------------- shoe ---------------- */
@@ -69,8 +69,8 @@ export default function Cards() {
     setNext(null);
     setFlipped(false);
     if (!quiet) {
-      setStatus("FRESH SHOE. FIFTY-ONE CARDS REMAIN.");
-      setSub("THE BUREAU HAS RESET THE ODDS IN YOUR FAVOUR. BRIEFLY.");
+      setStatus("សម្រាំងថ្មី។ នៅសល់បៀហាសិបមួយសន្លឹក។");
+      setSub("ការិយាល័យបានកំណត់ឱកាសឡើងវិញឱ្យអ្នក។ បណ្តោះអាសន្ន។");
       clunk();
     }
   }, []);
@@ -108,10 +108,10 @@ export default function Cards() {
       const tie = drawn.rank === current.rank;
 
       if (tie) {
-        setStatus("A TIE. EVERYBODY DRINKS.");
-        setSub("THE BUREAU CONSIDERS THIS THE BEST POSSIBLE OUTCOME.");
+        setStatus("ស្មើគ្នា។ គ្រប់គ្នាត្រូវផឹក។");
+        setSub("ការិយាល័យចាត់ទុកនេះជាលទ្ធផលល្អបំផុត។");
         trombone();
-        verdict("Everybody", "a tie. the bureau is delighted.", "#e8a317");
+        verdict("គ្រប់គ្នា", "ស្មើគ្នា។ ការិយាល័យសប្បាយចិត្តណាស់។", "#e8a317");
       } else if (won) {
         const s = streak + 1;
         setStreak(s);
@@ -121,17 +121,17 @@ export default function Cards() {
         }
         if (s === 7) S.discover("cardsharp");
         setStatus(`CORRECT. STREAK OF ${s}.`);
-        setSub("HAND OUT ONE DRINK. THE BUREAU PERMITS IT.");
+        setSub("ចែកភេសជ្ជៈមួយ។ ការិយាល័យអនុញ្ញាត។");
         beep(880, 0.09, "triangle");
         if (s % 5 === 0) {
           fanfare();
-          verdict(`Streak ${s}`, "the bureau is reluctantly impressed", "#4c9a56");
+          verdict(`ជាប់ៗ ${s} ដង`, "ការិយាល័យចាប់អារម្មណ៍ ទាំងមិនសូវចង់", "#4c9a56");
         } else if (cardRef.current) {
           const r = cardRef.current.getBoundingClientRect();
           burst(r.left + r.width / 2, r.top + r.height / 2, 26);
         }
       } else {
-        setStatus("WRONG. DRINK.");
+        setStatus("ខុស។ ផឹកទៅ។");
         setSub(SMUG[Math.floor(Math.random() * SMUG.length)]);
         raspberry();
         verdict("Drink", `you said ${dir}`, "#c8342b");
@@ -145,8 +145,8 @@ export default function Cards() {
         setDeck(d);
         setBusy(false);
         if (d.length === 0) {
-          setStatus("THE SHOE IS EMPTY. THAT IS ALL FIFTY-TWO.");
-          setSub("DEAL A FRESH SHOE TO CONTINUE.");
+          setStatus("សម្រាំងអស់ហើយ។ គ្រប់ហាសិបពីរសន្លឹក។");
+          setSub("ចែកសម្រាំងថ្មីដើម្បីបន្ត។");
         }
         // only clear the back face once the card has finished turning back
         window.setTimeout(() => setNext(null), 640);
@@ -162,8 +162,8 @@ export default function Cards() {
 
         <div className="plate">
           <div>
-            <div className="mk">Bureau of Probability · Window 3</div>
-            <h1>Higher Or Lower</h1>
+            <div className="mk">ការិយាល័យប្រូបាប៊ីលីតេ · បង្អួចទី ៣</div>
+            <h1>ធំ ឬ តូច</h1>
           </div>
           <div className="cert">
             DEALT WITHOUT REPLACEMENT<br />
@@ -211,11 +211,11 @@ export default function Cards() {
               onClick={() => guess("lower")}
               disabled={busy || deck.length === 0}
             >
-              ▼ Lower
+              ▼ តូច
             </button>
             {odds && (
               <div className="tiny" style={{ textAlign: "center" }}>
-                {odds.total ? Math.round((odds.lo / odds.total) * 100) : 0}% chance
+                {odds.total ? Math.round((odds.lo / odds.total) * 100) : 0}% ឱកាស
               </div>
             )}
           </div>
@@ -226,11 +226,11 @@ export default function Cards() {
               onClick={() => guess("higher")}
               disabled={busy || deck.length === 0}
             >
-              ▲ Higher
+              ▲ ធំ
             </button>
             {odds && (
               <div className="tiny" style={{ textAlign: "center" }}>
-                {odds.total ? Math.round((odds.hi / odds.total) * 100) : 0}% chance
+                {odds.total ? Math.round((odds.hi / odds.total) * 100) : 0}% ឱកាស
               </div>
             )}
           </div>
@@ -251,8 +251,8 @@ export default function Cards() {
         </div>
 
         <div className="footplate">
-          <span>ACE IS HIGH · THE SHOE IS NEVER RESHUFFLED MID-GAME</span>
-          <span>WINDOW 3</span>
+          <span>អាសជាបៀធំបំផុត · សម្រាំងមិនដែលច្របល់ឡើងវិញពាក់កណ្តាលល្បែងទេ</span>
+          <span>បង្អួចទី ៣</span>
         </div>
       </div>
     </div>

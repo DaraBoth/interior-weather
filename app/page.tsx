@@ -69,7 +69,7 @@ export default function Lobby() {
   const [pulled, setPulled] = useState(false);
   const [dodges, setDodges] = useState(0);
   const [runnerPos, setRunnerPos] = useState({ x: 0, y: 0, r: 0 });
-  const [runnerText, setRunnerText] = useState("Click me");
+  const [runnerText, setRunnerText] = useState("ចុចខ្ញុំ");
   const [switches, setSwitches] = useState([false, false, false]);
   const [uptime, setUptime] = useState(0);
   const [thinking, setThinking] = useState(false);
@@ -109,7 +109,7 @@ export default function Lobby() {
         try { localStorage.setItem("miw:demolitions", String(demolitions.current)); } catch {}
         if (demolitions.current >= 5) S.discover("demolition");
         trombone();
-        setTimeout(() => say("INTEGRITY RESTORED BY IGNORING THE PROBLEM.", "THE INDUSTRY STANDARD APPROACH"), 60);
+        setTimeout(() => say("ភាពរឹងមាំត្រូវបានស្តារឡើងវិញ ដោយការមិនអើពើនឹងបញ្ហា។", "វិធីសាស្ត្រស្តង់ដាររបស់វិស័យនេះ"), 60);
         return 100;
       }
       return next;
@@ -239,7 +239,7 @@ export default function Lobby() {
   const flee = () => {
     chases.current += 1;
     if (chases.current >= 20) S.discover("persistence");
-    if (dodges >= 7) { setRunnerText("fine. click it."); setRunnerPos({ x: 0, y: 0, r: 0 }); return; }
+    if (dodges >= 7) { setRunnerText("បានហើយ។ ចុចវាទៅ។"); setRunnerPos({ x: 0, y: 0, r: 0 }); return; }
     setDodges((d) => d + 1);
     setRunnerText(DODGES[Math.floor(Math.random() * DODGES.length)]);
     setRunnerPos({
@@ -255,7 +255,7 @@ export default function Lobby() {
     raspberry(); doShake();
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
     bits(r.left + r.width / 2, r.top, 22);
-    setDodges(0); setRunnerText("Click me"); setRunnerPos({ x: 0, y: 0, r: 0 });
+    setDodges(0); setRunnerText("ចុចខ្ញុំ"); setRunnerPos({ x: 0, y: 0, r: 0 });
     damage(7);
   };
 

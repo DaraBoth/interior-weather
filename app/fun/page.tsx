@@ -7,12 +7,12 @@ import { beep, boing, fanfare, raspberry, trombone } from "@/lib/audio";
 
 const MOLE_FACES = ["●", "◆", "▲", "★", "✦", "■"];
 const LIES = [
-  "That was not fast.",
-  "A tortoise did better this morning.",
-  "Statistically average. Devastating.",
-  "The machine has seen worse. Not often.",
-  "Suspiciously good. We are reviewing the footage.",
-  "That reaction time has been reported.",
+  "នោះមិនលឿនទេ។",
+  "អណ្តើកមួយធ្វើបានល្អជាងនេះកាលពីព្រឹក។",
+  "តាមស្ថិតិ មធ្យម។ គួរឱ្យសោកស្តាយណាស់។",
+  "ម៉ាស៊ីនធ្លាប់ឃើញអាក្រក់ជាងនេះ។ តែមិនញឹកញាប់ទេ។",
+  "ល្អគួរឱ្យសង្ស័យ។ យើងកំពុងពិនិត្យវីដេអូឡើងវិញ។",
+  "ល្បឿនប្រតិកម្មនោះត្រូវបានរាយការណ៍ហើយ។",
 ];
 
 export default function Recreation() {
@@ -107,7 +107,7 @@ export default function Recreation() {
       if (rxTimer.current) clearTimeout(rxTimer.current);
       setRxState("done");
       setRxMs(0);
-      setRxLie("Too early. The Ministry saw that.");
+      setRxLie("លឿនពេក។ ក្រសួងឃើញហើយ។");
       raspberry();
       return;
     }
@@ -128,8 +128,8 @@ export default function Recreation() {
 
         <div className="plate">
           <div>
-            <div className="mk">Recreation Wing · Floor 1</div>
-            <h1>Games Of No Value</h1>
+            <div className="mk">ស្លាបកម្សាន្ត · ជាន់ទី ១</div>
+            <h1>ហ្គេមគ្មានតម្លៃ</h1>
           </div>
           <div className="cert">
             RECREATION IS PERMITTED<br />
@@ -141,7 +141,7 @@ export default function Recreation() {
         <div className="grid">
           {/* whack */}
           <div className="cell s6">
-            <span className="cap">Hit the things</span>
+            <span className="cap">វាយរបស់ទាំងនោះ</span>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 8 }}>
               {Array.from({ length: 9 }).map((_, i) => (
                 <button
@@ -165,13 +165,13 @@ export default function Recreation() {
               onClick={() => { setScore(0); setMisses(0); setTimeLeft(20); setPlaying(true); beep(520, 0.1); }}
               disabled={playing}
             >
-              {playing ? "In progress" : "Begin"}
+              {playing ? "កំពុងលេង" : "ចាប់ផ្តើម"}
             </button>
           </div>
 
           {/* endurance */}
           <div className="cell s6">
-            <span className="cap">Hold this. That is the whole game.</span>
+            <span className="cap">សង្កត់វាទុក។ នោះហើយជាហ្គេមទាំងមូល។</span>
             <button
               className="btn red wide big"
               style={{ minHeight: 96 }}
@@ -181,7 +181,7 @@ export default function Recreation() {
               Hold
             </button>
             <div className="tiny">
-              THIS ATTEMPT {(holdMs / 1000).toFixed(2)}s · PERSONAL BEST {(best / 1000).toFixed(2)}s
+              លើកនេះ {(holdMs / 1000).toFixed(2)} វិ · ល្អបំផុតផ្ទាល់ខ្លួន {(best / 1000).toFixed(2)} វិ
             </div>
             <div className="tiny">
               The record is stored on this device only, so it is between you and the machine.
@@ -190,7 +190,7 @@ export default function Recreation() {
 
           {/* reaction */}
           <div className="cell s12">
-            <span className="cap">Reaction test (results not guaranteed to be true)</span>
+            <span className="cap">ការសាកល្បងប្រតិកម្ម (លទ្ធផលមិនធានាថាពិតទេ)</span>
             <button
               onClick={rxClick}
               style={{
@@ -204,17 +204,17 @@ export default function Recreation() {
                 transition: "background .1s",
               }}
             >
-              {rxState === "idle" && "Click to begin"}
-              {rxState === "wait" && "Wait for green…"}
-              {rxState === "go" && "NOW"}
+              {rxState === "idle" && "ចុចដើម្បីចាប់ផ្តើម"}
+              {rxState === "wait" && "រង់ចាំពណ៌បៃតង…"}
+              {rxState === "go" && "ឥឡូវ"}
               {rxState === "done" && `${rxMs}ms — ${rxLie}`}
             </button>
           </div>
         </div>
 
         <div className="footplate">
-          <span>NO PRIZES · NO LEADERBOARD · NO POINT</span>
-          <span>RECREATION WING</span>
+          <span>គ្មានរង្វាន់ · គ្មានតារាងចំណាត់ថ្នាក់ · គ្មានន័យ</span>
+          <span>ស្លាបកម្សាន្ត</span>
         </div>
       </div>
     </div>

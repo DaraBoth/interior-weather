@@ -35,7 +35,7 @@ export default function Freeze() {
   const [boxes, setBoxes] = useState<(FaceBox & { id: number })[]>([]);
   const [loser, setLoser] = useState<number | null>(null);
   const [taunt, setTaunt] = useState("");
-  const [status, setStatus] = useState("EVERYONE GET IN FRAME.");
+  const [status, setStatus] = useState("គ្រប់គ្នាចូលក្នុងស៊ុម។");
 
   /* ---------------- detector ---------------- */
   useEffect(() => {
@@ -70,13 +70,13 @@ export default function Freeze() {
         await videoRef.current.play().catch(() => {});
       }
       setLive(true);
-      setStatus("EVERYONE GET IN FRAME, THEN HOLD STILL.");
+      setStatus("គ្រប់គ្នាចូលក្នុងស៊ុម រួចឈរស្ងៀម។");
       beep(700, 0.1);
     } catch (e: any) {
       setErr(
         e?.name === "NotAllowedError"
-          ? "Camera refused. Freeze needs to see you, so this one cannot run without it."
-          : "No camera available here.",
+          ? "កាមេរ៉ាត្រូវបានបដិសេធ។ ហ្គេមកកត្រូវការមើលឃើញអ្នក ដូច្នេះវាដំណើរការមិនបានទេ។"
+          : "គ្មានកាមេរ៉ានៅទីនេះទេ។",
       );
     }
   }, []);
@@ -134,7 +134,7 @@ export default function Freeze() {
     setLoser(null);
     setPhase("countdown");
     setCount(3);
-    setStatus("GET READY…");
+    setStatus("ត្រៀមខ្លួន…");
 
     let n = 3;
     const step = () => {
@@ -144,7 +144,7 @@ export default function Freeze() {
       if (n >= 0) setTimeout(step, 800);
       else {
         setPhase("holding");
-        setStatus("FREEZE. DO NOT MOVE.");
+        setStatus("កក។ កុំកម្រើក។");
         alarm();
         setTimeout(finish, 4200);
       }
@@ -157,10 +157,10 @@ export default function Freeze() {
     const entries = [...samples.current.entries()];
     if (entries.length === 0) {
       // no detection, or nobody in frame: fall back to theatre and a coin
-      setStatus("THE MINISTRY COULD NOT SEE ANYONE. IT HAS DECIDED ANYWAY.");
+      setStatus("ក្រសួងមើលមិនឃើញនរណាទេ។ តែវាសម្រេចយ៉ាងណាក៏ដោយ។");
       setLoser(-1);
       trombone();
-      verdict("Everybody", "nobody was visible", "#e8a317");
+      verdict("គ្រប់គ្នា", "គ្មាននរណាមើលឃើញទេ", "#e8a317");
       return;
     }
     entries.sort((a, b) => b[1].drift - a[1].drift);
@@ -168,9 +168,9 @@ export default function Freeze() {
     setLoser(worst);
     const t = FREEZE_TAUNTS[Math.floor(Math.random() * FREEZE_TAUNTS.length)];
     setTaunt(t);
-    setStatus("THE MINISTRY SAW EVERYTHING.");
+    setStatus("ក្រសួងឃើញអស់ហើយ។");
     fanfare();
-    verdict("Caught", t, "#c8342b");
+    verdict("ចាប់បាន", t, "#c8342b");
   };
 
   return (
@@ -181,8 +181,8 @@ export default function Freeze() {
 
         <div className="plate">
           <div>
-            <div className="mk">Bureau of Stillness · Observation 1</div>
-            <h1>Freeze</h1>
+            <div className="mk">ការិយាល័យភាពនឹងថ្កល់ · ការសង្កេតទី ១</div>
+            <h1>កក</h1>
           </div>
           <div className="cert">
             NOTHING LEAVES THIS DEVICE<br />
@@ -193,10 +193,10 @@ export default function Freeze() {
 
         <div className="readout">
           <p className="rd-line">
-            {phase === "countdown" ? `HOLD STILL IN ${count}…` : status}
+            {phase === "countdown" ? `ឈរស្ងៀមក្នុង ${count}…` : status}
           </p>
           <p className="rd-sub">
-            FACES SEEN: {boxes.length} · {tier ? describeTier(tier) : "PREPARING DETECTOR…"}
+            ឃើញមុខ៖ {boxes.length} · {tier ? describeTier(tier) : "កំពុងរៀបចំឧបករណ៍ចាប់…"}
           </p>
         </div>
 
@@ -217,9 +217,9 @@ export default function Freeze() {
               alignItems: "center", justifyContent: "center", gap: 14, padding: 20, textAlign: "center",
             }}>
               <div className="mono" style={{ color: "#7de88a", fontSize: 13, maxWidth: 420, lineHeight: 1.7 }}>
-                {err ?? "Everyone poses. Whoever moves most during the freeze loses. Only box positions are compared, and nothing is uploaded or kept."}
+                {err ?? "គ្រប់គ្នាឈរតាំងកាយវិការ។ អ្នកណាកម្រើកខ្លាំងជាងគេពេលកក គឺចាញ់។ គេប្រៀបធៀបតែទីតាំងប្រអប់ប៉ុណ្ណោះ ហើយគ្មានអ្វីត្រូវបានផ្ទុកឡើង ឬរក្សាទុកទេ។"}
               </div>
-              <button className="btn amber big" onClick={start}>Open the camera</button>
+              <button className="btn amber big" onClick={start}>បើកកាមេរ៉ា</button>
             </div>
           )}
 
@@ -260,7 +260,7 @@ export default function Freeze() {
               fontSize: "min(34vw, 200px)", color: "rgba(255,255,255,.85)",
               textShadow: "0 6px 40px rgba(0,0,0,.8)", pointerEvents: "none",
             }}>
-              {count > 0 ? count : "FREEZE"}
+              {count > 0 ? count : "កក"}
             </div>
           )}
         </div>
@@ -284,7 +284,7 @@ export default function Freeze() {
               onClick={begin}
               disabled={!live || phase === "countdown" || phase === "holding"}
             >
-              {phase === "holding" ? "Hold still…" : phase === "countdown" ? "Get ready…" : "Start a round"}
+              {phase === "holding" ? "ឈរស្ងៀម…" : phase === "countdown" ? "ត្រៀមខ្លួន…" : "ចាប់ផ្តើមវគ្គ"}
             </button>
             {live && (
               <button className="btn red" style={{ flex: 1, minWidth: 120 }} onClick={stop}>
@@ -295,8 +295,8 @@ export default function Freeze() {
         </div>
 
         <div className="footplate">
-          <span>THE HOLD LASTS FOUR SECONDS · BLINKING IS PERMITTED, BARELY</span>
-          <span>OBSERVATION 1</span>
+          <span>ការឈរស្ងៀមមានរយៈពេលបួនវិនាទី · អនុញ្ញាតឱ្យព្រិចភ្នែក តែបន្តិចបន្តួច</span>
+          <span>ការសង្កេតទី ១</span>
         </div>
       </div>
     </div>

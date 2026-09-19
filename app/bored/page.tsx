@@ -6,20 +6,20 @@ import { useEffect, useRef, useState } from "react";
 import { beep, trombone } from "@/lib/audio";
 
 const FACTS = [
-  "The average office chair travels eight miles a year without leaving the room.",
-  "There is a word for the smell of rain. There is no word for the smell of a printer.",
-  "Somewhere, a fax machine is still receiving.",
-  "Every queue has exactly one person who knows what is going on. It is never you.",
-  "A watched pot boils at the same rate. It simply feels worse.",
-  "The Ministry has never once been to the fourth floor.",
-  "Corridors get 4% longer after 6pm. This is not measurable but it is true.",
-  "Nobody has ever finished a whole tube of hand cream.",
-  "The third drawer down contains the same objects in every building on Earth.",
-  "Time spent choosing something to watch counts as having watched it.",
-  "If you stand still long enough, the building considers you furniture.",
-  "One of the lifts goes to a floor that does not appear on any button.",
-  "The plant in reception has outlived four managers.",
-  "Every stapler is on loan from somewhere else.",
+  "កៅអីការិយាល័យជាមធ្យមធ្វើដំណើរប្រាំបីម៉ាយក្នុងមួយឆ្នាំ ដោយមិនចេញពីបន្ទប់។",
+  "មានពាក្យសម្រាប់ក្លិនភ្លៀង។ តែគ្មានពាក្យសម្រាប់ក្លិនម៉ាស៊ីនបោះពុម្ពទេ។",
+  "នៅកន្លែងណាមួយ ម៉ាស៊ីនហ្វាក់មួយនៅតែទទួលសារ។",
+  "រាល់ជួរតម្រង់មានមនុស្សម្នាក់ដែលដឹងថាមានរឿងអ្វី។ វាមិនដែលជាអ្នកទេ។",
+  "ឆ្នាំងដែលគេឈរមើលពុះក្នុងល្បឿនដដែល។ គ្រាន់តែអារម្មណ៍អាក្រក់ជាង។",
+  "ក្រសួងមិនដែលឡើងទៅជាន់ទីបួនសូម្បីតែម្តងទេ។",
+  "ច្រករបៀងវែងជាងមុន ៤% ក្រោយម៉ោង ៦ ល្ងាច។ រឿងនេះវាស់មិនបាន តែវាពិត។",
+  "គ្មាននរណាធ្លាប់ប្រើគ្រឹមលាបដៃអស់មួយបំពង់ទេ។",
+  "ថតទីបីរាប់ចុះមានរបស់ដូចគ្នា នៅគ្រប់អគារទាំងអស់លើផែនដី។",
+  "ពេលវេលាដែលចំណាយរើសរឿងមើល ត្រូវរាប់ថាបានមើលរួចហើយ។",
+  "បើអ្នកឈរស្ងៀមបានយូរល្មម អគារនឹងចាត់ទុកអ្នកជាគ្រឿងសង្ហារិម។",
+  "ជណ្តើរយន្តមួយក្នុងចំណោមនោះទៅជាន់មួយ ដែលមិនមាននៅលើប៊ូតុងណាទេ។",
+  "ដើមឈើនៅកន្លែងទទួលភ្ញៀវរស់បានយូរជាងប្រធានបួននាក់។",
+  "គ្រឿងដេរក្រដាសគ្រប់គ្រឿងគឺខ្ចីពីកន្លែងផ្សេង។",
 ];
 
 export default function Waiting() {
@@ -84,8 +84,8 @@ export default function Waiting() {
 
         <div className="plate">
           <div>
-            <div className="mk">Department of Waiting · Floor 1</div>
-            <h1>Please Wait</h1>
+            <div className="mk">នាយកដ្ឋានរង់ចាំ · ជាន់ទី ១</div>
+            <h1>សូមរង់ចាំ</h1>
           </div>
           <div className="cert">
             YOUR PATIENCE IS NOTED<br />
@@ -101,7 +101,7 @@ export default function Waiting() {
 
         <div className="grid">
           <div className="cell s12">
-            <span className="cap">Processing</span>
+            <span className="cap">កំពុងដំណើរការ</span>
             <div style={{
               height: 30, background: "#8e876f", borderRadius: 6, overflow: "hidden",
               boxShadow: "inset 0 3px 8px rgba(0,0,0,.45)",
@@ -116,17 +116,17 @@ export default function Waiting() {
           </div>
 
           <div className="cell s6" style={{ textAlign: "center" }}>
-            <span className="cap">Now serving</span>
+            <span className="cap">កំពុងបម្រើលេខ</span>
             <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1 }}>{serving.toLocaleString()}</div>
-            <div className="tiny">YOUR TICKET: {ticket.toLocaleString()}</div>
-            <div className="tiny">POSITION IN QUEUE: {(ticket - serving).toLocaleString()}</div>
+            <div className="tiny">សំបុត្ររបស់អ្នក៖ {ticket.toLocaleString()}</div>
+            <div className="tiny">លំដាប់ក្នុងជួរ៖ {(ticket - serving).toLocaleString()}</div>
           </div>
 
           <div className="cell s6" style={{ textAlign: "center" }}>
-            <span className="cap">Stillness contest</span>
+            <span className="cap">ការប្រកួតឈរស្ងៀម</span>
             <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1 }}>{stillness}s</div>
             <div className="tiny">DO NOT MOVE. DO NOT SCROLL. DO NOT BREATHE ON THE MOUSE.</div>
-            <div className="tiny">BEST THIS SESSION: {bestStill}s</div>
+            <div className="tiny">ល្អបំផុតលើកនេះ៖ {bestStill} វិនាទី</div>
           </div>
 
           <div className="cell s12">
@@ -139,8 +139,8 @@ export default function Waiting() {
         </div>
 
         <div className="footplate">
-          <span>THE DEPARTMENT OF WAITING HAS NEVER CLOSED</span>
-          <span>NOR HAS IT EVER OPENED</span>
+          <span>នាយកដ្ឋានរង់ចាំមិនដែលបិទទេ</span>
+          <span>ហើយក៏មិនដែលបើកដែរ</span>
         </div>
       </div>
     </div>

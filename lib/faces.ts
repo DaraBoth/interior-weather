@@ -118,7 +118,7 @@ export function getDetector(): Promise<Detector> {
 }
 
 export function describeTier(t: Tier): string {
-  if (t === "native") return "AUTOMATIC (BUILT-IN)";
-  if (t === "mediapipe") return "AUTOMATIC (MODEL LOADED)";
-  return "MANUAL ONLY — DETECTION UNAVAILABLE";
+  if (t === "native") return "ស្វ័យប្រវត្តិ (មានស្រាប់)";
+  if (t === "mediapipe") return "ស្វ័យប្រវត្តិ (ផ្ទុកម៉ូដែលរួច)";
+  return "ដោយដៃប៉ុណ្ណោះ — ការចាប់មិនអាចប្រើបាន";
 }

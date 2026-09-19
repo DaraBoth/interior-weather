@@ -24,21 +24,21 @@ import { getDetector, describeTier, type Tier } from "@/lib/faces";
 type Box = { x: number; y: number; w: number; h: number; id: number };
 
 const FORFEIT_SUGGESTIONS = [
-  "drink 2 glasses",
-  "tell an embarrassing story",
-  "do 10 push-ups",
-  "text your ex nothing at all. well done.",
-  "speak only in questions for 5 minutes",
-  "let the group pick your next song",
+  "ផឹក ២ កែវ",
+  "និទានរឿងគួរឱ្យខ្មាស",
+  "រុញដី ១០ ដង",
+  "កុំផ្ញើសារទៅគូចាស់សោះ។ ល្អណាស់។",
+  "និយាយតែជាសំណួរ ៥ នាទី",
+  "ទុកឱ្យក្រុមជ្រើសបទចម្រៀងបន្ទាប់របស់អ្នក",
 ];
 
 const SUSPENSE = [
-  "SCANNING THE ROOM",
-  "MEASURING GUILT",
-  "CONSULTING THE ARCHIVE",
-  "WEIGHING PAST BEHAVIOUR",
-  "IGNORING YOUR PROTESTS",
-  "CROSS-REFERENCING VIBES",
+  "កំពុងស្កេនបន្ទប់",
+  "កំពុងវាស់កំហុស",
+  "កំពុងពិគ្រោះជាមួយបណ្ណសារ",
+  "កំពុងថ្លឹងឥរិយាបថកន្លងមក",
+  "កំពុងមិនអើពើនឹងការតវ៉ារបស់អ្នក",
+  "កំពុងផ្ទៀងផ្ទាត់អារម្មណ៍",
 ];
 
 export default function SelectionChamber() {
@@ -48,7 +48,7 @@ export default function SelectionChamber() {
   const rafRef = useRef<number | null>(null);
   const detectorRef = useRef<Awaited<ReturnType<typeof getDetector>> | null>(null);
 
-  const [forfeit, setForfeit] = useState("drink 2 glasses");
+  const [forfeit, setForfeit] = useState("ផឹក ២ កែវ");
   const [facing, setFacing] = useState<"user" | "environment">("user");
   const [live, setLive] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -60,7 +60,7 @@ export default function SelectionChamber() {
   const [spinning, setSpinning] = useState(false);
   const [highlight, setHighlight] = useState<number | null>(null);
   const [chosen, setChosen] = useState<number | null>(null);
-  const [status, setStatus] = useState("CHAMBER IDLE. NAME THE FORFEIT.");
+  const [status, setStatus] = useState("បន្ទប់ទំនេរ។ ដាក់ឈ្មោះការផាកពិន័យ។");
 
   const candidates = manual ? marks : boxes;
 
@@ -93,10 +93,10 @@ export default function SelectionChamber() {
       const name = e?.name || "";
       setErr(
         name === "NotAllowedError"
-          ? "Camera permission refused. The Ministry respects this and is disappointed."
+          ? "ការអនុញ្ញាតកាមេរ៉ាត្រូវបានបដិសេធ។ ក្រសួងគោរពរឿងនេះ ហើយខកចិត្ត។"
           : name === "NotFoundError"
-          ? "No camera found. Use manual mode: everyone taps their own face."
-          : "Camera unavailable here. Manual mode still works.",
+          ? "រកមិនឃើញកាមេរ៉ាទេ។ ប្រើរបៀបដោយដៃ៖ គ្រប់គ្នាចុចលើមុខខ្លួនឯង។"
+          : "កាមេរ៉ាប្រើមិនបាននៅទីនេះ។ របៀបដោយដៃនៅតែដំណើរការ។",
       );
       setManual(true);
     }
@@ -156,7 +156,7 @@ export default function SelectionChamber() {
   /* ---------------- the selection ---------------- */
   const select = () => {
     if (candidates.length === 0) {
-      setStatus("NOBODY IS HERE. THE MINISTRY CANNOT PUNISH A VOID.");
+      setStatus("គ្មាននរណានៅទីនេះទេ។ ក្រសួងមិនអាចដាក់ទោសភាពទទេបានទេ។");
       trombone();
       return;
     }
@@ -177,16 +177,16 @@ export default function SelectionChamber() {
         setHighlight(winner);
         setChosen(winner);
         setSpinning(false);
-        setStatus("THE MINISTRY HAS DECIDED.");
+        setStatus("ក្រសួងបានសម្រេចហើយ។");
         fanfare();
-        verdict("Chosen", forfeit || "by order of the ministry", "#e8a317");
+        verdict("ត្រូវបានជ្រើស", forfeit || "តាមបញ្ជាក្រសួង", "#e8a317");
         S.discover("chosen");
       }
     };
     step();
   };
 
-  const reset = () => { setChosen(null); setHighlight(null); setMarks([]); setStatus("CHAMBER READY."); };
+  const reset = () => { setChosen(null); setHighlight(null); setMarks([]); setStatus("បន្ទប់រួចរាល់។"); };
 
   return (
     <div className="wrap">
@@ -196,8 +196,8 @@ export default function SelectionChamber() {
 
         <div className="plate">
           <div>
-            <div className="mk">Department of Selection · Chamber 1</div>
-            <h1>Who Is It Going To Be</h1>
+            <div className="mk">នាយកដ្ឋានជ្រើសរើស · បន្ទប់ទី ១</div>
+            <h1>តើនឹងជានរណា</h1>
           </div>
           <div className="cert">
             NOTHING LEAVES THIS DEVICE<br />
@@ -215,12 +215,12 @@ export default function SelectionChamber() {
 
         <div className="grid" style={{ marginBottom: 16 }}>
           <div className="cell s12">
-            <span className="cap">The forfeit</span>
+            <span className="cap">ការផាកពិន័យ</span>
             <input
               className="field"
               value={forfeit}
               onChange={(e) => setForfeit(e.target.value)}
-              placeholder="drink 2 glasses"
+              placeholder="ផឹក ២ កែវ"
               maxLength={90}
             />
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -262,9 +262,9 @@ export default function SelectionChamber() {
               alignItems: "center", justifyContent: "center", gap: 14, padding: 20, textAlign: "center",
             }}>
               <div className="mono" style={{ color: "#7de88a", fontSize: 13, maxWidth: 420, lineHeight: 1.7 }}>
-                {err ?? "The chamber needs to see the room. Your camera stays on this device — no upload, no recording, no server."}
+                {err ?? "បន្ទប់នេះត្រូវការមើលឃើញបន្ទប់របស់អ្នក។ កាមេរ៉ារបស់អ្នកនៅលើឧបករណ៍នេះ — គ្មានការផ្ទុកឡើង គ្មានការថត គ្មានម៉ាស៊ីនមេ។"}
               </div>
-              <button className="btn amber big" onClick={start}>Open the chamber</button>
+              <button className="btn amber big" onClick={start}>បើកបន្ទប់</button>
             </div>
           )}
 
@@ -317,12 +317,12 @@ export default function SelectionChamber() {
             marginTop: 16, padding: "18px 20px", background: "var(--amber)",
             border: "3px solid #241f0e", borderRadius: 10, textAlign: "center",
           }}>
-            <div className="mk" style={{ color: "#241f0e" }}>By order of the Ministry</div>
+            <div className="mk" style={{ color: "#241f0e" }}>តាមបញ្ជាក្រសួង</div>
             <div style={{
               fontSize: "clamp(20px,5vw,34px)", fontWeight: 700, textTransform: "uppercase",
               lineHeight: 1.05, marginTop: 6, color: "#241f0e",
             }}>
-              The one in the box must {forfeit || "decide for themselves"}
+              អ្នកនៅក្នុងប្រអប់ត្រូវ {forfeit || "សម្រេចដោយខ្លួនឯង"}
             </div>
             <div className="mono" style={{ fontSize: 11, marginTop: 8, color: "#5c4a12" }}>
               APPEALS MAY BE SUBMITTED VIA FORM 27-B AND WILL NOT BE READ
@@ -334,21 +334,21 @@ export default function SelectionChamber() {
         <div className="grid" style={{ marginTop: 16 }}>
           <div className="cell s12" style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
             <button className="btn amber big" style={{ flex: 2, minWidth: 180 }} onClick={select} disabled={!live || spinning}>
-              {spinning ? "Deciding…" : "Choose someone"}
+              {spinning ? "កំពុងសម្រេច…" : "ជ្រើសរើសនរណាម្នាក់"}
             </button>
             <button className="btn" style={{ flex: 1, minWidth: 120 }} onClick={() => { setFacing((f) => (f === "user" ? "environment" : "user")); if (live) setTimeout(start, 60); }}>
               {facing === "user" ? "Front" : "Back"} camera
             </button>
             <button className="btn" style={{ flex: 1, minWidth: 120 }} onClick={() => { setManual((m) => !m); setChosen(null); setHighlight(null); }}>
-              {manual ? "Auto mode" : "Manual mode"}
+              {manual ? "របៀបស្វ័យប្រវត្តិ" : "របៀបដោយដៃ"}
             </button>
-            <button className="btn" style={{ flex: 1, minWidth: 100 }} onClick={reset}>Clear</button>
-            {live && <button className="btn red" style={{ flex: 1, minWidth: 100 }} onClick={stop}>Close</button>}
+            <button className="btn" style={{ flex: 1, minWidth: 100 }} onClick={reset}>សម្អាត</button>
+            {live && <button className="btn red" style={{ flex: 1, minWidth: 100 }} onClick={stop}>បិទ</button>}
           </div>
         </div>
 
         <div className="footplate">
-          <span>ALL PROCESSING IS LOCAL · NOTHING IS UPLOADED OR STORED</span>
+          <span>ដំណើរការទាំងអស់នៅលើឧបករណ៍ · គ្មានអ្វីផ្ទុកឡើង ឬរក្សាទុកទេ</span>
           <span>
             {loadingModel ? "PREPARING DETECTOR…" : describeTier(tier ?? "none")}
           </span>

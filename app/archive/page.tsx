@@ -70,14 +70,14 @@ export default function Archive() {
             fontSize: "clamp(24px,6vw,44px)", fontWeight: 700, color: "#ff00ff",
             textShadow: "2px 2px 0 #00ffff, 4px 4px 0 #000",
           }}>
-            ~*~ THE MINISTRY ARCHIVE ~*~
+            ~*~ បណ្ណសារក្រសួង ~*~
           </div>
           <div style={{ color: "#00ff00", fontSize: 15, marginTop: 6 }}>
             &lt;&lt;&lt; FLOOR -1 &middot; LAST UPDATED 14 MARCH 1997 &gt;&gt;&gt;
           </div>
           <div style={{ marginTop: 10, fontSize: 26 }}>
             <span style={{ animation: "pulse 1s infinite alternate" }}>🚧</span>
-            <span style={{ color: "#ffff00", fontSize: 15, margin: "0 10px" }}>UNDER CONSTRUCTION</span>
+            <span style={{ color: "#ffff00", fontSize: 15, margin: "0 10px" }}>កំពុងសាងសង់</span>
             <span style={{ animation: "pulse 1s infinite alternate" }}>🚧</span>
           </div>
         </div>
@@ -88,7 +88,7 @@ export default function Archive() {
               display: "inline-block", paddingLeft: "100%",
               animation: "scroll 18s linear infinite", color: "#00ff00", fontSize: 16,
             }}>
-              WELCOME TO MY HOMEPAGE !!! ★ BEST VIEWED IN NETSCAPE NAVIGATOR AT 800x600 ★ PLEASE SIGN MY GUESTBOOK ★ THIS SITE IS PROUDLY HAND-CODED ★
+              សូមស្វាគមន៍មកកាន់គេហទំព័ររបស់ខ្ញុំ !!! ★ មើលបានល្អបំផុតក្នុង NETSCAPE NAVIGATOR ទំហំ 800x600 ★ សូមចុះហត្ថលេខាក្នុងសៀវភៅភ្ញៀវ ★ គេហទំព័រនេះសរសេរដោយដៃដោយមោទនភាព ★
             </div>
           </div>
         </div>
@@ -103,15 +103,15 @@ export default function Archive() {
             {String(visitors).padStart(7, "0")}
           </div>
           <div style={{ fontSize: 12, marginTop: 6, color: "#ccc" }}>
-            You are visitor number {visitors}. The counter has never been reset and never will be.
+            អ្នកជាភ្ញៀវលេខ {visitors}។ ឧបករណ៍រាប់មិនដែលត្រូវកំណត់ឡើងវិញទេ ហើយនឹងមិនដែលដែរ។
           </div>
         </div>
 
         {/* the hints, which is why anyone comes down here */}
         <div style={RETRO.box}>
-          <div style={{ color: "#ff00ff", fontSize: 17, marginBottom: 4 }}>◆ THE LIST OF THINGS ◆</div>
+          <div style={{ color: "#ff00ff", fontSize: 17, marginBottom: 4 }}>◆ បញ្ជីរបស់របរ ◆</div>
           <div style={{ fontSize: 13, color: "#ccc", marginBottom: 10 }}>
-            The Ministry denies that this building contains secrets. Somebody wrote this list anyway.
+            ក្រសួងបដិសេធថាអគារនេះមានអាថ៌កំបាំង។ តែមានគេសរសេរបញ្ជីនេះយ៉ាងណាក៏ដោយ។
             You have found <b style={{ color: "#0f0" }}>{foundCount}</b>. More clues appear as you find more.
           </div>
           <div style={{ display: "grid", gap: 6 }}>
@@ -133,13 +133,13 @@ export default function Archive() {
         </div>
 
         <div style={RETRO.box}>
-          <div style={{ color: "#00ffff", fontSize: 17, marginBottom: 8 }}>◆ SIGN MY GUESTBOOK ◆</div>
+          <div style={{ color: "#00ffff", fontSize: 17, marginBottom: 8 }}>◆ ចុះហត្ថលេខាក្នុងសៀវភៅភ្ញៀវ ◆</div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <input
               value={guest}
               onChange={(e) => setGuest(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") sign(); }}
-              placeholder="your name here"
+              placeholder="ឈ្មោះរបស់អ្នកនៅទីនេះ"
               maxLength={28}
               style={{
                 flex: 1, minWidth: 160, padding: "8px 10px", fontFamily: "inherit",
@@ -158,7 +158,7 @@ export default function Archive() {
             </button>
           </div>
           <div style={{ marginTop: 10, display: "grid", gap: 4 }}>
-            {book.length === 0 && <div style={{ fontSize: 13, color: "#ccc" }}>no entries yet :(</div>}
+            {book.length === 0 && <div style={{ fontSize: 13, color: "#ccc" }}>មិនទាន់មានធាតុណាទេ :(</div>}
             {book.map((b, i) => (
               <div key={i} style={{ fontSize: 13, color: "#ffff66" }}>» {b}</div>
             ))}
@@ -167,16 +167,16 @@ export default function Archive() {
 
         <div style={{ ...RETRO.box, textAlign: "center" }}>
           <div style={{ color: "#00ff00", fontSize: 14 }}>
-            [ <a href="/" style={{ color: "#00ffff", textDecoration: "underline" }}>HOME</a> ]
-            [ <a href="/bored" style={{ color: "#00ffff", textDecoration: "underline" }}>LINKS</a> ]
-            [ <a href="/form" style={{ color: "#00ffff", textDecoration: "underline" }}>CONTACT</a> ]
+            [ <a href="/" style={{ color: "#00ffff", textDecoration: "underline" }}>ទំព័រដើម</a> ]
+            [ <a href="/bored" style={{ color: "#00ffff", textDecoration: "underline" }}>តំណភ្ជាប់</a> ]
+            [ <a href="/form" style={{ color: "#00ffff", textDecoration: "underline" }}>ទំនាក់ទំនង</a> ]
             [ <span
                 onClick={() => { beep(300, 0.4, "sawtooth"); }}
                 style={{ color: "#ff00ff", textDecoration: "underline", cursor: "pointer" }}
-              >MIDI ON</span> ]
+              >បើកតន្ត្រី</span> ]
           </div>
           <div style={{ fontSize: 12, color: "#888", marginTop: 10 }}>
-            This page is a member of the Interior Weather WebRing.
+            ទំព័រនេះជាសមាជិកនៃ WebRing ផឹកភ្លាម។
             <br />« prev &nbsp; random &nbsp; next »
           </div>
         </div>

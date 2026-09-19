@@ -63,7 +63,7 @@ export default function Bomb() {
       if (p >= 1) {
         setPhase("blown");
         explosion();
-        verdict("Boom", "you are holding it", "#c8342b");
+        verdict("ផ្ទុះ", "អ្នកជាអ្នកកាន់វា", "#c8342b");
         // let the blast breathe before the punchline
         setTimeout(trombone, 1400);
         if (navigator.vibrate) { try { navigator.vibrate([220, 90, 220, 90, 420]); } catch {} }
@@ -99,8 +99,8 @@ export default function Bomb() {
 
         <div className="plate">
           <div>
-            <div className="mk">Department of Sudden Urgency · Device 4</div>
-            <h1>The Bomb</h1>
+            <div className="mk">នាយកដ្ឋានភាពបន្ទាន់ភ្លាមៗ · ឧបករណ៍ទី ៤</div>
+            <h1>គ្រាប់បែក</h1>
           </div>
           <div className="cert">
             PASS IT. DO NOT HOLD IT.<br />
@@ -130,11 +130,11 @@ export default function Bomb() {
                 DEVICE SAFE
               </div>
               <div style={{ fontSize: "clamp(28px,7vw,54px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 1 }}>
-                Arm the bomb
+                ដំឡើងគ្រាប់បែក
               </div>
               <div className="mono" style={{ fontSize: 13, opacity: 0.8, maxWidth: 460, lineHeight: 1.7 }}>
                 A category appears. Say one answer, tap, pass the phone.
-                Whoever is holding it when it goes off drinks.
+                អ្នកណាកាន់វានៅពេលវាផ្ទុះ ត្រូវផឹក។
               </div>
             </>
           )}
@@ -166,7 +166,7 @@ export default function Bomb() {
                 BOOM
               </div>
               <div style={{ fontSize: "clamp(18px,4.4vw,30px)", fontWeight: 700, textTransform: "uppercase" }}>
-                You are holding it
+                អ្នកកំពុងកាន់វា
               </div>
               <div className="mono" style={{ fontSize: 13, opacity: 0.9 }}>
                 {passes} passes before you · tap to arm it again
@@ -177,7 +177,7 @@ export default function Bomb() {
 
         <div className="grid" style={{ marginTop: 14 }}>
           <div className="cell s6">
-            <span className="cap">Change the subject</span>
+            <span className="cap">ប្តូរប្រធានបទ</span>
             <button
               className="btn wide"
               onClick={() => {
@@ -187,10 +187,10 @@ export default function Bomb() {
             >
               New category
             </button>
-            <div className="tiny">Allowed at any time. The fuse keeps burning.</div>
+            <div className="tiny">អនុញ្ញាតគ្រប់ពេល។ បន្ទះភ្លើងនៅតែឆេះ។</div>
           </div>
           <div className="cell s6">
-            <span className="cap">Cowardice</span>
+            <span className="cap">ភាពកំសាក</span>
             <button
               className="btn red wide"
               onClick={() => { setPhase("idle"); setHeat(0); fanfare(); }}
@@ -198,13 +198,13 @@ export default function Bomb() {
             >
               Defuse
             </button>
-            <div className="tiny">Everyone will see you do this.</div>
+            <div className="tiny">គ្រប់គ្នានឹងឃើញអ្នកធ្វើបែបនេះ។</div>
           </div>
         </div>
 
         <div className="footplate">
-          <span>FUSE IS RANDOM BETWEEN 18 AND 55 SECONDS · COUNTING IS FUTILE</span>
-          <span>DEVICE 4</span>
+          <span>បន្ទះភ្លើងចៃដន្យចន្លោះ ១៨ និង ៥៥ វិនាទី · ការរាប់គឺឥតប្រយោជន៍</span>
+          <span>ឧបករណ៍ទី ៤</span>
         </div>
       </div>
     </div>

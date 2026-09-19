@@ -81,8 +81,8 @@ export default function Paranoia() {
 
         <div className="plate">
           <div>
-            <div className="mk">Bureau of Whispers · Protocol P</div>
-            <h1>Paranoia</h1>
+            <div className="mk">ការិយាល័យខ្សឹបខ្សៀវ · បែបបទ ប</div>
+            <h1>ការសង្ស័យ</h1>
           </div>
           <div className="cert">
             READ IT PRIVATELY<br />
@@ -93,10 +93,10 @@ export default function Paranoia() {
 
         <div className="readout">
           <p className="rd-line">
-            {stage === "ready" && "TAKE THE PHONE. NOBODY ELSE LOOKS."}
-            {stage === "reading" && "HOLD TO READ. WHISPER IT TO THE PERSON ON YOUR LEFT."}
-            {stage === "answered" && "THE COIN IS DECIDING…"}
-            {stage === "flipped" && (revealed ? "THE QUESTION IS REVEALED." : "THE QUESTION DIES HERE.")}
+            {stage === "ready" && "យកទូរស័ព្ទ។ កុំឱ្យអ្នកដទៃមើល។"}
+            {stage === "reading" && "សង្កត់ដើម្បីអាន។ ខ្សឹបប្រាប់អ្នកនៅខាងឆ្វេងអ្នក។"}
+            {stage === "answered" && "កាក់កំពុងសម្រេច…"}
+            {stage === "flipped" && (revealed ? "សំណួរត្រូវបានបង្ហាញ។" : "សំណួរស្លាប់នៅទីនេះ។")}
           </p>
           <p className="rd-sub">
             PROTOCOL P · THE ANSWER IS ALWAYS SAID OUT LOUD · THE QUESTION USUALLY IS NOT
@@ -123,10 +123,10 @@ export default function Paranoia() {
           {stage === "reading" && !holding && (
             <>
               <div style={{ fontSize: "clamp(20px,5vw,34px)", fontWeight: 700, textTransform: "uppercase", lineHeight: 1.1 }}>
-                Hold to read
+                សង្កត់ដើម្បីអាន
               </div>
               <div className="mono" style={{ fontSize: 12.5, opacity: 0.85, maxWidth: 380, lineHeight: 1.7 }}>
-                Shield the screen. Let go and it disappears.
+                បាំងអេក្រង់។ លែងដៃ វានឹងបាត់។
               </div>
             </>
           )}
@@ -138,36 +138,36 @@ export default function Paranoia() {
           {stage !== "reading" && (
             <div className="mono" style={{ fontSize: 13, opacity: 0.8, maxWidth: 400, lineHeight: 1.8 }}>
               {stage === "ready"
-                ? "Press Deal a question below."
+                ? "ចុច ចែកសំណួរមួយ ខាងក្រោម។"
                 : revealed === null
-                ? "Flipping…"
+                ? "កំពុងបោះ…"
                 : revealed
                 ? question
-                : "Sealed. Only two people will ever know what was asked."}
+                : "បិទជិត។ មានតែពីរនាក់ប៉ុណ្ណោះដែលនឹងដឹងថាគេសួរអ្វី។"}
             </div>
           )}
         </button>
 
         <div className="grid" style={{ marginTop: 14 }}>
           <div className="cell s6">
-            <span className="cap">Step one</span>
+            <span className="cap">ជំហានទី ១</span>
             <button className="btn amber wide big" onClick={nextQuestion} disabled={flipping}>
-              {stage === "ready" ? "Deal a question" : "Next question"}
+              {stage === "ready" ? "ចែកសំណួរមួយ" : "សំណួរបន្ទាប់"}
             </button>
-            <div className="tiny">Read it privately, whisper it to one person, they answer out loud.</div>
+            <div className="tiny">អានដោយឯកជន ខ្សឹបប្រាប់មនុស្សម្នាក់ គេឆ្លើយឮៗ។</div>
           </div>
           <div className="cell s6">
-            <span className="cap">Step two</span>
+            <span className="cap">ជំហានទី ២</span>
             <button className="btn wide big" onClick={flip} disabled={stage !== "reading" || flipping}>
-              {flipping ? "Flipping…" : "Flip the coin"}
+              {flipping ? "កំពុងបោះ…" : "បោះកាក់"}
             </button>
-            <div className="tiny">Heads and the room learns the question. Tails and it stays buried.</div>
+            <div className="tiny">ក្បាល នោះអ្នកទាំងអស់គ្នាដឹងសំណួរ។ កន្ទុយ នោះវានៅតែកប់។</div>
           </div>
         </div>
 
         <div className="footplate">
-          <span>THE BUREAU KEEPS NO RECORD · THE BUREAU IS LYING</span>
-          <span>PROTOCOL P</span>
+          <span>ការិយាល័យមិនរក្សាកំណត់ត្រាទេ · ការិយាល័យកំពុងកុហក</span>
+          <span>បែបបទ ប</span>
         </div>
       </div>
     </div>

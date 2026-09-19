@@ -61,7 +61,7 @@ export default function Wheel() {
     if (mode === "custom" && custom.length >= 2) {
       return custom.map((label, i) => ({ label, weight: 1, tone: TONES[i % TONES.length] }));
     }
-    // weight expands into repeated slices, so "You drink" genuinely comes up more
+    // ទម្ងន់ពង្រីកទៅជាចំណិតដដែលៗ ដូច្នេះ "អ្នកផឹក" ពិតជាចេញញឹកញាប់ជាង
     return WHEEL_SEGMENTS.flatMap((s) => Array.from({ length: s.weight }, () => s));
   }, [mode, custom]);
 
@@ -171,11 +171,11 @@ export default function Wheel() {
       setSpinning(false);
       const seg = slicesRef.current[currentIndex()];
       setResult(seg);
-      const kind = seg.label === "Nobody drinks" || seg.label === "Immunity";
+      const kind = seg.label === "គ្មាននរណាផឹក" || seg.label === "អភ័យឯកសិទ្ធិ";
       if (kind) fanfare(); else trombone();
       verdict(
         seg.label,
-        WHEEL_NOTES[seg.label] ?? "the wheel has spoken",
+        WHEEL_NOTES[seg.label] ?? "កង់មូលបាននិយាយហើយ",
         kind ? "#4c9a56" : seg.tone,
       );
       return;
@@ -244,11 +244,11 @@ export default function Wheel() {
 
         <div className="plate">
           <div>
-            <div className="mk">Office of Random Allocation · Apparatus 2</div>
-            <h1>The Wheel</h1>
+            <div className="mk">ការិយាល័យបែងចែកដោយចៃដន្យ · ឧបករណ៍ទី ២</div>
+            <h1>កង់មូល</h1>
           </div>
           <div className="cert">
-            {usingCustom ? "RUNNING YOUR OWN LIST" : "OUTCOMES ARE WEIGHTED"}<br />
+            {usingCustom ? "កំពុងប្រើបញ្ជីផ្ទាល់ខ្លួនរបស់អ្នក" : "លទ្ធផលមានទម្ងន់ខុសៗគ្នា"}<br />
             THE WHEEL IS NOT YOUR FRIEND<br />
             SPINS {String(spins).padStart(3, "0")}
           </div>
@@ -256,14 +256,14 @@ export default function Wheel() {
 
         <div className="readout">
           <p className="rd-line">
-            {spinning ? "THE WHEEL IS DECIDING…" : result ? result.label.toUpperCase() : "SPIN IT."}
+            {spinning ? "កង់មូលកំពុងសម្រេច…" : result ? result.label : "បង្វិលវាទៅ។"}
           </p>
           <p className="rd-sub">
             {result && !spinning
-              ? (WHEEL_NOTES[result.label] ?? "THE WHEEL HAS SPOKEN. YOU WROTE THIS ONE YOURSELF.")
+              ? (WHEEL_NOTES[result.label] ?? "កង់មូលបាននិយាយហើយ។ មួយនេះអ្នកសរសេរខ្លួនឯង។")
               : usingCustom
               ? `YOUR LIST · ${custom.length} OUTCOMES · EQUAL ODDS`
-              : "OUTCOMES ARE NOT EQUALLY LIKELY. THIS IS DELIBERATE."}
+              : "លទ្ធផលមិនមានឱកាសស្មើគ្នាទេ។ នេះគឺដោយចេតនា។"}
           </p>
         </div>
 
@@ -282,7 +282,7 @@ export default function Wheel() {
         <div className="grid" style={{ marginTop: 14 }}>
           <div className="cell s12">
             <button className="btn amber wide big" onClick={spin} disabled={spinning}>
-              {spinning ? "Spinning…" : "Spin the wheel"}
+              {spinning ? "កំពុងបង្វិល…" : "បង្វិលកង់"}
             </button>
           </div>
 
@@ -293,7 +293,7 @@ export default function Wheel() {
               style={{ flex: 1, minWidth: 150 }}
               onClick={() => switchTo("ministry")}
             >
-              Ministry standard
+              ស្តង់ដារក្រសួង
             </button>
             <button
               className={usingCustom ? "btn amber" : "btn"}
@@ -307,7 +307,7 @@ export default function Wheel() {
 
           {/* ---- the editor ---- */}
           <div className="cell s12">
-            <span className="cap">Your own outcomes</span>
+            <span className="cap">លទ្ធផលផ្ទាល់ខ្លួនរបស់អ្នក</span>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <input
                 className="field"
@@ -315,10 +315,10 @@ export default function Wheel() {
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); add(); } }}
-                placeholder="a name, a forfeit, anything"
+                placeholder="ឈ្មោះ ការផាកពិន័យ ឬអ្វីក៏បាន"
                 maxLength={28}
               />
-              <button className="btn" onClick={add} disabled={!draft.trim()}>Add</button>
+              <button className="btn" onClick={add} disabled={!draft.trim()}>បន្ថែម</button>
             </div>
 
             {custom.length > 0 && (
@@ -327,7 +327,7 @@ export default function Wheel() {
                   <button
                     key={`${c}-${i}`}
                     onClick={() => remove(i)}
-                    title="Remove"
+                    title="លុបចេញ"
                     style={{
                       display: "inline-flex", alignItems: "center", gap: 8,
                       background: TONES[i % TONES.length],
@@ -347,10 +347,10 @@ export default function Wheel() {
 
             <div className="tiny">
               {custom.length === 0
-                ? "Add at least two and the wheel will run your list instead. Tap a chip to remove it."
+                ? "បន្ថែមយ៉ាងតិចពីរ នោះកង់មូលនឹងប្រើបញ្ជីរបស់អ្នកជំនួសវិញ។ ចុចលើស្លាកដើម្បីលុបចេញ។"
                 : custom.length < 2
-                ? "One more and you can switch to your own list."
-                : "Tap a chip to remove it. Your list is saved on this device only."}
+                ? "មួយទៀត នោះអ្នកអាចប្តូរទៅបញ្ជីផ្ទាល់ខ្លួនបាន។"
+                : "ចុចលើស្លាកដើម្បីលុបចេញ។ បញ្ជីរបស់អ្នករក្សាទុកតែលើឧបករណ៍នេះប៉ុណ្ណោះ។"}
             </div>
 
             {custom.length > 0 && (
@@ -359,7 +359,7 @@ export default function Wheel() {
                 style={{ alignSelf: "flex-start" }}
                 onClick={() => { setCustom([]); setMode("ministry"); persist([], "ministry"); trombone(); }}
               >
-                Clear the list
+                សម្អាតបញ្ជី
               </button>
             )}
           </div>
@@ -368,10 +368,10 @@ export default function Wheel() {
         <div className="footplate">
           <span>
             {usingCustom
-              ? "YOUR LIST RUNS ON EQUAL ODDS · WEIGHTING YOUR FRIENDS WOULD BE RUDE"
-              : "APPARATUS 2 · CALIBRATED ONCE, IN 1983, BADLY"}
+              ? "បញ្ជីរបស់អ្នកដំណើរការលើឱកាសស្មើគ្នា · ការដាក់ទម្ងន់លើមិត្តភក្តិគឺមិនសមរម្យ"
+              : "ឧបករណ៍ទី ២ · បានក្រិតតែម្តង ក្នុងឆ្នាំ ១៩៨៣ ហើយក្រិតមិនល្អ"}
           </span>
-          <span>NO REFUNDS</span>
+          <span>គ្មានការសងប្រាក់វិញទេ</span>
         </div>
       </div>
     </div>
