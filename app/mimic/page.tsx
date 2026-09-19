@@ -35,6 +35,7 @@ export default function Mimic() {
   const [hz, setHz] = useState(0);
   const [round, setRound] = useState(0);
   const [best, setBest] = useState(0);
+  const [showRules, setShowRules] = useState(true);
 
   const streamRef = useRef<MediaStream | null>(null);
   const acRef = useRef<AudioContext | null>(null);
@@ -146,6 +147,7 @@ export default function Mimic() {
     setHz(medianHz(sample.current));
     setPhase("scored");
     setRound((r) => r + 1);
+    setShowRules(false);
 
     if (s.total > best) {
       setBest(s.total);
@@ -203,6 +205,71 @@ export default function Mimic() {
             វគ្គទី {String(round).padStart(3, "0")}
           </div>
         </div>
+
+        {/* The rules, in the building's own voice. Collapsed once you have
+            played a round, because nobody reads instructions twice. */}
+        {showRules && (
+          <div
+            style={{
+              background: "var(--cell)",
+              border: "1px solid var(--panel-lo)",
+              borderRadius: 8,
+              padding: "14px 16px",
+              margin: "0 0 14px",
+            }}
+          >
+            <div
+              className="cap"
+              style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+              lang="km"
+            >
+              <span>របៀបលេង</span>
+              <button
+                type="button"
+                onClick={() => setShowRules(false)}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: "var(--f-read)",
+                  fontSize: 12,
+                  color: "var(--ink-soft)",
+                }}
+              >
+                បិទ ✕
+              </button>
+            </div>
+            <ol
+              lang="km"
+              style={{
+                margin: "10px 0 0",
+                paddingLeft: "1.3em",
+                fontFamily: "var(--f-km)",
+                fontSize: 14,
+                lineHeight: 1.95,
+                color: "var(--ink-soft)",
+              }}
+            >
+              <li>ក្រសួងប្រាប់សំឡេងមួយឱ្យអ្នកធ្វើ។</li>
+              <li>សង្កត់ប៊ូតុងទុក រួចបញ្ចេញសំឡេងនោះឱ្យអស់ពីចិត្ត។ លែងដៃពេលចប់។</li>
+              <li>
+                ក្រសួងវាស់រឿង ៣ យ៉ាង៖ <b>ការប្តេជ្ញា</b> (ខ្លាំងប៉ុណ្ណា),
+                <b> រយៈពេល</b> (យូរគ្រប់ទេ), និង <b>ទម្រង់សំឡេង</b> (ឡើង ចុះ ឬ នឹង)។
+              </li>
+              <li>
+                ពិន្ទុ <b>{PASS_MARK} ឬលើស</b> គឺឆ្លងកាត់។ ទាបជាងនេះ អ្នក<b>ត្រូវផឹក</b>។
+              </li>
+              <li>បញ្ជូនទូរស័ព្ទទៅអ្នកបន្ទាប់ រួចចុច “សំឡេងបន្ទាប់”។</li>
+            </ol>
+            <p
+              className="tiny"
+              lang="km"
+              style={{ marginTop: 10, lineHeight: 1.8 }}
+            >
+              សំឡេងរបស់អ្នកមិនចេញពីឧបករណ៍នេះទេ។ គ្មានការថត គ្មានការផ្ញើទៅណាទេ។
+            </p>
+          </div>
+        )}
 
         <div className="readout">
           <p className="rd-line" lang="km">

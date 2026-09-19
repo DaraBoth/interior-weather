@@ -5,7 +5,7 @@
    explicitly and the body ground is never left transparent.
    ========================================================================== */
 
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Courier+Prime:wght@400;700&family=Kantumruy+Pro:wght@400;500;600;700&family=Koulen&display=swap");
 
 :root {
   --room: #22241f;
@@ -26,8 +26,13 @@
   --green: #4c9a56;
   --screen: #101a10;
   --screen-txt: #7de88a;
-  --f-label: "Oswald", Impact, "Haettenschweiler", sans-serif;
-  --f-read: "Courier Prime", "Courier New", monospace;
+  /* Latin first, Khmer second. A browser falls through per glyph, so Latin keeps
+     Oswald and Courier Prime while Khmer automatically lands on a face that
+     actually has the glyphs. Koulen is the condensed display match for Oswald;
+     Kantumruy Pro is built for Khmer screen legibility. */
+  --f-label: "Oswald", "Koulen", Impact, "Haettenschweiler", sans-serif;
+  --f-read: "Courier Prime", "Kantumruy Pro", "Courier New", monospace;
+  --f-km: "Kantumruy Pro", "Noto Sans Khmer", sans-serif;
 }
 
 * { box-sizing: border-box; padding: 0; margin: 0; }
@@ -366,4 +371,54 @@ input, select, textarea, button { font-size: 16px; }
     animation-duration: 0.01ms !important;
     transition-duration: 0.08s !important;
   }
+}
+
+/* ==========================================================================
+   KHMER LEGIBILITY
+   The house style was built for Latin display type: tight tracking, condensed
+   caps, leading under 1. Khmer takes none of that well. Letter-spacing pulls
+   apart clusters that are meant to touch, and the script stacks marks both
+   above and below the baseline, so anything near line-height:1 clips them.
+   These rules apply to the whole document, which is lang="km".
+   ========================================================================== */
+:lang(km),
+[lang="km"] {
+  letter-spacing: normal;
+  word-spacing: 0.04em;
+}
+
+/* The chrome that used wide tracking for a bureaucratic look: keep the look for
+   Latin, drop the tracking for Khmer, and give every line room to breathe. */
+.corridor a,
+.cap,
+.mk,
+.btn,
+.tiny,
+.foot,
+.rd-sub,
+.cert,
+.langtog {
+  letter-spacing: normal;
+  line-height: 1.75;
+}
+
+h1 {
+  line-height: 1.35;          /* was 0.92, which cut the subscripts off */
+  letter-spacing: normal;
+  padding-bottom: 0.08em;     /* descenders in Khmer sit low */
+}
+
+.rd-line {
+  line-height: 1.65;
+  letter-spacing: normal;
+}
+
+/* Khmer has no case, so uppercasing does nothing but it also does no harm.
+   Left alone deliberately: removing it would change the Latin look. */
+
+/* Numerals and the few Latin scraps keep their character. */
+.tabular,
+.mono {
+  font-family: var(--f-read);
+  letter-spacing: 0.05em;
 }
