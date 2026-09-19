@@ -21,6 +21,7 @@ const ROOMS: { href: string; label: string }[] = [
   { href: "/freeze", label: "កក" },
   { href: "/cards", label: "ធំ ឬ តូច" },
   { href: "/pick", label: "នរណាផឹក" },
+  { href: "/mimic", label: "ត្រាប់តាម" },
   { href: "/drink", label: "ច្បាប់" },
   { href: "/fun", label: "ល្បែង" },
   { href: "/bored", label: "ការរង់ចាំ" },
