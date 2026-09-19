@@ -24,12 +24,17 @@ const FACTS = [
 
 export default function Waiting() {
   const [progress, setProgress] = useState(0);
-  const [ticket] = useState(() => 91000 + Math.floor(Math.random() * 900));
+  /* Drawn after mount, not in the initial state. This page is prerendered, so a
+     random initial value was baked into the HTML and then re-rolled on the
+     client, which is a hydration text mismatch (React #418) on every visit. */
+  const [ticket, setTicket] = useState(91000);
   const [serving, setServing] = useState(4182);
   const [stillness, setStillness] = useState(0);
   const [bestStill, setBestStill] = useState(0);
   const [factIdx, setFactIdx] = useState(0);
   const lastMove = useRef(Date.now());
+
+  useEffect(() => { setTicket(91000 + Math.floor(Math.random() * 900)); }, []);
 
   /* a progress bar that will never, ever finish */
   useEffect(() => {

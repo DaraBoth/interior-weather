@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The building itself: corridor nav, the bulletins that interrupt you, the
+ * The building itself: the room bar and full-screen menu, the bulletins that
  * discovery toast, and the secrets that can be triggered from any room
  * (Konami, typing SOUP, the console confession, the right-click menu).
  */
@@ -13,20 +13,20 @@ import { pickBulletin } from "@/lib/bulletins";
 import * as S from "@/lib/secrets";
 import { chime, beep } from "@/lib/audio";
 
-const ROOMS: { href: string; label: string }[] = [
-  { href: "/", label: "កន្លែងទទួលភ្ញៀវ" },
-  { href: "/bomb", label: "គ្រាប់បែក" },
-  { href: "/wheel", label: "កង់មូល" },
-  { href: "/paranoia", label: "ការសង្ស័យ" },
-  { href: "/freeze", label: "កក" },
-  { href: "/cards", label: "ធំ ឬ តូច" },
-  { href: "/pick", label: "នរណាផឹក" },
-  { href: "/mimic", label: "ត្រាប់តាម" },
-  { href: "/drink", label: "ច្បាប់" },
-  { href: "/fun", label: "ល្បែង" },
-  { href: "/bored", label: "ការរង់ចាំ" },
-  { href: "/form", label: "ទម្រង់ ២៧-ខ" },
-  { href: "/archive", label: "បណ្ណសារ" },
+const ROOMS: { href: string; label: string; note: string }[] = [
+  { href: "/",         label: "កន្លែងទទួលភ្ញៀវ", note: "ម៉ាស៊ីនអារម្មណ៍ និងប៊ូតុងក្រហម" },
+  { href: "/bomb",     label: "គ្រាប់បែក",        note: "និយាយ បញ្ជូនបន្ត កុំឱ្យផ្ទុះដាក់ខ្លួន" },
+  { href: "/wheel",    label: "កង់មូល",           note: "បង្វិល រួចទទួលយកផលវិបាក" },
+  { href: "/paranoia", label: "ការសង្ស័យ",        note: "សំណួរខ្សឹប ចម្លើយឮៗ" },
+  { href: "/freeze",   label: "កក",               note: "កុំកម្រើក កាមេរ៉ាកំពុងមើល" },
+  { href: "/cards",    label: "ធំ ឬ តូច",         note: "ទាយបៀ ខុសគឺផឹក" },
+  { href: "/pick",     label: "នរណាផឹក",          note: "បន្ទប់ជ្រើសរើសមនុស្សម្នាក់" },
+  { href: "/mimic",    label: "ត្រាប់តាមសំឡេង",   note: "បញ្ចេញសំឡេង យើងឱ្យពិន្ទុ" },
+  { href: "/drink",    label: "ច្បាប់",           note: "ច្បាប់ ការសារភាព និងការប្រកួត" },
+  { href: "/fun",      label: "ល្បែង",            note: "ហ្គេមតូចៗគ្មានតម្លៃ" },
+  { href: "/bored",    label: "ការរង់ចាំ",        note: "នាយកដ្ឋានរង់ចាំ" },
+  { href: "/form",     label: "ទម្រង់ ២៧-ខ",      note: "ពាក្យសុំដាក់ពាក្យ" },
+  { href: "/archive",  label: "បណ្ណសារ",          note: "ជាន់ទី -១ តម្រុយនៅទីនេះ" },
 ];
 
 const KONAMI = [
@@ -36,9 +36,11 @@ const KONAMI = [
 
 export default function Ministry({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const here = ROOMS.find((r) => r.href === pathname);
   const [bulletin, setBulletin] = useState<string | null>(null);
   const [toast, setToast] = useState<{ title: string; sub: string } | null>(null);
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
+  const [open, setOpen] = useState(false);
   const konami = useRef<string[]>([]);
   const typed = useRef("");
 
@@ -62,7 +64,26 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     S.recordVisit(pathname);
     S.checkTimeSecrets();
+    setOpen(false);
   }, [pathname]);
+
+  /* ---------------- the menu is a screen, so treat it like one ----------------
+     Escape closes it, and the room behind it stops scrolling while it is up.
+     Without the scroll lock a phone scrolls the page under the overlay and the
+     player comes back to a room they did not leave where they left it. */
+  useEffect(() => {
+    if (!open) return;
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setOpen(false); beep(420, 0.05); }
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onEsc);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onEsc);
+    };
+  }, [open]);
 
   /* ---------------- bulletins ---------------- */
   useEffect(() => {
@@ -152,14 +173,55 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="shell">
-      <nav className="corridor">
-        {ROOMS.map((r) => (
-          <Link key={r.href} href={r.href} className={pathname === r.href ? "on" : ""}>
-            {r.label}
-          </Link>
-        ))}
-        <span className="floor">ជាន់ទី ១ &middot; ជណ្តើរយន្តខូច</span>
+      {/* In a room: one small button, so the game gets the screen. */}
+      <nav className="roombar">
+        <button
+          type="button"
+          className="menubtn"
+          onClick={() => { setOpen(true); beep(560, 0.05); }}
+          aria-label="បើកម៉ឺនុយ"
+        >
+          <span aria-hidden="true">☰</span> ម៉ឺនុយ
+        </button>
+        <span className="roomname">{here?.label ?? "ផឹកភ្លាម"}</span>
+        <span className="floor">ជាន់ទី ១</span>
       </nav>
+
+      {/* The whole building, as one screen you step out to. */}
+      {open && (
+        <div className="menuscreen" role="dialog" aria-modal="true" aria-label="ម៉ឺនុយ">
+          <div className="menuhead">
+            <div>
+              <div className="mk">ក្រសួងផឹកភ្លាម</div>
+              <h2>ជ្រើសរើសបន្ទប់</h2>
+            </div>
+            <button
+              type="button"
+              className="menuclose"
+              onClick={() => { setOpen(false); beep(420, 0.05); }}
+              aria-label="បិទ"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="menugrid">
+            {ROOMS.map((r) => (
+              <Link
+                key={r.href}
+                href={r.href}
+                className={`menucard${pathname === r.href ? " on" : ""}`}
+                onClick={() => setOpen(false)}
+              >
+                <span className="menulabel">{r.label}</span>
+                <span className="menunote">{r.note}</span>
+              </Link>
+            ))}
+          </div>
+
+          <p className="menufoot">ជណ្តើរយន្តខូច · សូមប្រើជណ្តើរ</p>
+        </div>
+      )}
 
       {children}
 
