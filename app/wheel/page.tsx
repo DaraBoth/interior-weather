@@ -19,6 +19,64 @@ import { verdict } from "@/lib/celebrate";
 const TAU = Math.PI * 2;
 const STORE = "miw:wheel";
 
+/**
+ * Canvas has no stylesheet, so it needs the Khmer face named outright. The old
+ * stack was Oswald, Impact, sans-serif — none of which carry Khmer, so the
+ * browser silently substituted whatever system face it liked and measureText
+ * reported that face's metrics rather than the one on screen.
+ */
+const CANVAS_FACE = '"Kantumruy Pro", Oswald, "Noto Sans Khmer", sans-serif';
+
+/** Khmer ink box as a multiple of the nominal size: subscripts below, vowel
+ *  signs above. Latin sits near 1.2; this is sized for the script in use. */
+const KHMER_INK = 1.75;
+
+/** How far in the text is allowed to reach, as a fraction of the radius. The
+ *  wedge is narrowest here, so this is where the type has to fit. */
+const INNER = 0.44;
+
+/**
+ * Where each wedge starts and ends, in radians, and the total it spans.
+ *
+ * One list drives the drawing, the peg click and the landing, so the segment
+ * the pointer is over is by construction the segment that was drawn there.
+ */
+function bounds(list: Segment[]): { edges: number[]; total: number } {
+  const total = list.reduce((sum, s) => sum + Math.max(1, s.weight), 0);
+  const edges: number[] = [0];
+  let acc = 0;
+  for (const s of list) {
+    acc += Math.max(1, s.weight);
+    edges.push((acc / total) * TAU);
+  }
+  return { edges, total };
+}
+
+/**
+ * Trim a label to a pixel budget without breaking it.
+ *
+ * Cutting one UTF-16 unit at a time strips the combining marks off a Khmer
+ * cluster and leaves an orphaned consonant, so this walks grapheme clusters
+ * where the browser can segment them and falls back to code points where it
+ * cannot.
+ */
+function fit(ctx: CanvasRenderingContext2D, text: string, maxW: number): string {
+  if (ctx.measureText(text).width <= maxW) return text;
+
+  const seg =
+    typeof Intl !== "undefined" && "Segmenter" in Intl
+      ? [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text)].map(
+          (g) => g.segment,
+        )
+      : [...text];
+
+  let out = seg;
+  while (out.length > 1 && ctx.measureText(out.join("") + "…").width > maxW) {
+    out = out.slice(0, -1);
+  }
+  return out.join("").trimEnd() + "…";
+}
+
 /* colours cycle so a custom wheel still looks like it belongs in the building */
 const TONES = ["#c8342b", "#e8a317", "#4c9a56", "#4a6fa5", "#8e5aa8", "#8e876f", "#b8763a", "#3f8f8a"];
 
@@ -61,8 +119,13 @@ export default function Wheel() {
     if (mode === "custom" && custom.length >= 2) {
       return custom.map((label, i) => ({ label, weight: 1, tone: TONES[i % TONES.length] }));
     }
-    // ទម្ងន់ពង្រីកទៅជាចំណិតដដែលៗ ដូច្នេះ "អ្នកផឹក" ពិតជាចេញញឹកញាប់ជាង
-    return WHEEL_SEGMENTS.flatMap((s) => Array.from({ length: s.weight }, () => s));
+    // The twelve, each keeping its weight. They used to be flattened into one
+    // repeated slice per point of weight, which gave the same odds but
+    // twenty-three identical-width wedges: on a phone that left about 19px of
+    // chord for a Khmer label and the type had to shrink until it was unusable.
+    // A weighted wedge covers exactly the same share of the circle and gives
+    // its label up to three times the room.
+    return WHEEL_SEGMENTS;
   }, [mode, custom]);
 
   const slicesRef = useRef<Segment[]>(slices);
@@ -89,14 +152,15 @@ export default function Wheel() {
     const cy = size / 2;
     const r = size / 2 - 12;
     const list = slicesRef.current;
-    const step = TAU / list.length;
+    const { edges } = bounds(list);
 
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(angleRef.current);
 
     list.forEach((seg, i) => {
-      const a0 = i * step;
+      const a0 = edges[i];
+      const step = edges[i + 1] - a0;
       ctx.beginPath();
       ctx.moveTo(0, 0);
       ctx.arc(0, 0, r, a0, a0 + step);
@@ -113,15 +177,22 @@ export default function Wheel() {
       ctx.textBaseline = "middle";
       const light = seg.tone === "#dcd6c4" || seg.tone === "#e8a317" || seg.tone === "#8e876f";
       ctx.fillStyle = light ? "#241f0e" : "#f4f1e8";
-      // shrink the type as the wheel gets busier, and clip anything absurd
-      const fs = Math.max(9, Math.min(size * 0.038, (r * step) * 0.62));
-      ctx.font = `700 ${fs}px Oswald, Impact, sans-serif`;
-      let label = seg.label.toUpperCase();
-      const maxW = r - 26;
-      while (label.length > 3 && ctx.measureText(label).width > maxW) {
-        label = label.slice(0, -1);
-      }
-      if (label !== seg.label.toUpperCase()) label = label.trimEnd() + "…";
+
+      // A wedge is narrow where the text ends, not where it starts. The old
+      // size only looked at the arc at the rim and at the canvas width, so on a
+      // phone it picked ~13px for a slice whose inner chord is ~19px across —
+      // and Khmer puts subscripts under the baseline and vowel signs over it,
+      // so its ink box runs near 1.75x the nominal size. The labels crossed
+      // into their neighbours. Size to the room that is actually there.
+      const chord = 2 * (r * INNER) * Math.sin(step / 2);
+      // The chord is the real limit now that wedges differ in width, so the
+      // ceiling only exists to stop a weight-3 wedge shouting.
+      const fs = Math.max(9, Math.min(size * 0.062, chord / KHMER_INK));
+      ctx.font = `700 ${fs}px ${CANVAS_FACE}`;
+
+      // Latin gets the building's uppercase; Khmer has no case to change.
+      const full = /[ក-៿]/.test(seg.label) ? seg.label : seg.label.toUpperCase();
+      const label = fit(ctx, full, r - 26);
       ctx.fillText(label, r - 14, 0);
       ctx.restore();
     });
@@ -150,9 +221,13 @@ export default function Wheel() {
 
   const currentIndex = useCallback(() => {
     const list = slicesRef.current;
-    const step = TAU / list.length;
+    if (list.length === 0) return 0;
+    const { edges } = bounds(list);
     const a = ((-Math.PI / 2 - angleRef.current) % TAU + TAU) % TAU;
-    return Math.floor(a / step) % list.length;
+    for (let i = 0; i < list.length; i++) {
+      if (a >= edges[i] && a < edges[i + 1]) return i;
+    }
+    return list.length - 1;
   }, []);
 
   const tickLoop = useCallback(() => {
@@ -203,6 +278,20 @@ export default function Wheel() {
     };
   }, [draw, slices]);
 
+  /* Canvas does not pull a webfont in the way an element does: it draws with
+     whatever is already loaded and measures that. Kantumruy Pro at 700 is not
+     on the page otherwise, so ask for it and redraw once it lands, or the
+     first paint is measured against a substitute. */
+  useEffect(() => {
+    if (typeof document === "undefined" || !document.fonts) return;
+    let alive = true;
+    document.fonts
+      .load('700 16px "Kantumruy Pro"')
+      .then(() => { if (alive) draw(); })
+      .catch(() => { /* offline or blocked: the fallback still draws */ });
+    return () => { alive = false; };
+  }, [draw]);
+
   /* ---------------- custom entries ---------------- */
   const add = () => {
     const t = draft.trim().slice(0, 28);
@@ -250,7 +339,7 @@ export default function Wheel() {
           <div className="cert">
             {usingCustom ? "កំពុងប្រើបញ្ជីផ្ទាល់ខ្លួនរបស់អ្នក" : "លទ្ធផលមានទម្ងន់ខុសៗគ្នា"}<br />
             កង់មូលមិនមែនជាមិត្តរបស់អ្នកទេ<br />
-            SPINS {String(spins).padStart(3, "0")}
+            បង្វិលរួច {String(spins).padStart(3, "0")} ដង
           </div>
         </div>
 
