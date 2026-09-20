@@ -9,25 +9,11 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { ROOMS } from "@/lib/rooms";
 import { pickBulletin } from "@/lib/bulletins";
 import * as S from "@/lib/secrets";
 import { chime, beep } from "@/lib/audio";
 
-const ROOMS: { href: string; label: string; note: string }[] = [
-  { href: "/",         label: "កន្លែងទទួលភ្ញៀវ", note: "ម៉ាស៊ីនអារម្មណ៍ និងប៊ូតុងក្រហម" },
-  { href: "/bomb",     label: "គ្រាប់បែក",        note: "និយាយ បញ្ជូនបន្ត កុំឱ្យផ្ទុះដាក់ខ្លួន" },
-  { href: "/wheel",    label: "កង់មូល",           note: "បង្វិល រួចទទួលយកផលវិបាក" },
-  { href: "/paranoia", label: "ការសង្ស័យ",        note: "សំណួរខ្សឹប ចម្លើយឮៗ" },
-  { href: "/freeze",   label: "កក",               note: "កុំកម្រើក កាមេរ៉ាកំពុងមើល" },
-  { href: "/cards",    label: "ធំ ឬ តូច",         note: "ទាយបៀ ខុសគឺផឹក" },
-  { href: "/pick",     label: "នរណាផឹក",          note: "បន្ទប់ជ្រើសរើសមនុស្សម្នាក់" },
-  { href: "/mimic",    label: "ត្រាប់តាមសំឡេង",   note: "បញ្ចេញសំឡេង យើងឱ្យពិន្ទុ" },
-  { href: "/drink",    label: "ច្បាប់",           note: "ច្បាប់ ការសារភាព និងការប្រកួត" },
-  { href: "/fun",      label: "ល្បែង",            note: "ហ្គេមតូចៗគ្មានតម្លៃ" },
-  { href: "/bored",    label: "ការរង់ចាំ",        note: "នាយកដ្ឋានរង់ចាំ" },
-  { href: "/form",     label: "ទម្រង់ ២៧-ខ",      note: "ពាក្យសុំដាក់ពាក្យ" },
-  { href: "/archive",  label: "បណ្ណសារ",          note: "ជាន់ទី -១ តម្រុយនៅទីនេះ" },
-];
 
 const KONAMI = [
   "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
@@ -37,10 +23,10 @@ const KONAMI = [
 export default function Ministry({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const here = ROOMS.find((r) => r.href === pathname);
+  const atMenu = pathname === "/menu";
   const [bulletin, setBulletin] = useState<string | null>(null);
   const [toast, setToast] = useState<{ title: string; sub: string } | null>(null);
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
-  const [open, setOpen] = useState(false);
   const konami = useRef<string[]>([]);
   const typed = useRef("");
 
@@ -64,26 +50,7 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     S.recordVisit(pathname);
     S.checkTimeSecrets();
-    setOpen(false);
   }, [pathname]);
-
-  /* ---------------- the menu is a screen, so treat it like one ----------------
-     Escape closes it, and the room behind it stops scrolling while it is up.
-     Without the scroll lock a phone scrolls the page under the overlay and the
-     player comes back to a room they did not leave where they left it. */
-  useEffect(() => {
-    if (!open) return;
-    const onEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") { setOpen(false); beep(420, 0.05); }
-    };
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onEsc);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onEsc);
-    };
-  }, [open]);
 
   /* ---------------- bulletins ---------------- */
   useEffect(() => {
@@ -173,54 +140,15 @@ export default function Ministry({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="shell">
-      {/* In a room: one small button, so the game gets the screen. */}
-      <nav className="roombar">
-        <button
-          type="button"
-          className="menubtn"
-          onClick={() => { setOpen(true); beep(560, 0.05); }}
-          aria-label="បើកម៉ឺនុយ"
-        >
-          <span aria-hidden="true">☰</span> ម៉ឺនុយ
-        </button>
-        <span className="roomname">{here?.label ?? "ផឹកភ្លាម"}</span>
-        <span className="floor">ជាន់ទី ១</span>
-      </nav>
-
-      {/* The whole building, as one screen you step out to. */}
-      {open && (
-        <div className="menuscreen" role="dialog" aria-modal="true" aria-label="ម៉ឺនុយ">
-          <div className="menuhead">
-            <div>
-              <div className="mk">ក្រសួងផឹកភ្លាម</div>
-              <h2>ជ្រើសរើសបន្ទប់</h2>
-            </div>
-            <button
-              type="button"
-              className="menuclose"
-              onClick={() => { setOpen(false); beep(420, 0.05); }}
-              aria-label="បិទ"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="menugrid">
-            {ROOMS.map((r) => (
-              <Link
-                key={r.href}
-                href={r.href}
-                className={`menucard${pathname === r.href ? " on" : ""}`}
-                onClick={() => setOpen(false)}
-              >
-                <span className="menulabel">{r.label}</span>
-                <span className="menunote">{r.note}</span>
-              </Link>
-            ))}
-          </div>
-
-          <p className="menufoot">ជណ្តើរយន្តខូច · សូមប្រើជណ្តើរ</p>
-        </div>
+      {/* Out of a room and back to the menu. One control, top left, where a
+          thumb already expects Back to be. The menu itself does not get one. */}
+      {!atMenu && (
+        <nav className="roombar">
+          <Link href="/menu" className="backbtn" onClick={() => beep(420, 0.05)}>
+            <span aria-hidden="true">←</span> ម៉ឺនុយ
+          </Link>
+          <span className="roomname">{here?.label ?? "ផឹកភ្លាម"}</span>
+        </nav>
       )}
 
       {children}

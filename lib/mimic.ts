@@ -131,6 +131,15 @@ export type Sample = {
   hz: number[];
   /** Frame interval in ms. */
   stepMs: number;
+  /**
+   * How long the take actually ran, measured off the clock.
+   *
+   * Not frames x stepMs. Frames arrive on requestAnimationFrame, roughly every
+   * 16.7ms, while stepMs is the analyser's window at 21.3ms: multiplying the
+   * two overstated every hold by about a quarter, and any difference in frame
+   * rate between two takes showed up as a length difference that was not there.
+   */
+  ms?: number;
 };
 
 export type Score = {
@@ -194,6 +203,41 @@ export function detectPitch(buf: Float32Array, sampleRate: number): number {
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
+/**
+ * Below this RMS nobody made a sound, whatever else the numbers say.
+ *
+ * It matters because the pitch detector is happy to report a confident 249 Hz
+ * from room tone, and a track of near-identical spurious readings looks like a
+ * perfectly steady note to anything measuring shape. Every feature that reads
+ * pitch has to be gated on this, or silence scores well on contour.
+ */
+const VOICE_FLOOR = 0.012;
+
+/** Pitch readings from frames that were actually loud enough to believe. */
+function audibleHz(s: Sample): number[] {
+  return s.hz.filter((h, i) => h > 0 && (s.rms[i] ?? 0) >= VOICE_FLOOR);
+}
+
+/** The loudest sustained quarter of a take, rather than one lucky spike. */
+function sustainedPeak(rms: number[]): number {
+  if (rms.length === 0) return 0;
+  const sorted = [...rms].sort((a, b) => b - a);
+  const top = sorted.slice(0, Math.max(1, Math.floor(rms.length * 0.25)));
+  return top.reduce((a, b) => a + b, 0) / top.length;
+}
+
+/**
+ * How much of the score a take has earned the right to keep.
+ *
+ * Commitment used to be one weighted term among four, which meant a silent
+ * round still collected full marks for length and contour and passed on those
+ * alone. It is a multiplier instead: make no sound, keep none of it. Full
+ * credit from a third of the reference's loudness upward, tapering below.
+ */
+function credit(commitment: number): number {
+  return clamp01(commitment / 0.45);
+}
+
 /** Median of the non-zero values, which ignores unvoiced frames. */
 function medianVoiced(hz: number[]): number {
   const v = hz.filter((x) => x > 0).sort((a, b) => a - b);
@@ -207,7 +251,9 @@ function medianVoiced(hz: number[]): number {
  */
 function shapeMatch(hz: number[], want: Contour): number {
   const voiced = hz.filter((x) => x > 0);
-  if (voiced.length < 6) return want === "any" ? 0.6 : 0.25;
+  // Too little to read: score it as unknown-and-unearned rather than as a
+  // partial match, which is what let a silent take keep a contour mark.
+  if (voiced.length < 6) return 0;
 
   const third = Math.max(2, Math.floor(voiced.length / 3));
   const head = voiced.slice(0, third);
@@ -250,13 +296,10 @@ const NOTES: { min: number; km: string; en: string }[] = [
 export const PASS_MARK = 60;
 
 export function scoreAttempt(s: Sample, p: Prompt): Score {
-  const frames = s.rms.length;
-  const heldMs = frames * s.stepMs;
+  const heldMs = s.ms ?? s.rms.length * s.stepMs;
 
   // commitment: the loudest sustained stretch, not a single spike
-  const sorted = [...s.rms].sort((a, b) => b - a);
-  const topSlice = sorted.slice(0, Math.max(1, Math.floor(frames * 0.25)));
-  const peakish = topSlice.reduce((a, b) => a + b, 0) / topSlice.length;
+  const peakish = sustainedPeak(s.rms);
   const commitment = clamp01(peakish / p.want.loud);
 
   // duration: full marks inside the window, tapering outside it
@@ -265,21 +308,25 @@ export function scoreAttempt(s: Sample, p: Prompt): Score {
   else if (heldMs > p.want.maxMs) duration = clamp01(1 - (heldMs - p.want.maxMs) / p.want.maxMs);
   else duration = 1;
 
-  const shape = shapeMatch(s.hz, p.want.contour);
+  // only frames loud enough to believe get a say in the contour
+  const shape = peakish >= VOICE_FLOOR ? shapeMatch(audibleHz(s), p.want.contour) : 0;
 
-  // A silent round cannot be rescued by a lucky pitch reading.
-  const total =
-    commitment < 0.12
-      ? Math.round(commitment * 40)
-      : Math.round(100 * (commitment * 0.4 + duration * 0.25 + shape * 0.35));
+  // A silent round cannot be rescued by a lucky pitch reading: credit() scales
+  // the whole thing by how much of a sound there actually was.
+  const c = credit(commitment);
+  const total = Math.round(100 * (commitment * 0.4 + duration * 0.25 + shape * 0.35) * c);
 
   const note = NOTES.find((n) => total >= n.min) ?? NOTES[NOTES.length - 1];
 
   return {
     total,
+    // Commitment is the raw measurement; the other two are shown after credit,
+    // so the three bars are the marks actually granted rather than marks the
+    // total then quietly took back. A near-silent take used to read "shape 57"
+    // next to a score of 24.
     commitment: Math.round(commitment * 100),
-    duration: Math.round(duration * 100),
-    shape: Math.round(shape * 100),
+    duration: Math.round(duration * c * 100),
+    shape: Math.round(shape * c * 100),
     verdict: total >= PASS_MARK ? "pass" : "drink",
     noteKm: note.km,
     noteEn: note.en,
@@ -288,4 +335,120 @@ export function scoreAttempt(s: Sample, p: Prompt): Score {
 
 export function medianHz(s: Sample): number {
   return Math.round(medianVoiced(s.hz));
+}
+
+/* ------------------------------------------------- copying a real voice */
+
+/**
+ * Score an attempt against a recording of somebody else, rather than against a
+ * prompt's written targets. This is what the pass-the-phone mode runs on: one
+ * player makes a noise, the next has to be that person.
+ *
+ * Everything is compared in relative terms. Pitch is converted to semitones
+ * away from each speaker's own median, so a low voice copying a high one is
+ * judged on whether it moved the same way, not on whether it landed on the
+ * same notes — otherwise the game would just be a test of who has a similar
+ * larynx to whoever went first.
+ */
+
+/** Resample a series to n points by averaging each bucket. Empty in, empty out. */
+function resample(v: number[], n: number): number[] {
+  if (v.length === 0) return [];
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) {
+    const a = Math.floor((i * v.length) / n);
+    const b = Math.max(a + 1, Math.floor(((i + 1) * v.length) / n));
+    let s = 0;
+    for (let k = a; k < b; k++) s += v[k];
+    out.push(s / (b - a));
+  }
+  return out;
+}
+
+/** Pearson correlation, mapped from -1..1 onto 0..1. */
+function correlate(a: number[], b: number[]): number {
+  const n = Math.min(a.length, b.length);
+  if (n < 3) return 0;
+  const mean = (x: number[]) => x.reduce((s, v) => s + v, 0) / x.length;
+  const ma = mean(a.slice(0, n));
+  const mb = mean(b.slice(0, n));
+  let num = 0;
+  let da = 0;
+  let db = 0;
+  for (let i = 0; i < n; i++) {
+    const x = a[i] - ma;
+    const y = b[i] - mb;
+    num += x * y;
+    da += x * x;
+    db += y * y;
+  }
+  if (da === 0 || db === 0) return 0.5; // both flat: they agree, weakly
+  return clamp01((num / Math.sqrt(da * db) + 1) / 2);
+}
+
+/** Voiced pitch as semitones from the speaker's own median. */
+function semitoneTrack(s: Sample): number[] {
+  const hz = audibleHz(s);
+  const med = medianVoiced(hz);
+  if (med <= 0) return [];
+  return hz.map((h) => 12 * Math.log2(h / med));
+}
+
+const COPY_NOTES: { min: number; km: string; en: string }[] = [
+  { min: 90, km: "ក្រសួងមិនអាចបែងចែកអ្នកពីម្ចាស់ដើមបានទេ។", en: "The Ministry cannot tell you two apart." },
+  { min: 75, km: "ដូចគ្នាណាស់។ អ្នករួចខ្លួន។", en: "Close enough. You are free to go." },
+  { min: 60, km: "ស្ទើរតែដូច។ ក្រសួងនឹងមិននិយាយអ្វីទេ។", en: "Nearly. The Ministry will say nothing." },
+  { min: 40, km: "មិនដូចទេ។ សូមផឹកមួយកែវ។", en: "Not them. Drink one." },
+  { min: 20, km: "អ្នកធ្វើសំឡេងផ្សេងទាំងស្រុង។ ផឹកទៅ។", en: "You made a different sound entirely. Drink." },
+  { min: 0, km: "គ្មានអ្វីសោះ។ ផឹកទៅ។", en: "Nothing at all. Drink." },
+];
+
+export function scoreAgainst(attempt: Sample, ref: Sample): Score {
+  const aMs = attempt.ms ?? attempt.rms.length * attempt.stepMs;
+  const rMs = ref.ms ?? ref.rms.length * ref.stepMs;
+
+  // length: how close the two are, as a ratio that does not care which is longer
+  const duration = rMs > 0 && aMs > 0 ? clamp01(1 - Math.abs(Math.log2(aMs / rMs)) / 1.4) : 0;
+
+  // the shape of the loudness over time, each normalised to its own peak, so
+  // a quiet room and a loud one are judged on rhythm rather than volume
+  const N = 24;
+  const norm = (v: number[]) => {
+    const peak = Math.max(...v, 1e-6);
+    return v.map((x) => x / peak);
+  };
+  const envelope = correlate(norm(resample(attempt.rms, N)), norm(resample(ref.rms, N)));
+
+  const peakish = sustainedPeak(attempt.rms);
+  const refPeak = sustainedPeak(ref.rms);
+
+  // did the pitch travel the same way. Both sides have to be audible before
+  // this means anything; room tone correlates beautifully with room tone.
+  const at = semitoneTrack(attempt);
+  const rt = semitoneTrack(ref);
+  const shape =
+    peakish >= VOICE_FLOOR && at.length >= 6 && rt.length >= 6
+      ? correlate(resample(at, N), resample(rt, N))
+      : 0;
+
+  // relative to whoever went first, but with an absolute floor under it, so
+  // two people sitting in silence do not impersonate each other perfectly
+  const commitment = clamp01(peakish / Math.max(VOICE_FLOOR * 2.5, refPeak * 0.75));
+
+  const c = credit(commitment);
+  const total = Math.round(
+    100 * (commitment * 0.2 + duration * 0.2 + envelope * 0.2 + shape * 0.4) * c,
+  );
+
+  const note = COPY_NOTES.find((n) => total >= n.min) ?? COPY_NOTES[COPY_NOTES.length - 1];
+
+  return {
+    total,
+    commitment: Math.round(commitment * 100),
+    duration: Math.round(duration * c * 100),
+    shape: Math.round(shape * c * 100),
+    verdict: total >= PASS_MARK ? "pass" : "drink",
+    noteKm: note.km,
+    noteEn: note.en,
+  };
 }
